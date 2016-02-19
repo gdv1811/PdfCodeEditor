@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SoftwareIdentity tagId="wix:bundle/229C8B18-B30C-409E-A47F-7D11C10AEBB7" name="WiX Toolset v3.10.0.2103" version="3.10.0.2103" versionScheme="multipartnumeric" xmlns="http://standards.iso.org/iso/19770/-2/2015/schema.xsd">
+  <Entity name="Outercurve Foundation" regid="outercurve.org" role="softwareCreator tagCreator" />
+  <Meta persistentId="wix:bundle.upgrade/65E893AD-EDD5-4E7D-80CA-F0F50F383532" />
+  <Link rel="component" href="swid:msi:package/1C7E2E3C-CBBF-49DB-BB84-10EAE84D527D" />
+  <Link rel="component" href="swid:msi:package/2C1803CE-33EE-4ECC-8E43-B45D841BE94C" />
+  <Link rel="component" href="swid:msi:package/C5F2CDA5-0688-4927-B43C-5B24C625ACCF" />
+  <Link rel="component" href="swid:msi:package/DC6E5029-B030-4984-8B1A-8923811F3155" />
+  <Link rel="component" href="swid:msi:package/FEC27513-A16F-4E0D-A6E0-FAC5270C6CAA" />
+  <Link rel="component" href="swid:msi:package/79FC51AD-A6C4-4C6A-A7D2-B5704B035A05" />
+  <Link rel="component" href="swid:msi:package/A4D0CDD6-7FE5-41D0-8B06-9A7989B964D6" />
+  <Link rel="component" href="swid:msi:package/8E0FF766-60ED-4294-9B8D-83C77160F148" />
+</SoftwareIdentity>

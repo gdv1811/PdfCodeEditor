@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?define AssembliesPath = "..\PdfCodeEditor\bin\$(var.PdfCodeEditor.Configuration)"?>
+  <Product Id="*"
+           Name="PdfCodeEditor"
+           Language="1033"
+           Version="1.0.0.0"
+           Manufacturer="Dmitry Goryachev"
+           UpgradeCode="7bc7384e-31bf-4074-b7e5-2673d247f9f2">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate />
+
+    <Feature Id="ProductFeature" Title="PdfCodeEditor" Level="1">
+      <Component Id="PdfCodeEditor" Directory="INSTALLFOLDER">
+        <File Id="Assembly.PdfCodeEditor.exe" Source="$(var.AssembliesPath)\PdfCodeEditor.exe"/>
+      </Component>
+      <Component Id="ICSharpCode.AvalonEdit" Directory="INSTALLFOLDER">
+        <File Id="Assembly.ICSharpCode.AvalonEdit.dll" Source="$(var.AssembliesPath)\ICSharpCode.AvalonEdit.dll"/>
+      </Component>
+      <Component Id="PdfCodeEditor.exe.config" Directory="INSTALLFOLDER">
+        <File Id="Assembly.PdfCodeEditor.exe.config" Source="$(var.AssembliesPath)\PdfCodeEditor.exe.config"/>
+      </Component>
+      <Component Id="PdfCodeEditor.vshost.exe" Directory="INSTALLFOLDER">
+        <File Id="Assembly.PdfCodeEditor.vshost.exe" Source="$(var.AssembliesPath)\PdfCodeEditor.vshost.exe"/>
+      </Component>
+      <Component Id="PdfCodeEditor.vshost.exe.config" Directory="INSTALLFOLDER">
+        <File Id="Assembly.PdfCodeEditor.vshost.exe.config" Source="$(var.AssembliesPath)\PdfCodeEditor.vshost.exe.config"/>
+      </Component>
+      <Component Id="PdfCodeEditor.vshost.exe.manifest" Directory="INSTALLFOLDER">
+        <File Id="Assembly.PdfCodeEditor.vshost.exe.manifest" Source="$(var.AssembliesPath)\PdfCodeEditor.vshost.exe.manifest"/>
+      </Component>
+      <Component Id="System.Windows.Interactivity.dll" Directory="INSTALLFOLDER">
+        <File Id="Assembly.System.Windows.Interactivity.dll" Source="$(var.AssembliesPath)\System.Windows.Interactivity.dll"/>
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.dll" Directory="INSTALLFOLDER">
+        <File Id="Assembly.Xceed.Wpf.AvalonDock.dll" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.dll"/>
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Directory="INSTALLFOLDER">
+        <File Id="Assembly.Xceed.Wpf.AvalonDock.Themes.Aero.dll" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.Aero.dll"/>
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.Expression.dll" Directory="INSTALLFOLDER">
+        <File Id="Assembly.Xceed.Wpf.AvalonDock.Themes.Expression.dll" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.Expression.dll"/>
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Directory="INSTALLFOLDER">
+        <File Id="Assembly.Xceed.Wpf.AvalonDock.Themes.Metro.dll" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.Metro.dll"/>
+      </Component>
+      <Component Id="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Directory="INSTALLFOLDER">
+        <File Id="Assembly.Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.VS2010.dll"/>
+      </Component>
+    </Feature>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER"/>
+    <WixVariable Id="WixUILicenseRtf" Value="License.rtf"/>
+    <UIRef Id="WixUI_InstallDir"/>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="PdfCodeEditor" />
+      </Directory>
+    </Directory>
+  </Fragment>
+</Wix>

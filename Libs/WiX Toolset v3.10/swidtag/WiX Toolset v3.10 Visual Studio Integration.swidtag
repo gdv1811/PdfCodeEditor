@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SoftwareIdentity tagId="msi:package/8E0FF766-60ED-4294-9B8D-83C77160F148" name="WiX Toolset v3.10 Visual Studio Integration" version="3.10.2103.0" versionScheme="multipartnumeric" xmlns="http://standards.iso.org/iso/19770/-2/2015/schema.xsd">
+  <Entity name="Outercurve Foundation" regid="outercurve.org" role="softwareCreator tagCreator" />
+  <Meta persistentId="msi:upgrade/B6D64CBC-7075-4A94-AD48-DB084C0E70B1" />
+</SoftwareIdentity>

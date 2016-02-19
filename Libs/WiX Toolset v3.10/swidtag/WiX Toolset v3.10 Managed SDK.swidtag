@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SoftwareIdentity tagId="msi:package/C5F2CDA5-0688-4927-B43C-5B24C625ACCF" name="WiX Toolset v3.10 Managed SDK" version="3.10.2103.0" versionScheme="multipartnumeric" xmlns="http://standards.iso.org/iso/19770/-2/2015/schema.xsd">
+  <Entity name="Outercurve Foundation" regid="outercurve.org" role="softwareCreator tagCreator" />
+  <Meta persistentId="msi:upgrade/1BF98B34-B863-4AF7-956C-FEEB1938B2C8" />
+</SoftwareIdentity>

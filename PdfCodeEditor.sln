@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfCodeEditor", "PdfCodeEdi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfCodeEditor.Tests", "PdfCodeEditor.Tests\PdfCodeEditor.Tests.csproj", "{29B3B7A6-FE89-40C3-9C37-E865A2385098}"
 EndProject
+Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "PdfCodeEditor.Installer", "PdfCodeEditor.Installer\PdfCodeEditor.Installer.wixproj", "{0EEB91AB-DB17-4465-B3A5-EA8E6A1414D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{29B3B7A6-FE89-40C3-9C37-E865A2385098}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29B3B7A6-FE89-40C3-9C37-E865A2385098}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29B3B7A6-FE89-40C3-9C37-E865A2385098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EEB91AB-DB17-4465-B3A5-EA8E6A1414D1}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{0EEB91AB-DB17-4465-B3A5-EA8E6A1414D1}.Release|Any CPU.ActiveCfg = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
