@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+  <?define ProductId="*"?>
+  <?define ProductName="PdfCodeEditor"?>
+  <?define Version="1.0.0.0"?>
+  <?define Manufacturer="Dmitry Goryachev"?>
+  <?define UpgradeCode="7bc7384e-31bf-4074-b7e5-2673d247f9f2"?>
+  <?define IconPath="$(var.SolutionDir)\PdfCodeEditor\Resources\PdfCodeEditor.ico"?>
+  <?define License="$(var.SolutionDir)\PdfCodeEditor.Installer\License.rtf"?>
+  
+  <?define AssembliesPath = "$(var.SolutionDir)\PdfCodeEditor\bin\$(var.PdfCodeEditor.Configuration)"?>
+</Include>
