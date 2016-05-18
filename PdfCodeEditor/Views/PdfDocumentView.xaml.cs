@@ -22,6 +22,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Folding;
 using PdfCodeEditor.Editor;
+using PdfCodeEditor.Models;
 
 namespace PdfCodeEditor.Views
 {
@@ -30,8 +31,14 @@ namespace PdfCodeEditor.Views
     /// </summary>
     public partial class PdfDocumentView
     {
+        #region Fields
+
         private readonly FoldingStrategy _foldingStrategy = new FoldingStrategy();
         //private readonly Timer _timerOfUpdateFoldings;
+
+        private readonly History<int> _history = new History<int>(); 
+        
+        #endregion
 
         #region Constructor
 
@@ -48,7 +55,7 @@ namespace PdfCodeEditor.Views
             {
                 new FoldingTemplate
                 {
-                    OpeningPhrase = "[^a-zA-Z0-9]stream[^a-zA-Z0-9]", 
+                    OpeningPhrase = "[^a-zA-Z0-9]stream[^a-zA-Z0-9]",
                     ClosingPhrase = "[^a-zA-Z0-9]endstream[^a-zA-Z0-9]",
                     IsDefaultFolded = true,
                     Name = "stream"
@@ -62,22 +69,16 @@ namespace PdfCodeEditor.Views
 
             TextEditor.TextArea.TextEntered += TextAreaOnTextEntered;
         }
+        
+        #endregion
 
-        private void TextAreaOnTextEntered(object sender, TextCompositionEventArgs e)
-        {
-            UpdateFoldings();
-            //_timerOfUpdateFoldings.Start();
-        }
+        #region Private methods
 
         private void UpdateFoldings()
         {
             _foldingStrategy.FoldingManager = _foldingStrategy.FoldingManager ?? FoldingManager.Install(TextEditor.TextArea);
             _foldingStrategy.UpdateFoldings(TextEditor.Document);
         }
-
-        #endregion
-
-        #region Private methods
 
         private string GetReference(int carreteOffset)
         {
@@ -120,13 +121,44 @@ namespace PdfCodeEditor.Views
 
             if (!match.Success)
                 return;
+            
             TextEditor.Select(match.Index + 1, definition.Length);
+            TextEditor.TextArea.Caret.BringCaretToView();
+            AddPositionInHistory(TextEditor.CaretOffset);
+        }
+
+        private void AddPositionInHistory(int position)
+        {
+            if (Math.Abs(position - _history.CurrentItem) > 20)
+                _history.Add(position);
+        }
+
+        private void Forward()
+        {
+            if (!_history.CanRedo)
+                return;
+            TextEditor.CaretOffset = _history.Redo();
+            TextEditor.TextArea.Caret.BringCaretToView();
+        }
+
+        private void Backward()
+        {
+            AddPositionInHistory(TextEditor.CaretOffset);
+            if (!_history.CanUndo)
+                return;
+            TextEditor.CaretOffset = _history.Undo();
             TextEditor.TextArea.Caret.BringCaretToView();
         }
 
         #endregion
 
         #region Event handlers
+
+        private void TextAreaOnTextEntered(object sender, TextCompositionEventArgs e)
+        {
+            UpdateFoldings();
+            //_timerOfUpdateFoldings.Start();
+        }
 
         private void TextAreaOnPreviewKeyDown(object sender, KeyEventArgs keyEventArgs)
         {
@@ -136,6 +168,7 @@ namespace PdfCodeEditor.Views
             var reference = GetReference(TextEditor.CaretOffset);
             if (reference == null)
                 return;
+            AddPositionInHistory(TextEditor.CaretOffset);
             GoToDefinition(reference);
         }
 
@@ -162,10 +195,35 @@ namespace PdfCodeEditor.Views
             if (reference == null)
                 return;
 
+            AddPositionInHistory(offset);
             GoToDefinition(reference);
             e.Handled = true;
         }
 
+        private void PdfDocumentViewOnPreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemMinus)
+            {
+                Backward();
+            }
+
+            if (e.KeyboardDevice.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.OemMinus)
+            {
+                Forward();
+            }
+        }
+
+        private void BackwardButtonOnClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Backward();
+        }
+
+        private void ForwardButtonOnClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Forward();
+        }
+        
         #endregion
+        
     }
 }

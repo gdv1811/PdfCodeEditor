@@ -6,13 +6,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300"
              d:DesignWidth="300"
+             PreviewKeyUp="PdfDocumentViewOnPreviewKeyUp"
              mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <ToolBarTray>
+            <ToolBar>
+                <Button Width="20"
+                        Height="20"
+                        Click="BackwardButtonOnClick"
+                        Content="&lt;-"
+                        SnapsToDevicePixels="True" />
+                <Button Width="20"
+                        Height="20"
+                        Click="ForwardButtonOnClick"
+                        Content="-&gt;"
+                        SnapsToDevicePixels="True" />
+            </ToolBar>
+        </ToolBarTray>
         <avalonedit:TextEditor x:Name="TextEditor"
+                               Grid.Row="1"
                                Document="{Binding Document}"
                                FontFamily="Consolas"
                                FontSize="10pt"
@@ -21,7 +38,7 @@
                                ShowLineNumbers="True"
                                SyntaxHighlighting="Pdf" />
 
-        <StatusBar Grid.Row="1">
+        <StatusBar Grid.Row="2">
             <Label x:Name="Offset"
                    Margin="5,-5"
                    Content="0"

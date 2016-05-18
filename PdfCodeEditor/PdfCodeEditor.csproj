@@ -79,6 +79,7 @@
     <Compile Include="Editor\FoldingTemplate.cs" />
     <Compile Include="Editor\FoldingStrategy.cs" />
     <Compile Include="Models\FileManager.cs" />
+    <Compile Include="Models\History.cs" />
     <Compile Include="Models\PdfEncoding.cs" />
     <Compile Include="ViewModels\InvokeCommandAction.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
