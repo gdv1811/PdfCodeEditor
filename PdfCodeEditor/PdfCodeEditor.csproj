@@ -78,6 +78,7 @@
     </ApplicationDefinition>
     <Compile Include="Editor\FoldingTemplate.cs" />
     <Compile Include="Editor\FoldingStrategy.cs" />
+    <Compile Include="Editor\PdfTextEditor.cs" />
     <Compile Include="Models\FileManager.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\PdfEncoding.cs" />

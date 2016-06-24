@@ -46,10 +46,8 @@ namespace PdfCodeEditor.Views
         {
             InitializeComponent();
 
-            TextEditor.TextArea.Caret.PositionChanged += CaretOnPositionChanged;
-            TextEditor.TextArea.PreviewMouseDown += TextAreaOnPreviewMouseDown;
-            TextEditor.TextArea.PreviewKeyDown += TextAreaOnPreviewKeyDown;
-            TextEditor.TextArea.SelectionChanged += TextAreaOnSelectionChanged;
+            Editor.TextArea.PreviewMouseDown += TextAreaOnPreviewMouseDown;
+            Editor.TextArea.PreviewKeyDown += TextAreaOnPreviewKeyDown;
 
             _foldingStrategy.FoldingTemplates = new List<FoldingTemplate>
             {
@@ -62,12 +60,12 @@ namespace PdfCodeEditor.Views
                 }
             };
 
-            TextEditor.DocumentChanged += (sender, args) => UpdateFoldings();
+            Editor.DocumentChanged += (sender, args) => UpdateFoldings();
 
             //_timerOfUpdateFoldings = new Timer(1000) { AutoReset = false };
             //_timerOfUpdateFoldings.Elapsed += (sender, args) => UpdateFoldings();
 
-            TextEditor.TextArea.TextEntered += TextAreaOnTextEntered;
+            Editor.TextArea.TextEntered += TextAreaOnTextEntered;
         }
         
         #endregion
@@ -76,8 +74,8 @@ namespace PdfCodeEditor.Views
 
         private void UpdateFoldings()
         {
-            _foldingStrategy.FoldingManager = _foldingStrategy.FoldingManager ?? FoldingManager.Install(TextEditor.TextArea);
-            _foldingStrategy.UpdateFoldings(TextEditor.Document);
+            _foldingStrategy.FoldingManager = _foldingStrategy.FoldingManager ?? FoldingManager.Install(Editor.TextArea);
+            _foldingStrategy.UpdateFoldings(Editor.Document);
         }
 
         private string GetReference(int carreteOffset)
@@ -87,7 +85,7 @@ namespace PdfCodeEditor.Views
             var step = 1;
             for (var currentOffset = carreteOffset; ; currentOffset += step)
             {
-                var currentChar = TextEditor.Document.GetCharAt(currentOffset);
+                var currentChar = Editor.Document.GetCharAt(currentOffset);
                 if (currentChar == 'R')
                 {
                     token += currentChar;
@@ -117,14 +115,14 @@ namespace PdfCodeEditor.Views
         {
             var definition = reference.Replace("R", "obj");
             var regex = new Regex("[^0-9]" + definition);
-            var match = regex.Match(TextEditor.Text);
+            var match = regex.Match(Editor.Text);
 
             if (!match.Success)
                 return;
             
-            TextEditor.Select(match.Index + 1, definition.Length);
-            TextEditor.TextArea.Caret.BringCaretToView();
-            AddPositionInHistory(TextEditor.CaretOffset);
+            Editor.Select(match.Index + 1, definition.Length);
+            Editor.TextArea.Caret.BringCaretToView();
+            AddPositionInHistory(Editor.CaretOffset);
         }
 
         private void AddPositionInHistory(int position)
@@ -137,17 +135,17 @@ namespace PdfCodeEditor.Views
         {
             if (!_history.CanRedo)
                 return;
-            TextEditor.CaretOffset = _history.Redo();
-            TextEditor.TextArea.Caret.BringCaretToView();
+            Editor.CaretOffset = _history.Redo();
+            Editor.TextArea.Caret.BringCaretToView();
         }
 
         private void Backward()
         {
-            AddPositionInHistory(TextEditor.CaretOffset);
+            AddPositionInHistory(Editor.CaretOffset);
             if (!_history.CanUndo)
                 return;
-            TextEditor.CaretOffset = _history.Undo();
-            TextEditor.TextArea.Caret.BringCaretToView();
+            Editor.CaretOffset = _history.Undo();
+            Editor.TextArea.Caret.BringCaretToView();
         }
 
         #endregion
@@ -162,35 +160,24 @@ namespace PdfCodeEditor.Views
 
         private void TextAreaOnPreviewKeyDown(object sender, KeyEventArgs keyEventArgs)
         {
-            Offset.Content = TextEditor.CaretOffset;
             if (keyEventArgs.Key != Key.F12)
                 return;
-            var reference = GetReference(TextEditor.CaretOffset);
+            var reference = GetReference(Editor.CaretOffset);
             if (reference == null)
                 return;
-            AddPositionInHistory(TextEditor.CaretOffset);
+            AddPositionInHistory(Editor.CaretOffset);
             GoToDefinition(reference);
         }
-
-        private void CaretOnPositionChanged(object sender, EventArgs eventArgs)
-        {
-            Offset.Content = TextEditor.CaretOffset;
-        }
-
-        private void TextAreaOnSelectionChanged(object sender, EventArgs e)
-        {
-            Selected.Content = TextEditor.TextArea.Selection.Length;
-        }
-
+        
         private void TextAreaOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left || Keyboard.Modifiers != ModifierKeys.Control)
                 return;
 
-            var position = TextEditor.GetPositionFromPoint(e.GetPosition(TextEditor));
+            var position = Editor.GetPositionFromPoint(e.GetPosition(Editor));
             if (position == null)
                 return;
-            var offset = TextEditor.Document.GetOffset(position.Value.Location);
+            var offset = Editor.Document.GetOffset(position.Value.Location);
             var reference = GetReference(offset);
             if (reference == null)
                 return;
