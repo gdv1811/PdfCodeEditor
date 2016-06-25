@@ -35,8 +35,6 @@ namespace PdfCodeEditor.Views
 
         private readonly FoldingStrategy _foldingStrategy = new FoldingStrategy();
         //private readonly Timer _timerOfUpdateFoldings;
-
-        private readonly History<int> _history = new History<int>(); 
         
         #endregion
 
@@ -45,10 +43,7 @@ namespace PdfCodeEditor.Views
         public PdfDocumentView()
         {
             InitializeComponent();
-
-            Editor.TextArea.PreviewMouseDown += TextAreaOnPreviewMouseDown;
-            Editor.TextArea.PreviewKeyDown += TextAreaOnPreviewKeyDown;
-
+            
             _foldingStrategy.FoldingTemplates = new List<FoldingTemplate>
             {
                 new FoldingTemplate
@@ -77,76 +72,7 @@ namespace PdfCodeEditor.Views
             _foldingStrategy.FoldingManager = _foldingStrategy.FoldingManager ?? FoldingManager.Install(Editor.TextArea);
             _foldingStrategy.UpdateFoldings(Editor.Document);
         }
-
-        private string GetReference(int carreteOffset)
-        {
-            var spacesCount = 0;
-            var token = "";
-            var step = 1;
-            for (var currentOffset = carreteOffset; ; currentOffset += step)
-            {
-                var currentChar = Editor.Document.GetCharAt(currentOffset);
-                if (currentChar == 'R')
-                {
-                    token += currentChar;
-                    currentOffset = carreteOffset;
-                    step = -1;
-                    continue;
-                }
-                if (currentChar == ' ')
-                {
-                    spacesCount++;
-                    if (spacesCount == 3)
-                        break;
-                }
-                else if (!char.IsDigit(currentChar))
-                    break;
-
-                if (step == 1)
-                    token += currentChar;
-                else
-                    token = currentChar + token;
-            }
-
-            return spacesCount > 1 ? token : null;
-        }
-
-        private void GoToDefinition(string reference)
-        {
-            var definition = reference.Replace("R", "obj");
-            var regex = new Regex("[^0-9]" + definition);
-            var match = regex.Match(Editor.Text);
-
-            if (!match.Success)
-                return;
-            
-            Editor.Select(match.Index + 1, definition.Length);
-            Editor.TextArea.Caret.BringCaretToView();
-            AddPositionInHistory(Editor.CaretOffset);
-        }
-
-        private void AddPositionInHistory(int position)
-        {
-            if (Math.Abs(position - _history.CurrentItem) > 20)
-                _history.Add(position);
-        }
-
-        private void Forward()
-        {
-            if (!_history.CanRedo)
-                return;
-            Editor.CaretOffset = _history.Redo();
-            Editor.TextArea.Caret.BringCaretToView();
-        }
-
-        private void Backward()
-        {
-            AddPositionInHistory(Editor.CaretOffset);
-            if (!_history.CanUndo)
-                return;
-            Editor.CaretOffset = _history.Undo();
-            Editor.TextArea.Caret.BringCaretToView();
-        }
+        
 
         #endregion
 
@@ -158,57 +84,34 @@ namespace PdfCodeEditor.Views
             //_timerOfUpdateFoldings.Start();
         }
 
-        private void TextAreaOnPreviewKeyDown(object sender, KeyEventArgs keyEventArgs)
-        {
-            if (keyEventArgs.Key != Key.F12)
-                return;
-            var reference = GetReference(Editor.CaretOffset);
-            if (reference == null)
-                return;
-            AddPositionInHistory(Editor.CaretOffset);
-            GoToDefinition(reference);
-        }
+        //private void TextAreaOnPreviewKeyDown(object sender, KeyEventArgs keyEventArgs)
+        //{
+        //    if (keyEventArgs.Key != Key.F12)
+        //        return;
+        //    var reference = GetReference(Editor.CaretOffset);
+        //    if (reference == null)
+        //        return;
+        //    AddPositionInHistory(Editor.CaretOffset);
+        //    GoToDefinition(reference);
+        //}
         
-        private void TextAreaOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton != MouseButton.Left || Keyboard.Modifiers != ModifierKeys.Control)
-                return;
+        //private void TextAreaOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        //{
+        //    if (e.ChangedButton != MouseButton.Left || Keyboard.Modifiers != ModifierKeys.Control)
+        //        return;
 
-            var position = Editor.GetPositionFromPoint(e.GetPosition(Editor));
-            if (position == null)
-                return;
-            var offset = Editor.Document.GetOffset(position.Value.Location);
-            var reference = GetReference(offset);
-            if (reference == null)
-                return;
+        //    var position = Editor.GetPositionFromPoint(e.GetPosition(Editor));
+        //    if (position == null)
+        //        return;
+        //    var offset = Editor.Document.GetOffset(position.Value.Location);
+        //    var reference = GetReference(offset);
+        //    if (reference == null)
+        //        return;
 
-            AddPositionInHistory(offset);
-            GoToDefinition(reference);
-            e.Handled = true;
-        }
-
-        private void PdfDocumentViewOnPreviewKeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyboardDevice.Modifiers == ModifierKeys.Control && e.Key == Key.OemMinus)
-            {
-                Backward();
-            }
-
-            if (e.KeyboardDevice.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift) && e.Key == Key.OemMinus)
-            {
-                Forward();
-            }
-        }
-
-        private void BackwardButtonOnClick(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Backward();
-        }
-
-        private void ForwardButtonOnClick(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Forward();
-        }
+        //    AddPositionInHistory(offset);
+        //    GoToDefinition(reference);
+        //    e.Handled = true;
+        //}
         
         #endregion
         

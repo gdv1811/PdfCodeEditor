@@ -5,7 +5,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:views="clr-namespace:PdfCodeEditor.Views"
         xmlns:vm="clr-namespace:PdfCodeEditor.ViewModels"
-        Title="MainView"
+        Title="PdfCodeEditor"
         Width="1024"
         Height="500">
     <Window.DataContext>

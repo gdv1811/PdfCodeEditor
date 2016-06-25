@@ -33,6 +33,7 @@ namespace PdfCodeEditor.ViewModels
         private TextDocument _document;
         private bool _isModified;
         private ICommand _saveCommand;
+        private NavigatorViewModel _navigator;
 
         #endregion
 
@@ -77,6 +78,16 @@ namespace PdfCodeEditor.ViewModels
             }
         }
 
+        public NavigatorViewModel Navigator
+        {
+            get { return _navigator; }
+            set
+            {
+                _navigator = value;
+                OnPropertyChanged(nameof(Navigator));
+            }
+        }
+
         #endregion
 
         #region Properties-commands
@@ -93,6 +104,7 @@ namespace PdfCodeEditor.ViewModels
         public PdfDocumentViewModel()
         {
             Document = new TextDocument();
+            Navigator = new NavigatorViewModel(Document);
         }
 
         #endregion
@@ -104,7 +116,10 @@ namespace PdfCodeEditor.ViewModels
             FilePath = filePath;
 
             if (File.Exists(filePath))
+            {
                 _document = new TextDocument(FileManager.ReadTextFile(_filePath));
+                Navigator.Document = _document;
+            }
         }
 
         public void Save(bool saveAsFlag)

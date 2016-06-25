@@ -18,6 +18,7 @@
 
 using System;
 using System.Windows;
+using System.Windows.Input;
 using ICSharpCode.AvalonEdit;
 
 namespace PdfCodeEditor.Editor
@@ -49,6 +50,7 @@ namespace PdfCodeEditor.Editor
             {
                 SetValue(CaretOffsetProperty, value);
                 base.CaretOffset = value;
+                TextArea.Caret.BringCaretToView();
             }
         }
 
