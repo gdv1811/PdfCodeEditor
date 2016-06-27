@@ -39,7 +39,7 @@
                               ShowLineNumbers="True"
                               SyntaxHighlighting="Pdf">
             <editor:PdfTextEditor.InputBindings>
-                <MouseBinding Command="{Binding Navigator.GoToDefinitionCommand}">
+                <MouseBinding x:Name="GoToDefinitionMouseBinding" Command="{Binding Navigator.GoToDefinitionCommand}">
                     <MouseBinding.Gesture>
                         <MouseGesture Modifiers="Control" MouseAction="LeftClick" />
                     </MouseBinding.Gesture>

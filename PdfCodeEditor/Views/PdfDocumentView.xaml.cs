@@ -16,13 +16,10 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Folding;
 using PdfCodeEditor.Editor;
-using PdfCodeEditor.Models;
 
 namespace PdfCodeEditor.Views
 {
@@ -61,6 +58,7 @@ namespace PdfCodeEditor.Views
             //_timerOfUpdateFoldings.Elapsed += (sender, args) => UpdateFoldings();
 
             Editor.TextArea.TextEntered += TextAreaOnTextEntered;
+            Editor.TextArea.PreviewMouseDown += TextAreaOnPreviewMouseDown;
         }
         
         #endregion
@@ -83,35 +81,21 @@ namespace PdfCodeEditor.Views
             UpdateFoldings();
             //_timerOfUpdateFoldings.Start();
         }
-
-        //private void TextAreaOnPreviewKeyDown(object sender, KeyEventArgs keyEventArgs)
-        //{
-        //    if (keyEventArgs.Key != Key.F12)
-        //        return;
-        //    var reference = GetReference(Editor.CaretOffset);
-        //    if (reference == null)
-        //        return;
-        //    AddPositionInHistory(Editor.CaretOffset);
-        //    GoToDefinition(reference);
-        //}
         
-        //private void TextAreaOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    if (e.ChangedButton != MouseButton.Left || Keyboard.Modifiers != ModifierKeys.Control)
-        //        return;
+        private void TextAreaOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton != MouseButton.Left || Keyboard.Modifiers != ModifierKeys.Control)
+                return;
 
-        //    var position = Editor.GetPositionFromPoint(e.GetPosition(Editor));
-        //    if (position == null)
-        //        return;
-        //    var offset = Editor.Document.GetOffset(position.Value.Location);
-        //    var reference = GetReference(offset);
-        //    if (reference == null)
-        //        return;
+            var position = Editor.GetPositionFromPoint(e.GetPosition(Editor));
+            if (position == null)
+                return;
+            Editor.CaretOffset = Editor.Document.GetOffset(position.Value.Location);
 
-        //    AddPositionInHistory(offset);
-        //    GoToDefinition(reference);
-        //    e.Handled = true;
-        //}
+            GoToDefinitionMouseBinding.Command.Execute(GoToDefinitionMouseBinding.CommandParameter);
+            
+            e.Handled = true;
+        }
         
         #endregion
         
