@@ -19,6 +19,7 @@
 using System.Collections.Generic;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Folding;
+using ICSharpCode.AvalonEdit.Search;
 using PdfCodeEditor.Editor;
 
 namespace PdfCodeEditor.Views
@@ -32,7 +33,7 @@ namespace PdfCodeEditor.Views
 
         private readonly FoldingStrategy _foldingStrategy = new FoldingStrategy();
         //private readonly Timer _timerOfUpdateFoldings;
-        
+
         #endregion
 
         #region Constructor
@@ -40,7 +41,7 @@ namespace PdfCodeEditor.Views
         public PdfDocumentView()
         {
             InitializeComponent();
-            
+
             _foldingStrategy.FoldingTemplates = new List<FoldingTemplate>
             {
                 new FoldingTemplate
@@ -59,8 +60,9 @@ namespace PdfCodeEditor.Views
 
             Editor.TextArea.TextEntered += TextAreaOnTextEntered;
             Editor.TextArea.PreviewMouseDown += TextAreaOnPreviewMouseDown;
+            SearchPanel.Install(Editor);
         }
-        
+
         #endregion
 
         #region Private methods
@@ -70,7 +72,7 @@ namespace PdfCodeEditor.Views
             _foldingStrategy.FoldingManager = _foldingStrategy.FoldingManager ?? FoldingManager.Install(Editor.TextArea);
             _foldingStrategy.UpdateFoldings(Editor.Document);
         }
-        
+
 
         #endregion
 
@@ -81,7 +83,7 @@ namespace PdfCodeEditor.Views
             UpdateFoldings();
             //_timerOfUpdateFoldings.Start();
         }
-        
+
         private void TextAreaOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left || Keyboard.Modifiers != ModifierKeys.Control)
@@ -93,11 +95,11 @@ namespace PdfCodeEditor.Views
             Editor.CaretOffset = Editor.Document.GetOffset(position.Value.Location);
 
             GoToDefinitionMouseBinding.Command.Execute(GoToDefinitionMouseBinding.CommandParameter);
-            
+
             e.Handled = true;
         }
-        
+
         #endregion
-        
+
     }
 }

@@ -36,12 +36,14 @@
             <ToolBar>
                 <Button Width="20"
                         Height="20"
-                        Command="{Binding ElementName=DockManager, Path=ActiveContent.Navigator.BackwardCommand}"
+                        Command="{Binding ElementName=DockManager,
+                                          Path=ActiveContent.Navigator.BackwardCommand}"
                         Content="&lt;-"
                         SnapsToDevicePixels="True" />
                 <Button Width="20"
                         Height="20"
-                        Command="{Binding ElementName=DockManager, Path=ActiveContent.Navigator.ForwardCommand}"
+                        Command="{Binding ElementName=DockManager,
+                                          Path=ActiveContent.Navigator.ForwardCommand}"
                         Content="-&gt;"
                         SnapsToDevicePixels="True" />
             </ToolBar>
