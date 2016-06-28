@@ -14,8 +14,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Menu>
@@ -32,8 +32,23 @@
             </MenuItem>
         </Menu>
 
+        <ToolBarTray Grid.Row="1">
+            <ToolBar>
+                <Button Width="20"
+                        Height="20"
+                        Command="{Binding ElementName=DockManager, Path=ActiveContent.Navigator.BackwardCommand}"
+                        Content="&lt;-"
+                        SnapsToDevicePixels="True" />
+                <Button Width="20"
+                        Height="20"
+                        Command="{Binding ElementName=DockManager, Path=ActiveContent.Navigator.ForwardCommand}"
+                        Content="-&gt;"
+                        SnapsToDevicePixels="True" />
+            </ToolBar>
+        </ToolBarTray>
+
         <avalonDock:DockingManager x:Name="DockManager"
-                                   Grid.Row="1"
+                                   Grid.Row="2"
                                    Margin="0,0,0,0"
                                    ActiveContent="{Binding CurrentPdfDocument}"
                                    AllowDrop="True"

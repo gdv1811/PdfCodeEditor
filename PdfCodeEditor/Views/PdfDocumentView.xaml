@@ -13,20 +13,6 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ToolBarTray>
-            <ToolBar>
-                <Button Width="20"
-                        Height="20"
-                        Command="{Binding Navigator.BackwardCommand}"
-                        Content="&lt;-"
-                        SnapsToDevicePixels="True" />
-                <Button Width="20"
-                        Height="20"
-                        Command="{Binding Navigator.ForwardCommand}"
-                        Content="-&gt;"
-                        SnapsToDevicePixels="True" />
-            </ToolBar>
-        </ToolBarTray>
         <editor:PdfTextEditor x:Name="Editor"
                               Grid.Row="1"
                               CaretOffset="{Binding Path=Navigator.CaretOffset,
