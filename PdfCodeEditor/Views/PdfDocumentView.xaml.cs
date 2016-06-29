@@ -99,7 +99,16 @@ namespace PdfCodeEditor.Views
             e.Handled = true;
         }
 
-        #endregion
+        private void TextBoxOnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                Editor.Focus();
+                e.Handled = true;
+            }
+        }
 
+        #endregion
+        
     }
 }
