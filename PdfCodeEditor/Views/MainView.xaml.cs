@@ -17,8 +17,10 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Windows.Controls;
 using System.Xml;
 using ICSharpCode.AvalonEdit.Highlighting;
+using Microsoft.Win32;
 
 namespace PdfCodeEditor.Views
 {
@@ -45,6 +47,30 @@ namespace PdfCodeEditor.Views
             HighlightingManager.Instance.RegisterHighlighting("Pdf", new[] { ".pdf" }, pdfHighlighting);
 
             InitializeComponent();
+        }
+
+        private void OpenMenuItemOnClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem) sender;
+            var dialog = new OpenFileDialog
+            {
+                Filter = "PDF|*.pdf",
+                CheckFileExists = true
+            };
+            if (dialog.ShowDialog() ?? false)
+                menuItem.CommandParameter = dialog.FileName;
+            else
+                menuItem.CommandParameter = null;
+        }
+
+        private void SaveAsMenuItemOnClick(object sender, System.Windows.RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            var dlg = new SaveFileDialog()
+            {
+                Filter = "PDF|*.pdf|No extension|*.*"
+            };
+            menuItem.CommandParameter = dlg.ShowDialog().GetValueOrDefault() ? dlg.FileName : null;
         }
     }
 }

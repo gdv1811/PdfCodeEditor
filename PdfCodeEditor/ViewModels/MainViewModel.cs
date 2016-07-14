@@ -53,12 +53,12 @@ namespace PdfCodeEditor.ViewModels
 
         public ICommand OpenCommand
         {
-            get { return _openCommand ?? (_openCommand = new RelayCommand(arg => Open())); }
+            get { return _openCommand ?? (_openCommand = new RelayCommand(arg => Open(arg as string))); }
         }
 
         public ICommand DropCommand
         {
-            get { return _dropCommand ?? (_dropCommand = new RelayCommand(arg => Drop((DragEventArgs)arg))); }
+            get { return _dropCommand ?? (_dropCommand = new RelayCommand(arg => Drop(arg as DragEventArgs))); }
         }
 
         #endregion
@@ -73,21 +73,12 @@ namespace PdfCodeEditor.ViewModels
         #endregion
 
         #region Private methods
-
-        private void Open()
-        {
-            var dialog = new OpenFileDialog
-            {
-                Filter = "PDF|*.pdf",
-                CheckFileExists = true
-            };
-            if (!(dialog.ShowDialog() ?? false))
-                return;
-            Open(dialog.FileName);
-        }
-
+        
         private void Open(string path)
         {
+            if(string.IsNullOrEmpty(path))
+                return;
+
             var doc = new PdfDocumentViewModel();
             doc.Open(path);
 

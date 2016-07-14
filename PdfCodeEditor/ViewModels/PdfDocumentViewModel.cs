@@ -20,7 +20,6 @@ using System;
 using System.IO;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Document;
-using Microsoft.Win32;
 using PdfCodeEditor.Models;
 
 namespace PdfCodeEditor.ViewModels
@@ -33,6 +32,7 @@ namespace PdfCodeEditor.ViewModels
         private TextDocument _document;
         private bool _isModified;
         private ICommand _saveCommand;
+        private ICommand _saveAsCommand;
         private NavigatorViewModel _navigator;
 
         #endregion
@@ -94,7 +94,12 @@ namespace PdfCodeEditor.ViewModels
 
         public ICommand SaveCommand
         {
-            get { return _saveCommand ?? (_saveCommand = new RelayCommand(arg => Save(Convert.ToBoolean(arg)))); }
+            get { return _saveCommand ?? (_saveCommand = new RelayCommand(arg => Save(FilePath))); }
+        }
+
+        public ICommand SaveAsCommand
+        {
+            get { return _saveAsCommand ?? (_saveAsCommand = new RelayCommand(arg => Save(arg as string))); }
         }
 
         #endregion
@@ -122,21 +127,22 @@ namespace PdfCodeEditor.ViewModels
             }
         }
 
-        public void Save(bool saveAsFlag)
+        public void Save(string path)
         {
-            if (FilePath == null || saveAsFlag)
-            {
-                var dlg = new SaveFileDialog();
-                if (dlg.ShowDialog().GetValueOrDefault())
-                    FilePath = dlg.FileName;
-            }
-
-            if (FilePath == null)
+            if (path == null)
                 return;
+            FilePath = path;
 
-            FileManager.WriteTextFile(Document.Text, FilePath);
+            try
+            {
+                FileManager.WriteTextFile(Document.Text, FilePath);
 
-            IsModified = false;
+                IsModified = false;
+            }
+            catch (Exception ex)
+            {
+                // todo: add showing message
+            }
         }
 
         #endregion

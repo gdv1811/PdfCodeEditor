@@ -21,15 +21,14 @@
         <Menu>
             <MenuItem Header="_File">
                 <!--<MenuItem Header="New" Command="{Binding NewCommand}"/>-->
-                <MenuItem Command="{Binding OpenCommand}" Header="Open" />
+                <MenuItem Click="OpenMenuItemOnClick"
+                          Command="{Binding OpenCommand}"
+                          Header="Open" />
                 <Separator />
-                <MenuItem Command="{Binding Path=ActiveContent.SaveCommand,
+                <MenuItem Command="{Binding Path=ActiveContent.SaveCommand, ElementName=DockManager}" Header="Save" />
+                <MenuItem Click="SaveAsMenuItemOnClick"
+                          Command="{Binding Path=ActiveContent.SaveAsCommand,
                                             ElementName=DockManager}"
-                          CommandParameter="False"
-                          Header="Save" />
-                <MenuItem Command="{Binding Path=ActiveContent.SaveCommand,
-                                            ElementName=DockManager}"
-                          CommandParameter="True"
                           Header="Save As..." />
             </MenuItem>
         </Menu>
