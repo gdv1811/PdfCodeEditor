@@ -86,17 +86,28 @@ namespace PdfCodeEditor.Views
 
         private void TextAreaOnPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ChangedButton != MouseButton.Left || Keyboard.Modifiers != ModifierKeys.Control)
-                return;
+            switch (e.ChangedButton)
+            {
+                case MouseButton.Left:
+                    if (Keyboard.Modifiers != ModifierKeys.Control)
+                        break;
 
-            var position = Editor.GetPositionFromPoint(e.GetPosition(Editor));
-            if (position == null)
-                return;
-            Editor.CaretOffset = Editor.Document.GetOffset(position.Value.Location);
+                    var position = Editor.GetPositionFromPoint(e.GetPosition(Editor));
+                    if (position == null)
+                        return;
+                    Editor.CaretOffset = Editor.Document.GetOffset(position.Value.Location);
 
-            GoToDefinitionMouseBinding.Command.Execute(GoToDefinitionMouseBinding.CommandParameter);
+                    GoToDefinitionMouseBinding.Command.Execute(GoToDefinitionMouseBinding.CommandParameter);
 
-            e.Handled = true;
+                    e.Handled = true;
+                    break;
+                case MouseButton.XButton1:
+                    BackwardKeyBinding.Command.Execute(null);
+                    break;
+                case MouseButton.XButton2:
+                    ForwardKeyBinding.Command.Execute(null);
+                    break;
+            }
         }
 
         private void TextBoxOnPreviewKeyDown(object sender, KeyEventArgs e)

@@ -30,11 +30,14 @@
                         <MouseGesture Modifiers="Control" MouseAction="LeftClick" />
                     </MouseBinding.Gesture>
                 </MouseBinding>
+
                 <KeyBinding Key="F12" Command="{Binding Navigator.GoToDefinitionCommand}" />
                 <KeyBinding Key="OemMinus"
+                            x:Name="BackwardKeyBinding"
                             Command="{Binding Navigator.BackwardCommand}"
                             Modifiers="Control" />
                 <KeyBinding Key="OemMinus"
+                            x:Name="ForwardKeyBinding"
                             Command="{Binding Navigator.ForwardCommand}"
                             Modifiers="Control+Shift" />
             </editor:PdfTextEditor.InputBindings>
