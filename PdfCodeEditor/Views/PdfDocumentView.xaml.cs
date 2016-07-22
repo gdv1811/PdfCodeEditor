@@ -17,10 +17,14 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
+using System.Windows.Media;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Search;
 using PdfCodeEditor.Editor;
+using PdfCodeEditor.Editor.AvalonEdit.AddIn;
 
 namespace PdfCodeEditor.Views
 {
@@ -32,6 +36,8 @@ namespace PdfCodeEditor.Views
         #region Fields
 
         private readonly FoldingStrategy _foldingStrategy = new FoldingStrategy();
+        private TextMarkerService _colorTransformer;
+        private ITextMarker _objectRefMarker;
         //private readonly Timer _timerOfUpdateFoldings;
 
         #endregion
@@ -53,13 +59,20 @@ namespace PdfCodeEditor.Views
                 }
             };
 
-            Editor.DocumentChanged += (sender, args) => UpdateFoldings();
+            Editor.DocumentChanged += (sender, args) =>
+            {
+                UpdateFoldings();
+                _colorTransformer = new TextMarkerService(Editor.Document);
+                Editor.TextArea.TextView.BackgroundRenderers.Add(_colorTransformer);
+                Editor.TextArea.TextView.LineTransformers.Add(_colorTransformer);
+            };
 
             //_timerOfUpdateFoldings = new Timer(1000) { AutoReset = false };
             //_timerOfUpdateFoldings.Elapsed += (sender, args) => UpdateFoldings();
 
             Editor.TextArea.TextEntered += TextAreaOnTextEntered;
             Editor.TextArea.PreviewMouseDown += TextAreaOnPreviewMouseDown;
+            Editor.TextArea.MouseMove += TextAreaOnMouseMove;
             SearchPanel.Install(Editor);
         }
 
@@ -73,10 +86,47 @@ namespace PdfCodeEditor.Views
             _foldingStrategy.UpdateFoldings(Editor.Document);
         }
 
+        private void HighlightObjectRef(TextViewPosition? position)
+        {
+            if (position == null)
+                return;
+
+            if (_objectRefMarker != null)
+                _colorTransformer.Remove(_objectRefMarker);
+            var line = Editor.Document.GetLineByNumber(position.Value.Line);
+            var regex = new Regex(@"[^a-zA-Z0-9]\d+\s\d+\sR[^a-zA-Z0-9]");
+            var matches = regex.Matches(Editor.Document.GetText(line));
+
+            foreach (Match match in matches)
+            {
+                if (match.Index < position.Value.Location.Column &&
+                    match.Index + match.Length > position.Value.Location.Column)
+                {
+                    _objectRefMarker = _colorTransformer.Create(line.Offset + match.Index + 1,
+                        match.Length - 2);
+                    _objectRefMarker.MarkerTypes = TextMarkerTypes.NormalUnderline;
+                    _objectRefMarker.MarkerColor = Colors.Blue;
+                }
+            }
+        }
 
         #endregion
 
         #region Event handlers
+
+        private void TextAreaOnMouseMove(object sender, MouseEventArgs e)
+        {
+            if (Keyboard.Modifiers == ModifierKeys.Control)
+            {
+                var position = Editor.GetPositionFromPoint(e.GetPosition(Editor));
+                HighlightObjectRef(position);
+            }
+            else
+            {
+                if (_objectRefMarker != null)
+                    _colorTransformer.Remove(_objectRefMarker);
+            }
+        }
 
         private void TextAreaOnTextEntered(object sender, TextCompositionEventArgs e)
         {
@@ -120,6 +170,6 @@ namespace PdfCodeEditor.Views
         }
 
         #endregion
-        
+
     }
 }

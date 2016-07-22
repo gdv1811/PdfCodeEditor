@@ -76,6 +76,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Editor\AvalonEdit.AddIn\ITextMarker.cs" />
+    <Compile Include="Editor\AvalonEdit.AddIn\ITextMarkerService.cs" />
+    <Compile Include="Editor\AvalonEdit.AddIn\TextMarker.cs" />
+    <Compile Include="Editor\AvalonEdit.AddIn\TextMarkerService.cs" />
+    <Compile Include="Editor\AvalonEdit.AddIn\TextMarkerTypes.cs" />
     <Compile Include="Editor\FoldingTemplate.cs" />
     <Compile Include="Editor\FoldingStrategy.cs" />
     <Compile Include="Editor\PdfTextEditor.cs" />
@@ -133,6 +138,7 @@
   <ItemGroup>
     <None Include="Resources\PdfCodeEditor.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
