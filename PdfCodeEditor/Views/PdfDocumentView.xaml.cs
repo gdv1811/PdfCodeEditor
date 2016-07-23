@@ -73,6 +73,7 @@ namespace PdfCodeEditor.Views
             Editor.TextArea.TextEntered += TextAreaOnTextEntered;
             Editor.TextArea.PreviewMouseDown += TextAreaOnPreviewMouseDown;
             Editor.TextArea.MouseMove += TextAreaOnMouseMove;
+            Editor.TextArea.MouseRightButtonDown += TextAreaOnMouseRightButtonDown;
             SearchPanel.Install(Editor);
         }
 
@@ -157,6 +158,15 @@ namespace PdfCodeEditor.Views
                 case MouseButton.XButton2:
                     ForwardKeyBinding.Command.Execute(null);
                     break;
+            }
+        }
+
+        private void TextAreaOnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var position = Editor.GetPositionFromPoint(e.GetPosition(Editor));
+            if (position.HasValue)
+            {
+                Editor.TextArea.Caret.Position = position.Value;
             }
         }
 

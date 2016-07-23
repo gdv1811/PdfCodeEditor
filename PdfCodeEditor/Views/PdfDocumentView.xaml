@@ -24,6 +24,17 @@
                                                    Mode=TwoWay}"
                               ShowLineNumbers="True"
                               SyntaxHighlighting="Pdf">
+            <editor:PdfTextEditor.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="{Binding Navigator.GoToDefinitionCommand}"
+                              Header="Go To Definition"
+                              InputGestureText="F12" />
+                    <Separator />
+                    <MenuItem Command="Cut" Header="Cut" />
+                    <MenuItem Command="Copy" Header="Copy" />
+                    <MenuItem Command="Paste" Header="Paste" />
+                </ContextMenu>
+            </editor:PdfTextEditor.ContextMenu>
             <editor:PdfTextEditor.InputBindings>
                 <MouseBinding x:Name="GoToDefinitionMouseBinding" Command="{Binding Navigator.GoToDefinitionCommand}">
                     <MouseBinding.Gesture>
