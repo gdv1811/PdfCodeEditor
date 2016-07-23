@@ -16,10 +16,12 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Win32;
 
 namespace PdfCodeEditor.ViewModels
 {
@@ -68,6 +70,12 @@ namespace PdfCodeEditor.ViewModels
         public MainViewModel()
         {
             Documents = new ObservableCollection<PdfDocumentViewModel>();
+
+            var args = Environment.GetCommandLineArgs();
+            foreach (var path in args.Where(File.Exists).Where(path => Path.GetExtension(path) == ".pdf"))
+            {
+                Open(path);
+            }
         }
 
         #endregion
