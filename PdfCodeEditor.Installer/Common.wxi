@@ -7,6 +7,8 @@
   <?define UpgradeCode="7bc7384e-31bf-4074-b7e5-2673d247f9f2"?>
   <?define IconPath="$(var.SolutionDir)\PdfCodeEditor\Resources\PdfCodeEditor.ico"?>
   <?define License="$(var.SolutionDir)\PdfCodeEditor.Installer\License.rtf"?>
+  <?define DialogBmp="$(var.SolutionDir)\PdfCodeEditor.Installer\Images\Dialog.bmp"?>
+  <?define BannerBmp="$(var.SolutionDir)\PdfCodeEditor.Installer\Images\Banner.bmp"?>
   
   <?define AssembliesPath = "$(var.SolutionDir)\PdfCodeEditor\bin\$(var.PdfCodeEditor.Configuration)"?>
 </Include>

@@ -37,6 +37,8 @@
     <Property Id="ARPPRODUCTICON" Value="icon.ico" />
 
     <WixVariable Id="WixUILicenseRtf" Value="$(var.License)"/>
+    <WixVariable Id="WixUIBannerBmp" Value="$(var.BannerBmp)"/>
+    <WixVariable Id="WixUIDialogBmp" Value="$(var.DialogBmp)"/>
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER"/>
     <UIRef Id="WixUI_InstallDir"/>
