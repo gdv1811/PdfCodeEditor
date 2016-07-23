@@ -49,6 +49,7 @@
                      Key="AcroExch.Document.7\shell\PdfCodeEditor"
                      Action="createAndRemoveOnUninstall">
           <RegistryValue Type="string" Value="$(var.ProductName)"/>
+          <RegistryValue Type="string" Name="Icon" Value="[#fil7FAF8E4E6003C4FD8CC7760A8822C90F]"/>
         </RegistryKey>
       </Component>
       <Component Id="RegistryEntry7Command" Directory="TARGETDIR">
@@ -63,6 +64,7 @@
                      Key="AcroExch.Document\shell\PdfCodeEditor"
                      Action="createAndRemoveOnUninstall">
           <RegistryValue Type="string" Value="$(var.ProductName)"/>
+          <RegistryValue Type="string" Name="Icon" Value="[#fil7FAF8E4E6003C4FD8CC7760A8822C90F]"/>
         </RegistryKey>
       </Component>
       <Component Id="RegistryEntryCommand" Directory="TARGETDIR">
@@ -77,6 +79,7 @@
                      Key="AcroExch.Document.DC\shell\PdfCodeEditor"
                      Action="createAndRemoveOnUninstall">
           <RegistryValue Type="string" Value="$(var.ProductName)"/>
+          <RegistryValue Type="string" Name="Icon" Value="[#fil7FAF8E4E6003C4FD8CC7760A8822C90F]"/>
         </RegistryKey>
       </Component>
       <Component Id="RegistryEntryDCCommand" Directory="TARGETDIR">
