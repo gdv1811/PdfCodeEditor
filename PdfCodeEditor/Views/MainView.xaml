@@ -35,18 +35,26 @@
 
         <ToolBarTray Grid.Row="1">
             <ToolBar>
-                <Button Width="20"
-                        Height="20"
-                        Command="{Binding ElementName=DockManager,
-                                          Path=ActiveContent.Navigator.BackwardCommand}"
-                        Content="&lt;-"
-                        SnapsToDevicePixels="True" />
-                <Button Width="20"
-                        Height="20"
-                        Command="{Binding ElementName=DockManager,
-                                          Path=ActiveContent.Navigator.ForwardCommand}"
-                        Content="-&gt;"
-                        SnapsToDevicePixels="True" />
+                <Button Command="{Binding ElementName=DockManager, Path=ActiveContent.Navigator.BackwardCommand}">
+                    <Image Source="../Resources/BackwardImage.png" />
+                </Button>
+                <Button Command="{Binding ElementName=DockManager, Path=ActiveContent.Navigator.ForwardCommand}">
+                    <Image Source="../Resources/ForwardImage.png" />
+                </Button>
+                <Separator/>
+                <Button Click="OpenMenuItemOnClick" Command="{Binding OpenCommand}">
+                    <Image Source="../Resources/FolderImage.png" />
+                </Button>
+                <Button Command="{Binding Path=ActiveContent.SaveCommand, ElementName=DockManager}">
+                    <Image Source="../Resources/SaveImage.png" />
+                </Button>
+                <Separator/>
+                <Button Command="Undo">
+                    <Image Source="../Resources/UndoImage.png"></Image>
+                </Button>
+                <Button Command="Redo">
+                    <Image Source="../Resources/RedoImage.png"></Image>
+                </Button>
             </ToolBar>
         </ToolBarTray>
 

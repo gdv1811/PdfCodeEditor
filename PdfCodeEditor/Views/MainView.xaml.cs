@@ -51,26 +51,52 @@ namespace PdfCodeEditor.Views
 
         private void OpenMenuItemOnClick(object sender, System.Windows.RoutedEventArgs e)
         {
-            var menuItem = (MenuItem) sender;
             var dialog = new OpenFileDialog
             {
                 Filter = "PDF|*.pdf",
                 CheckFileExists = true
             };
+            // todo: fix hack
+            var menuItem = sender as MenuItem;
+            if (menuItem != null)
+            {
+                if (dialog.ShowDialog() ?? false)
+                    menuItem.CommandParameter = dialog.FileName;
+                else
+                    menuItem.CommandParameter = null;
+                return;
+            }
+
+            var button = sender as Button;
+            if (button == null)
+                return;
+
             if (dialog.ShowDialog() ?? false)
-                menuItem.CommandParameter = dialog.FileName;
+                button.CommandParameter = dialog.FileName;
             else
-                menuItem.CommandParameter = null;
+                button.CommandParameter = null;
         }
 
         private void SaveAsMenuItemOnClick(object sender, System.Windows.RoutedEventArgs e)
         {
-            var menuItem = (MenuItem)sender;
-            var dlg = new SaveFileDialog()
+            var dlg = new SaveFileDialog
             {
                 Filter = "PDF|*.pdf|No extension|*.*"
             };
-            menuItem.CommandParameter = dlg.ShowDialog().GetValueOrDefault() ? dlg.FileName : null;
+
+            // todo: fix hack
+            var menuItem = sender as MenuItem;
+            if (menuItem != null)
+            {
+                menuItem.CommandParameter = dlg.ShowDialog().GetValueOrDefault() ? dlg.FileName : null;
+                return;
+            }
+
+            var button = sender as Button;
+            if (button == null)
+                return;
+            button.CommandParameter = dlg.ShowDialog().GetValueOrDefault() ? dlg.FileName : null;
+
         }
     }
 }
