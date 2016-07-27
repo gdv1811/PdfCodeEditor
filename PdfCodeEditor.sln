@@ -11,6 +11,8 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "PdfCodeEditor.Installer", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfWorkbench", "PdfWorkbench\PdfWorkbench.csproj", "{FEDE093C-9D42-4123-944E-1DC90CD20922}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfWorkbench.Tests", "PdfWorkbench.Tests\PdfWorkbench.Tests.csproj", "{CC572A2C-0477-4280-A5B9-A2E271F44A76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{FEDE093C-9D42-4123-944E-1DC90CD20922}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEDE093C-9D42-4123-944E-1DC90CD20922}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEDE093C-9D42-4123-944E-1DC90CD20922}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC572A2C-0477-4280-A5B9-A2E271F44A76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC572A2C-0477-4280-A5B9-A2E271F44A76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC572A2C-0477-4280-A5B9-A2E271F44A76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC572A2C-0477-4280-A5B9-A2E271F44A76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PdfWorkbench")]
+[assembly: AssemblyTitle("PdfWorkbench.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("PdfWorkbench")]
+[assembly: AssemblyProduct("PdfWorkbench.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,8 +20,8 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fede093c-9d42-4123-944e-1dc90cd20922")]
-[assembly: InternalsVisibleTo("PdfWorkbench.Tests")]
+[assembly: Guid("cc572a2c-0477-4280-a5b9-a2e271f44a76")]
+
 // Version information for an assembly consists of the following four values:
 //
 //      Major Version
