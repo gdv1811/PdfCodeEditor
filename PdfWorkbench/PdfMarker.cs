@@ -32,7 +32,8 @@ namespace PdfWorkbench
     {
         Comment,
         StartDictionary,
-        EndDictionary
+        EndDictionary,
+        HexString
     }
 
     internal class PdfMarker

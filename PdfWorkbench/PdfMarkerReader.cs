@@ -16,6 +16,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System;
 using System.IO;
 using System.Text;
 
@@ -31,13 +32,9 @@ namespace PdfWorkbench
 
         public PdfMarker GetMarker()
         {
-            int bt;
-            do
-            {
-                bt = _stream.ReadByte();
-                if (bt == -1)
-                    throw new EndOfStreamException();
-            } while (IsWhiteSpace(bt));
+            var bt = ReadWhile(IsWhiteSpace);
+            if (bt == -1)
+                throw new EndOfStreamException();
 
             var firstChar = (char)bt;
 
@@ -45,29 +42,66 @@ namespace PdfWorkbench
             {
                 case '%':
                     return ReadComment(firstChar);
+                case '<':
+                    return ReadHexString(firstChar);
             }
 
             return null;
+        }
+
+        private PdfMarker ReadHexString(char firstChar)
+        {
+            var marker = new PdfMarker { Offset = (int)(_stream.Position - 1) };
+            var builder = new StringBuilder(firstChar.ToString());
+
+            var lastByte = ReadWhile(arg => IsHex((char)arg) || IsWhiteSpace(arg), builder, IsWhiteSpace);
+
+            switch (lastByte)
+            {
+                case '<':
+                    if (marker.Offset + 2 != _stream.Position)
+                        throw new Exception("Unexpected char in hex string: " + (char)lastByte);
+                    builder.Append((char)lastByte);
+                    marker.Type = MarkerType.StartDictionary;
+                    marker.Content = builder.ToString();
+                    marker.Length = (int)_stream.Position - marker.Offset;
+                    return marker;
+                case '>':
+                    builder.Append((char)lastByte);
+                    marker.Type = MarkerType.HexString;
+                    marker.Content = builder.ToString();
+                    marker.Length = (int)_stream.Position - marker.Offset;
+                    return marker;
+            }
+            throw new Exception("Unexpected char in hex string: " + (char)lastByte);
         }
 
         private PdfMarker ReadComment(char firstChar)
         {
             var marker = new PdfMarker { Type = MarkerType.Comment, Offset = (int)(_stream.Position - 1) };
             var builder = new StringBuilder(firstChar.ToString());
-            int bt;
-            while (true)
-            {
-                bt = _stream.ReadByte();
-                if (bt == -1 || bt == (int)WhiteSpaces.CarriageReturn || bt == (int)WhiteSpaces.CarriageReturn)
-                    break;
-                builder.Append((char)bt);
-            }
+
+            var lastChar =
+                ReadWhile(bt => bt != (int)WhiteSpaces.CarriageReturn && bt != (int)WhiteSpaces.CarriageReturn,
+                    builder);
 
             marker.Content = builder.ToString();
             marker.Length = (int)_stream.Position - marker.Offset;
-            if (bt != -1)
+            if (lastChar != -1)
                 marker.Length--;
             return marker;
+        }
+
+        private int ReadWhile(Func<int, bool> condition, StringBuilder builder = null, Func<int, bool> ignorCondition = null)
+        {
+            while (true)
+            {
+                var bt = _stream.ReadByte();
+                if (bt == -1 || !condition(bt))
+                    return bt; // return last char
+                if (ignorCondition == null || !ignorCondition(bt))
+                    builder?.Append((char)bt);
+            }
         }
 
         private bool IsWhiteSpace(int c)
@@ -84,6 +118,11 @@ namespace PdfWorkbench
                 default:
                     return false;
             }
+        }
+
+        private bool IsHex(char c)
+        {
+            return "0123456789abcdefABCDEF".IndexOf(c) != -1;
         }
     }
 }
