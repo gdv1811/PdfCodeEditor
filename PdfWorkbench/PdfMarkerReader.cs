@@ -18,13 +18,14 @@
 
 using System;
 using System.IO;
-using System.Text;
 
 namespace PdfWorkbench
 {
     internal class PdfMarkerReader
     {
         private readonly Stream _stream;
+        private int _lastChar = -1;
+
         public PdfMarkerReader(Stream stream)
         {
             _stream = stream;
@@ -32,67 +33,77 @@ namespace PdfWorkbench
 
         public PdfMarker GetMarker()
         {
-            var bt = ReadWhile(IsWhiteSpace);
-            if (bt == -1)
-                throw new EndOfStreamException();
+            var firstChar = _lastChar;
+            _lastChar = -1;
+            if (firstChar == -1 || IsWhiteSpace(firstChar))
+            {
+                firstChar = ReadWhile(IsWhiteSpace);
+                if (firstChar == -1)
+                    throw new EndOfStreamException();
+            }
 
-            var firstChar = (char)bt;
+            var marker = new PdfMarker { Offset = (int)(_stream.Position - 1) };
+            marker.Append((char)firstChar);
 
             switch (firstChar)
             {
                 case '%':
-                    return ReadComment(firstChar);
+                    ReadComment(marker);
+                    break;
                 case '<':
-                    return ReadHexString(firstChar);
+                    ReadStartDictionaryOrHexString(marker);
+                    break;
+                case '>':
+                    ReadEndDictionary(marker);
+                    break;
             }
-
-            return null;
+            marker.Length = (int)_stream.Position - marker.Offset;
+            if (_lastChar != -1)
+                marker.Length--;
+            return marker;
         }
 
-        private PdfMarker ReadHexString(char firstChar)
+        private void ReadEndDictionary(PdfMarker marker)
         {
-            var marker = new PdfMarker { Offset = (int)(_stream.Position - 1) };
-            var builder = new StringBuilder(firstChar.ToString());
+            var c = (char)_stream.ReadByte();
+            if (c != '>')
+                throw new Exception("Unexpected char: " + c);
+            marker.Type = MarkerType.EndDictionary;
+            marker.Append(c);
+        }
 
-            var lastByte = ReadWhile(arg => IsHex((char)arg) || IsWhiteSpace(arg), builder, IsWhiteSpace);
-
+        private void ReadStartDictionaryOrHexString(PdfMarker marker)
+        {
+            var lastByte = ReadWhile(arg => IsHex((char)arg) || IsWhiteSpace(arg), marker, IsWhiteSpace);
+            marker.Append((char)lastByte);
             switch (lastByte)
             {
                 case '<':
                     if (marker.Offset + 2 != _stream.Position)
                         throw new Exception("Unexpected char in hex string: " + (char)lastByte);
-                    builder.Append((char)lastByte);
                     marker.Type = MarkerType.StartDictionary;
-                    marker.Content = builder.ToString();
-                    marker.Length = (int)_stream.Position - marker.Offset;
-                    return marker;
+                    return;
                 case '>':
-                    builder.Append((char)lastByte);
                     marker.Type = MarkerType.HexString;
-                    marker.Content = builder.ToString();
                     marker.Length = (int)_stream.Position - marker.Offset;
-                    return marker;
+                    return;
             }
             throw new Exception("Unexpected char in hex string: " + (char)lastByte);
         }
 
-        private PdfMarker ReadComment(char firstChar)
+        private void ReadComment(PdfMarker marker)
         {
-            var marker = new PdfMarker { Type = MarkerType.Comment, Offset = (int)(_stream.Position - 1) };
-            var builder = new StringBuilder(firstChar.ToString());
+            marker.Type = MarkerType.Comment;
 
             var lastChar =
                 ReadWhile(bt => bt != (int)WhiteSpaces.CarriageReturn && bt != (int)WhiteSpaces.CarriageReturn,
-                    builder);
+                    marker);
 
-            marker.Content = builder.ToString();
-            marker.Length = (int)_stream.Position - marker.Offset;
             if (lastChar != -1)
-                marker.Length--;
-            return marker;
+                _lastChar = lastChar;
         }
 
-        private int ReadWhile(Func<int, bool> condition, StringBuilder builder = null, Func<int, bool> ignorCondition = null)
+        private int ReadWhile(Func<int, bool> condition, PdfMarker marker = null, Func<int, bool> ignorCondition = null)
         {
             while (true)
             {
@@ -100,7 +111,7 @@ namespace PdfWorkbench
                 if (bt == -1 || !condition(bt))
                     return bt; // return last char
                 if (ignorCondition == null || !ignorCondition(bt))
-                    builder?.Append((char)bt);
+                    marker?.Append((char)bt);
             }
         }
 

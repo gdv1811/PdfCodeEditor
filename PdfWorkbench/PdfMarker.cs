@@ -16,6 +16,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System.Text;
+
 namespace PdfWorkbench
 {
     internal enum WhiteSpaces
@@ -38,9 +40,27 @@ namespace PdfWorkbench
 
     internal class PdfMarker
     {
+        private StringBuilder _builder = new StringBuilder();
+
         public MarkerType Type { get; set; }
         public int Offset { get; set; }
-        public string Content { get; set; }
+
+        public string Content
+        {
+            get { return _builder.ToString(); }
+            set { _builder = new StringBuilder(value); }
+        }
+
         public int Length { get; set; }
+
+        public void Append(string s)
+        {
+            _builder.Append(s);
+        }
+
+        public void Append(char s)
+        {
+            _builder.Append(s);
+        }
     }
 }
