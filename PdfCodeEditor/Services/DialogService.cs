@@ -17,26 +17,38 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System.Windows;
-using PdfCodeEditor.Services;
-using PdfCodeEditor.ViewModels;
-using PdfCodeEditor.Views;
+using Microsoft.Win32;
 
-namespace PdfCodeEditor
+namespace PdfCodeEditor.Services
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    internal class DialogService : IDialogService
     {
-        public App()
+        public string ShowOpenDialog(string filter)
         {
-            //InitializeComponent();
+            var dialog = new OpenFileDialog
+            {
+                Filter = filter,
+                CheckFileExists = true
+            };
+            if (dialog.ShowDialog() ?? false)
+                return dialog.FileName;
+            return null;
         }
 
-        protected override void OnStartup(StartupEventArgs e)
+        public string ShowSaveDialog(string filter)
         {
-            MainWindow = new MainView {DataContext = new MainViewModel(new DialogService())};
-            MainWindow.ShowDialog();
+            var dialog = new SaveFileDialog
+            {
+                Filter = filter
+            };
+            if (dialog.ShowDialog() ?? false)
+                return dialog.FileName;
+            return null;
+        }
+
+        public void ShowErrorMessage(string message, string caption)
+        {
+            MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

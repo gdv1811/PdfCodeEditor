@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using PdfCodeEditor.Services;
 
 namespace PdfCodeEditor.ViewModels
 {
@@ -29,6 +30,7 @@ namespace PdfCodeEditor.ViewModels
     {
         #region Fields
 
+        private readonly IDialogService _dialogService;
         private PdfDocumentViewModel _currentPdfDocument;
         private ICommand _openCommand;
         private ICommand _dropCommand;
@@ -55,7 +57,7 @@ namespace PdfCodeEditor.ViewModels
 
         public ICommand OpenCommand
         {
-            get { return _openCommand ?? (_openCommand = new RelayCommand(arg => Open(arg as string))); }
+            get { return _openCommand ?? (_openCommand = new RelayCommand(arg => Open())); }
         }
 
         public ICommand DropCommand
@@ -67,8 +69,9 @@ namespace PdfCodeEditor.ViewModels
 
         #region Constructors
 
-        public MainViewModel()
+        public MainViewModel(IDialogService dialogService)
         {
+            _dialogService = dialogService;
             Documents = new ObservableCollection<PdfDocumentViewModel>();
 
             var args = Environment.GetCommandLineArgs();
@@ -81,13 +84,18 @@ namespace PdfCodeEditor.ViewModels
         #endregion
 
         #region Private methods
-        
+
+        private void Open()
+        {
+            Open(_dialogService.ShowOpenDialog("PDF|*.pdf"));
+        }
+
         private void Open(string path)
         {
             if(string.IsNullOrEmpty(path))
                 return;
 
-            var doc = new PdfDocumentViewModel();
+            var doc = new PdfDocumentViewModel(_dialogService);
             doc.Open(path);
 
             Documents.Add(doc);

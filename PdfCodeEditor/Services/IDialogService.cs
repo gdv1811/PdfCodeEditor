@@ -16,27 +16,12 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System.Windows;
-using PdfCodeEditor.Services;
-using PdfCodeEditor.ViewModels;
-using PdfCodeEditor.Views;
-
-namespace PdfCodeEditor
+namespace PdfCodeEditor.Services
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
-    public partial class App : Application
+    internal interface IDialogService
     {
-        public App()
-        {
-            //InitializeComponent();
-        }
-
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            MainWindow = new MainView {DataContext = new MainViewModel(new DialogService())};
-            MainWindow.ShowDialog();
-        }
+        void ShowErrorMessage(string message, string caption);
+        string ShowOpenDialog(string filter);
+        string ShowSaveDialog(string filter);
     }
 }

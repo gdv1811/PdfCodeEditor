@@ -21,6 +21,7 @@ using System.IO;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Document;
 using PdfCodeEditor.Models;
+using PdfCodeEditor.Services;
 
 namespace PdfCodeEditor.ViewModels
 {
@@ -28,6 +29,7 @@ namespace PdfCodeEditor.ViewModels
     {
         #region Fields
 
+        private readonly IDialogService _dialogService;
         private string _filePath;
         private TextDocument _document;
         private bool _isModified;
@@ -99,15 +101,21 @@ namespace PdfCodeEditor.ViewModels
 
         public ICommand SaveAsCommand
         {
-            get { return _saveAsCommand ?? (_saveAsCommand = new RelayCommand(arg => Save(arg as string))); }
+            get
+            {
+                return _saveAsCommand ??
+                       (_saveAsCommand =
+                           new RelayCommand(arg => Save(_dialogService.ShowSaveDialog("PDF|*.pdf|No extension|*.*"))));
+            }
         }
 
         #endregion
 
         #region Constructors
 
-        public PdfDocumentViewModel()
+        public PdfDocumentViewModel(IDialogService dialogService)
         {
+            _dialogService = dialogService;
             Document = new TextDocument();
             Navigator = new NavigatorViewModel(Document);
         }
@@ -141,7 +149,7 @@ namespace PdfCodeEditor.ViewModels
             }
             catch (Exception ex)
             {
-                // todo: add showing message
+                _dialogService.ShowErrorMessage(ex.Message, "Save error");
             }
         }
 

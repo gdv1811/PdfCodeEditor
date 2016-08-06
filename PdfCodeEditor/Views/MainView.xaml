@@ -8,9 +8,6 @@
         Title="PdfCodeEditor"
         Width="1024"
         Height="500">
-    <Window.DataContext>
-        <vm:MainViewModel />
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -21,15 +18,10 @@
         <Menu>
             <MenuItem Header="_File">
                 <!--<MenuItem Header="New" Command="{Binding NewCommand}"/>-->
-                <MenuItem Click="OpenMenuItemOnClick"
-                          Command="{Binding OpenCommand}"
-                          Header="Open" />
+                <MenuItem Command="{Binding OpenCommand}" Header="Open" />
                 <Separator />
                 <MenuItem Command="{Binding Path=ActiveContent.SaveCommand, ElementName=DockManager}" Header="Save" />
-                <MenuItem Click="SaveAsMenuItemOnClick"
-                          Command="{Binding Path=ActiveContent.SaveAsCommand,
-                                            ElementName=DockManager}"
-                          Header="Save As..." />
+                <MenuItem Command="{Binding Path=ActiveContent.SaveAsCommand, ElementName=DockManager}" Header="Save As..." />
             </MenuItem>
         </Menu>
 
@@ -41,19 +33,19 @@
                 <Button Command="{Binding ElementName=DockManager, Path=ActiveContent.Navigator.ForwardCommand}">
                     <Image Source="../Resources/ForwardImage.png" />
                 </Button>
-                <Separator/>
-                <Button Click="OpenMenuItemOnClick" Command="{Binding OpenCommand}">
+                <Separator />
+                <Button Command="{Binding OpenCommand}">
                     <Image Source="../Resources/FolderImage.png" />
                 </Button>
                 <Button Command="{Binding Path=ActiveContent.SaveCommand, ElementName=DockManager}">
                     <Image Source="../Resources/SaveImage.png" />
                 </Button>
-                <Separator/>
+                <Separator />
                 <Button Command="Undo">
-                    <Image Source="../Resources/UndoImage.png"></Image>
+                    <Image Source="../Resources/UndoImage.png" />
                 </Button>
                 <Button Command="Redo">
-                    <Image Source="../Resources/RedoImage.png"></Image>
+                    <Image Source="../Resources/RedoImage.png" />
                 </Button>
             </ToolBar>
         </ToolBarTray>
