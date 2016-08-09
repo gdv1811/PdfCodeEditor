@@ -56,11 +56,46 @@ namespace PdfWorkbench
                 case '>':
                     ReadEndDictionary(marker);
                     break;
+                case '(':
+                    ReadString(marker);
+                    break;
+                case '/':
+                    ReadName(marker);
+                    break;
+                case '[':
+                    marker.Type = MarkerType.LBracket;
+                    break;
+                case ']':
+                    marker.Type = MarkerType.RBracket;
+                    break;
+                case '{':
+                    marker.Type = MarkerType.LBrace;
+                    break;
+                case '}':
+                    marker.Type = MarkerType.RBrace;
+                    break;
             }
             marker.Length = (int)_stream.Position - marker.Offset;
             if (_lastChar != -1)
                 marker.Length--;
             return marker;
+        }
+
+        private void ReadName(PdfMarker marker)
+        {
+            marker.Type = MarkerType.Name;
+
+            var lastChar =
+                ReadWhile(bt => !IsWhiteSpace(bt) && !IsDelimiter((char)bt),
+                    marker);
+
+            if (lastChar != -1)
+                _lastChar = lastChar;
+        }
+
+        private void ReadString(PdfMarker marker)
+        {
+            throw new NotImplementedException();
         }
 
         private void ReadEndDictionary(PdfMarker marker)
@@ -74,7 +109,7 @@ namespace PdfWorkbench
 
         private void ReadStartDictionaryOrHexString(PdfMarker marker)
         {
-            var lastByte = ReadWhile(arg => IsHex((char)arg) || IsWhiteSpace(arg), marker, IsWhiteSpace);
+            var lastByte = ReadWhile(arg => IsHex(arg) || IsWhiteSpace(arg), marker, IsWhiteSpace);
             marker.Append((char)lastByte);
             switch (lastByte)
             {
@@ -87,8 +122,9 @@ namespace PdfWorkbench
                     marker.Type = MarkerType.HexString;
                     marker.Length = (int)_stream.Position - marker.Offset;
                     return;
+                default:
+                    throw new Exception("Unexpected char in hex string: " + (char)lastByte);
             }
-            throw new Exception("Unexpected char in hex string: " + (char)lastByte);
         }
 
         private void ReadComment(PdfMarker marker)
@@ -115,9 +151,9 @@ namespace PdfWorkbench
             }
         }
 
-        private bool IsWhiteSpace(int c)
+        private static bool IsWhiteSpace(int @char)
         {
-            switch (c)
+            switch (@char)
             {
                 case (int)WhiteSpaces.Null:
                 case (int)WhiteSpaces.HorizontalTab:
@@ -131,9 +167,14 @@ namespace PdfWorkbench
             }
         }
 
-        private bool IsHex(char c)
+        private static bool IsHex(int @char)
         {
-            return "0123456789abcdefABCDEF".IndexOf(c) != -1;
+            return "0123456789abcdefABCDEF".IndexOf((char)@char) != -1;
+        }
+
+        private static bool IsDelimiter(int @char)
+        {
+            return "()<>[]{}/%".IndexOf((char)@char) != -1;
         }
     }
 }
