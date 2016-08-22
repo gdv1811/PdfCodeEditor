@@ -18,6 +18,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 
 namespace PdfWorkbench
 {
@@ -25,19 +26,21 @@ namespace PdfWorkbench
     {
         private readonly Stream _stream;
         private int _lastChar = -1;
+        private readonly PdfLiteralStringReader _stringReader;
 
         public PdfMarkerReader(Stream stream)
         {
             _stream = stream;
+            _stringReader = new PdfLiteralStringReader(stream);
         }
 
         public PdfMarker GetMarker()
         {
             var firstChar = _lastChar;
             _lastChar = -1;
-            if (firstChar == -1 || IsWhiteSpace(firstChar))
+            if (firstChar == -1 || SpecialChars.IsWhiteSpace(firstChar))
             {
-                firstChar = ReadWhile(IsWhiteSpace);
+                firstChar = ReadWhile(SpecialChars.IsWhiteSpace);
                 if (firstChar == -1)
                     throw new EndOfStreamException();
             }
@@ -86,7 +89,7 @@ namespace PdfWorkbench
             marker.Type = MarkerType.Name;
 
             var lastChar =
-                ReadWhile(bt => !IsWhiteSpace(bt) && !IsDelimiter((char)bt),
+                ReadWhile(bt => !SpecialChars.IsWhiteSpace(bt) && !SpecialChars.IsDelimiter((char)bt),
                     marker);
 
             if (lastChar != -1)
@@ -95,7 +98,10 @@ namespace PdfWorkbench
 
         private void ReadString(PdfMarker marker)
         {
-            throw new NotImplementedException();
+            var builder = new StringBuilder(marker.Content);
+            _stringReader.ReadString(builder);
+            marker.Type = MarkerType.LiteralString;
+            marker.Content = builder.ToString();
         }
 
         private void ReadEndDictionary(PdfMarker marker)
@@ -109,7 +115,7 @@ namespace PdfWorkbench
 
         private void ReadStartDictionaryOrHexString(PdfMarker marker)
         {
-            var lastByte = ReadWhile(arg => IsHex(arg) || IsWhiteSpace(arg), marker, IsWhiteSpace);
+            var lastByte = ReadWhile(arg => SpecialChars.IsHex(arg) || SpecialChars.IsWhiteSpace(arg), marker, SpecialChars.IsWhiteSpace);
             marker.Append((char)lastByte);
             switch (lastByte)
             {
@@ -149,32 +155,6 @@ namespace PdfWorkbench
                 if (ignorCondition == null || !ignorCondition(bt))
                     marker?.Append((char)bt);
             }
-        }
-
-        private static bool IsWhiteSpace(int @char)
-        {
-            switch (@char)
-            {
-                case (int)WhiteSpaces.Null:
-                case (int)WhiteSpaces.HorizontalTab:
-                case (int)WhiteSpaces.LineFeed:
-                case (int)WhiteSpaces.FormFeed:
-                case (int)WhiteSpaces.CarriageReturn:
-                case (int)WhiteSpaces.Space:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private static bool IsHex(int @char)
-        {
-            return "0123456789abcdefABCDEF".IndexOf((char)@char) != -1;
-        }
-
-        private static bool IsDelimiter(int @char)
-        {
-            return "()<>[]{}/%".IndexOf((char)@char) != -1;
         }
     }
 }
