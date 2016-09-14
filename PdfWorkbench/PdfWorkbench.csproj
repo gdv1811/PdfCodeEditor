@@ -44,6 +44,7 @@
     <Compile Include="PdfMarkerReader.cs" />
     <Compile Include="PdfParser.cs" />
     <Compile Include="PdfStructure.cs" />
+    <Compile Include="PdfVersion.cs" />
     <Compile Include="PdfXref.cs" />
     <Compile Include="PdfObject.cs" />
     <Compile Include="PdfDocument.cs" />

@@ -16,33 +16,38 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System.IO;
-
 namespace PdfWorkbench
 {
-    internal class PdfParser
+    public class PdfVersion
     {
-        private readonly PdfMarkerReader _markerReader;
+        public int Major { get; set; }
+        public int Minor { get; set; }
 
-        public PdfParser(PdfMarkerReader markerReader)
+        public PdfVersion(string version)
         {
-            _markerReader = markerReader;
+            var i = version.StartsWith("%PDF-") ? 5 : 0;
+
+            for (; i < version.Length && char.IsDigit(version[i]); i++)
+            {
+                Major = Major * 10 + version[i] - '0';
+            }
+            if (i == version.Length || version[i] != '.')
+                return;
+            for (i++; i < version.Length && char.IsDigit(version[i]); i++)
+            {
+                Minor = Minor * 10 + version[i] - '0';
+            }
         }
 
-        public PdfVersion GetVersion()
+        public PdfVersion(int major = 0, int minor = 0)
         {
-            _markerReader.Stream.Seek(0, SeekOrigin.Begin);
-            while (_markerReader.Stream.Position < 1024)
-            {
-                var marker = _markerReader.GetMarker();
-                if (marker.Type != MarkerType.Comment)
-                    continue;
-                if (!marker.Content.StartsWith("%PDF-"))
-                    continue;
-                return new PdfVersion(marker.Content);
-            }
+            Major = major;
+            Minor = minor;
+        }
 
-            return null;
+        public override string ToString()
+        {
+            return $"{Major}.{Minor}";
         }
     }
 }

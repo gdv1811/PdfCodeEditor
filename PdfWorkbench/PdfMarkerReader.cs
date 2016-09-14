@@ -24,15 +24,16 @@ namespace PdfWorkbench
 {
     internal class PdfMarkerReader
     {
-        private readonly Stream _stream;
         private int _lastChar = -1;
         private readonly PdfLiteralStringReader _stringReader;
 
         public PdfMarkerReader(Stream stream)
         {
-            _stream = stream;
+            Stream = stream;
             _stringReader = new PdfLiteralStringReader(stream);
         }
+
+        public Stream Stream { get; }
 
         public PdfMarker GetMarker()
         {
@@ -45,7 +46,7 @@ namespace PdfWorkbench
                     throw new EndOfStreamException();
             }
 
-            var marker = new PdfMarker { Offset = (int)(_stream.Position - 1) };
+            var marker = new PdfMarker { Offset = (int)(Stream.Position - 1) };
             marker.Append((char)firstChar);
 
             switch (firstChar)
@@ -77,11 +78,47 @@ namespace PdfWorkbench
                 case '}':
                     marker.Type = MarkerType.RBrace;
                     break;
+                default:
+                    if (char.IsNumber((char)firstChar))
+                        ReadNumber(marker);
+                    if (char.IsLetter((char)firstChar))
+                        ReadWord(marker);
+                    break;
             }
-            marker.Length = (int)_stream.Position - marker.Offset;
+            marker.Length = (int)Stream.Position - marker.Offset;
             if (_lastChar != -1)
                 marker.Length--;
             return marker;
+        }
+
+        private void ReadWord(PdfMarker marker)
+        {
+            marker.Type = MarkerType.Word;
+            var lastChar =
+                ReadWhile(bt => !SpecialChars.IsWhiteSpace(bt) && !SpecialChars.IsDelimiter(bt),
+                    marker);
+
+            if (lastChar != -1)
+                _lastChar = lastChar;
+        }
+
+        private void ReadNumber(PdfMarker marker)
+        {
+            marker.Type = MarkerType.Number;
+
+            var lastChar =
+                ReadWhile(bt => char.IsDigit((char) bt), marker);
+
+            if (lastChar == -1)
+                return;
+
+            if (SpecialChars.IsWhiteSpace(lastChar) || SpecialChars.IsDelimiter(lastChar))
+                _lastChar = lastChar;
+            else
+            {
+                marker.Append((char)lastChar);
+                ReadWord(marker);
+            }
         }
 
         private void ReadName(PdfMarker marker)
@@ -89,7 +126,7 @@ namespace PdfWorkbench
             marker.Type = MarkerType.Name;
 
             var lastChar =
-                ReadWhile(bt => !SpecialChars.IsWhiteSpace(bt) && !SpecialChars.IsDelimiter((char)bt),
+                ReadWhile(bt => !SpecialChars.IsWhiteSpace(bt) && !SpecialChars.IsDelimiter(bt),
                     marker);
 
             if (lastChar != -1)
@@ -106,7 +143,7 @@ namespace PdfWorkbench
 
         private void ReadEndDictionary(PdfMarker marker)
         {
-            var c = (char)_stream.ReadByte();
+            var c = (char)Stream.ReadByte();
             if (c != '>')
                 throw new Exception("Unexpected char: " + c);
             marker.Type = MarkerType.EndDictionary;
@@ -120,13 +157,13 @@ namespace PdfWorkbench
             switch (lastByte)
             {
                 case '<':
-                    if (marker.Offset + 2 != _stream.Position)
+                    if (marker.Offset + 2 != Stream.Position)
                         throw new Exception("Unexpected char in hex string: " + (char)lastByte);
                     marker.Type = MarkerType.StartDictionary;
                     return;
                 case '>':
                     marker.Type = MarkerType.HexString;
-                    marker.Length = (int)_stream.Position - marker.Offset;
+                    marker.Length = (int)Stream.Position - marker.Offset;
                     return;
                 default:
                     throw new Exception("Unexpected char in hex string: " + (char)lastByte);
@@ -149,7 +186,7 @@ namespace PdfWorkbench
         {
             while (true)
             {
-                var bt = _stream.ReadByte();
+                var bt = Stream.ReadByte();
                 if (bt == -1 || !condition(bt))
                     return bt; // return last char
                 if (ignorCondition == null || !ignorCondition(bt))

@@ -41,7 +41,9 @@ namespace PdfWorkbench
         RBracket,
         LBrace,
         RBrace,
-        LiteralString
+        LiteralString,
+        Word,
+        Number
     }
 
     internal class PdfMarker

@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Text;
+﻿using System.Text;
 using NUnit.Framework;
 
 namespace PdfWorkbench.Tests
@@ -11,7 +10,7 @@ namespace PdfWorkbench.Tests
         public void GetMarker_ReadingComment_CommentMarker()
         {
             const string comment = "%PDF-1.0";
-            using (var stream = GetStream(comment))
+            using (var stream = Helpers.GetStream(comment))
             {
                 var reader = new PdfMarkerReader(stream);
                 var marker = reader.GetMarker();
@@ -34,7 +33,7 @@ namespace PdfWorkbench.Tests
                        (char)WhiteSpaces.Null +
                        (char)WhiteSpaces.Space +
                        comment;
-            using (var stream = GetStream(text))
+            using (var stream = Helpers.GetStream(text))
             {
                 var reader = new PdfMarkerReader(stream);
                 var marker = reader.GetMarker();
@@ -57,7 +56,7 @@ namespace PdfWorkbench.Tests
                        (char)WhiteSpaces.LineFeed +
                        (char)WhiteSpaces.Null +
                        (char)WhiteSpaces.Space;
-            using (var stream = GetStream(text))
+            using (var stream = Helpers.GetStream(text))
             {
                 var reader = new PdfMarkerReader(stream);
                 var marker = reader.GetMarker();
@@ -74,7 +73,7 @@ namespace PdfWorkbench.Tests
         public void GetMarker_ReadingHexString_HexStringMarker()
         {
             const string hex = "<4E6F762073686D6F7A206B6120706F702E>";
-            using (var stream = GetStream(hex))
+            using (var stream = Helpers.GetStream(hex))
             {
                 var reader = new PdfMarkerReader(stream);
                 var marker = reader.GetMarker();
@@ -96,7 +95,7 @@ namespace PdfWorkbench.Tests
                       "F7A2" + (char)WhiteSpaces.Null +
                       "06B6" + (char)WhiteSpaces.Space + "120706F702E>";
             const string hexExpect = "<4E6F762073686D6F7A206B6120706F702E>";
-            using (var stream = GetStream(hex))
+            using (var stream = Helpers.GetStream(hex))
             {
                 var reader = new PdfMarkerReader(stream);
                 var marker = reader.GetMarker();
@@ -112,7 +111,7 @@ namespace PdfWorkbench.Tests
         public void GetMarker_ReadingStartDictionary_StartDictionaryMarker()
         {
             const string dictStart = "<<";
-            using (var stream = GetStream(dictStart))
+            using (var stream = Helpers.GetStream(dictStart))
             {
                 var reader = new PdfMarkerReader(stream);
                 var marker = reader.GetMarker();
@@ -129,7 +128,7 @@ namespace PdfWorkbench.Tests
         {
             const string octalChar = "\\053)";
 
-            using (var stream = GetStream(octalChar))
+            using (var stream = Helpers.GetStream(octalChar))
             {
                 var reader = new PdfLiteralStringReader(stream);
                 var builder = new StringBuilder("(");
@@ -143,7 +142,7 @@ namespace PdfWorkbench.Tests
         {
             var text = "1234" + (char)WhiteSpaces.CarriageReturn + (char)WhiteSpaces.LineFeed + "zxcv)";
 
-            using (var stream = GetStream(text))
+            using (var stream = Helpers.GetStream(text))
             {
                 var reader = new PdfLiteralStringReader(stream);
                 var builder = new StringBuilder("(");
@@ -159,7 +158,7 @@ namespace PdfWorkbench.Tests
                        "two strings \\" + (char)WhiteSpaces.CarriageReturn + (char)WhiteSpaces.LineFeed +
                        "are the same.)";
 
-            using (var stream = GetStream(text))
+            using (var stream = Helpers.GetStream(text))
             {
                 var reader = new PdfMarkerReader(stream);
                 var marker = reader.GetMarker();
@@ -171,16 +170,42 @@ namespace PdfWorkbench.Tests
             }
         }
 
-        private static Stream GetStream(string text)
+        [Test]
+        public void GetMarker_ReadingWordAndNumber_ThreeMarkers()
         {
-            var stream = new MemoryStream();
-            using (var streamWriter = new StreamWriter(stream, Encoding.Default, text.Length, true))
+            var text = "12 0 obj";
+
+            using (var stream = Helpers.GetStream(text))
             {
-                streamWriter.Write(text);
-                streamWriter.Flush();
-                stream.Seek(0, SeekOrigin.Begin);
+                var reader = new PdfMarkerReader(stream);
+                var num1 = reader.GetMarker();
+                var num2 = reader.GetMarker();
+                var word = reader.GetMarker();
+                
+                Assert.That(num1.Type, Is.EqualTo(MarkerType.Number));
+                Assert.That(num1.Content, Is.EqualTo("12"));
+
+                Assert.That(num2.Type, Is.EqualTo(MarkerType.Number));
+                Assert.That(num2.Content, Is.EqualTo("0"));
+
+                Assert.That(word.Type, Is.EqualTo(MarkerType.Word));
+                Assert.That(word.Content, Is.EqualTo("obj"));
             }
-            return stream;
+        }
+
+        [Test]
+        public void GetMarker_ReadingWord_Word()
+        {
+            var text = "12obj";
+
+            using (var stream = Helpers.GetStream(text))
+            {
+                var reader = new PdfMarkerReader(stream);
+                var word = reader.GetMarker();
+
+                Assert.That(word.Type, Is.EqualTo(MarkerType.Word));
+                Assert.That(word.Content, Is.EqualTo("12obj"));
+            }
         }
     }
 }
