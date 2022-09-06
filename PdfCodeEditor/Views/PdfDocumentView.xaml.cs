@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2016 Dmitry Goryachev
+﻿// Copyright (c) 2022 Dmitry Goryachev
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
@@ -74,6 +74,7 @@ namespace PdfCodeEditor.Views
             Editor.TextArea.PreviewMouseDown += TextAreaOnPreviewMouseDown;
             Editor.TextArea.MouseMove += TextAreaOnMouseMove;
             Editor.TextArea.MouseRightButtonDown += TextAreaOnMouseRightButtonDown;
+            Editor.Options.AllowToggleOverstrikeMode = true;
             SearchPanel.Install(Editor);
         }
 
