@@ -18,10 +18,19 @@
 
 namespace PdfCodeEditor.Models.Pdf
 {
-    internal interface IPdfObjectProvider
+    internal enum PdfObjectType
     {
-        PdfObject GetPdfVersion();
-        PdfObject GetTrailer();
-        PdfObject GetPdfObject(PdfReference reference);
+        Boolean,
+        Numeric,
+        LiteralString,
+        HexString,
+        Name,
+        Array,
+        Dictionary,
+        Stream,
+        Null,
+        Reference,
+
+        Exception
     }
 }

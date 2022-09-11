@@ -163,8 +163,11 @@
     <Compile Include="Models\FileManager.cs" />
     <Compile Include="Models\History.cs" />
     <Compile Include="Models\Pdf\IPdfObjectProvider.cs" />
+    <Compile Include="Models\Pdf\PdfExceptionObject.cs" />
     <Compile Include="Models\Pdf\PdfObject.cs" />
     <Compile Include="Models\Pdf\PdfObjectiTextProvider.cs" />
+    <Compile Include="Models\Pdf\PdfObjectType.cs" />
+    <Compile Include="Models\Pdf\PdfReference.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="Services\IDialogService.cs" />
     <Compile Include="ViewModels\NavigatorViewModel.cs" />

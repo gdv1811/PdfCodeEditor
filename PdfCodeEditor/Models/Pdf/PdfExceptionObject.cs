@@ -18,10 +18,13 @@
 
 namespace PdfCodeEditor.Models.Pdf
 {
-    internal interface IPdfObjectProvider
+    internal class PdfExceptionObject:PdfObject
     {
-        PdfObject GetPdfVersion();
-        PdfObject GetTrailer();
-        PdfObject GetPdfObject(PdfReference reference);
+        public PdfExceptionObject(string type, string message)
+        {
+            Type = PdfObjectType.Exception;
+            Name = type;
+            Value = message;
+        }
     }
 }

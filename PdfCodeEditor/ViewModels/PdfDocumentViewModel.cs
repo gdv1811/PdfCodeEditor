@@ -138,12 +138,12 @@ namespace PdfCodeEditor.ViewModels
                 _document = new TextDocument(FileManager.ReadTextFile(_filePath));
                 Navigator.Document = _document;
 
-                //IPdfObjectProvider provider = new PdfObjectiTextProvider(filePath);
-                //var version = provider.GetPdfVersion();
-                //var trailer = provider.GetTrailer();
-                //version.ValuesCollection = trailer.ValuesCollection;
+                IPdfObjectProvider provider = new PdfObjectiTextProvider(filePath);
+                var version = provider.GetPdfVersion();
+                var trailer = provider.GetTrailer();
+                version.ValuesCollection = trailer.ValuesCollection;
 
-                //PdfTree.Add(new PdfObjectViewModel(version, provider));
+                PdfTree.Add(new PdfObjectViewModel(version, provider));
             }
         }
 

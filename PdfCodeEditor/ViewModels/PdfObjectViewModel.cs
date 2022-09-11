@@ -23,20 +23,18 @@ namespace PdfCodeEditor.ViewModels
 {
     internal class PdfObjectViewModel: ViewModelBase
     {
-        //private static readonly ObservableCollection<PdfObjectViewModel> DummyChild = new ObservableCollection<PdfObjectViewModel>();
-
         private readonly PdfObjectViewModel _parent;
         private readonly IPdfObjectProvider _provider;
         private readonly PdfObject _pdfObject;
 
-        private string _type;
+        private PdfObjectType _type;
         private string _name;
         private string _value;
-        private string _reference;
+        private string _valueReference;
 
         private bool _isExpanded;
 
-        public string Type
+        public PdfObjectType Type
         {
             get => _type;
             set
@@ -66,17 +64,17 @@ namespace PdfCodeEditor.ViewModels
             }
         }
 
-        public string Reference
+        public string ValueRef
         {
-            get { return _reference; }
+            get { return _valueReference; }
             set
             {
-                _reference = value;
-                OnPropertyChanged(nameof(Reference));
+                _valueReference = value;
+                OnPropertyChanged(nameof(ValueRef));
             }
         }
 
-        public ObservableCollection<PdfObjectViewModel> ValuesCollection { get; } 
+        public ObservableCollection<PdfObjectViewModel> ValuesCollection { get; private set; } 
 
         public bool IsExpanded
         {
@@ -93,12 +91,12 @@ namespace PdfCodeEditor.ViewModels
                 if (_isExpanded && _parent != null)
                     _parent.IsExpanded = true;
 
-                // Lazy load the child items, if necessary.
-                if (!IsLoaded)
-                {
-                    //ValuesCollection.Remove(DummyChild);
-                    Load();
-                }
+                if (ValuesCollection == null)
+                    return;
+
+                // Load child items
+                foreach (var item in ValuesCollection)
+                    item.Load();
             }
         }
 
@@ -107,21 +105,42 @@ namespace PdfCodeEditor.ViewModels
         public PdfObjectViewModel(PdfObject obj, IPdfObjectProvider provider, PdfObjectViewModel parent = null)
         {
             _pdfObject = obj;
-
-            Type = obj.Type.ToString();
-            Name = obj.Name;
-            Value = obj.Value;
-            Reference = obj.Reference;
-            if (obj.ValuesCollection != null)
-                ValuesCollection = new ObservableCollection<PdfObjectViewModel>();
-
-            _parent = parent;
             _provider = provider;
+            _parent = parent;
+
+            Name = obj.Name;
+            InitFromPdfObject(obj, _provider);
         }
 
         public void Load()
         {
+            if (IsLoaded)
+                return;
 
+            if (Type == PdfObjectType.Reference)
+            {
+                var obj = _provider.GetPdfObject(_pdfObject.ValueReference);
+                InitFromPdfObject(obj, _provider);
+            }
+
+            IsLoaded = true;
+        }
+
+        private void InitFromPdfObject(PdfObject obj, IPdfObjectProvider provider)
+        {
+            Type = obj.Type;
+            Value = obj.Value;
+            if (obj.ValueReference != null)
+                ValueRef = obj.ValueReference.ToString();
+
+            if (obj.ValuesCollection != null)
+            {
+                ValuesCollection = new ObservableCollection<PdfObjectViewModel>();
+                foreach (var item in obj.ValuesCollection)
+                    ValuesCollection.Add(new PdfObjectViewModel(item, provider, this));
+                if (Value == null) 
+                    Value = $"{obj.ValuesCollection.Count} entries";
+            }
         }
     }
 }

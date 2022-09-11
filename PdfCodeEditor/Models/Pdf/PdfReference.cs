@@ -18,10 +18,15 @@
 
 namespace PdfCodeEditor.Models.Pdf
 {
-    internal interface IPdfObjectProvider
+    internal class PdfReference
     {
-        PdfObject GetPdfVersion();
-        PdfObject GetTrailer();
-        PdfObject GetPdfObject(PdfReference reference);
+        public int Id { get; set; }
+        public int Generation { get; set; }
+        public long Offset { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Id} {Generation} R";
+        }
     }
 }

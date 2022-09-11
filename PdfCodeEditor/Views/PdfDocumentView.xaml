@@ -13,9 +13,9 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <editor:PdfTextEditor x:Name="Editor"
                                   Grid.Row="0"
@@ -69,8 +69,18 @@
                 </Style>
             </TreeView.ItemContainerStyle>
             <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Values}">
-                    <TextBlock Text="{Binding Key}" ></TextBlock>
+                <HierarchicalDataTemplate ItemsSource="{Binding ValuesCollection}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Foreground="Maroon">
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} : {1} ">
+                                    <Binding Path="Name" />
+                                    <Binding Path="Value" />
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                        <TextBlock Text="{Binding ValueRef}" Foreground="DarkCyan"/>
+                    </StackPanel>
                 </HierarchicalDataTemplate>
             </TreeView.ItemTemplate>
         </TreeView>
