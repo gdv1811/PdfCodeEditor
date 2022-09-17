@@ -112,6 +112,10 @@ namespace PdfCodeEditor.ViewModels
             InitFromPdfObject(obj, _provider);
         }
 
+        public PdfObjectViewModel()
+        {
+        }
+
         public void Load()
         {
             if (IsLoaded)
