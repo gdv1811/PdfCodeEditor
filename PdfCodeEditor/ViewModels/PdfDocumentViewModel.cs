@@ -38,6 +38,7 @@ namespace PdfCodeEditor.ViewModels
         private ICommand _saveCommand;
         private ICommand _saveAsCommand;
         private NavigatorViewModel _navigator;
+        private PdfTreeViewModel _pdfTree;
 
         #endregion
 
@@ -92,7 +93,15 @@ namespace PdfCodeEditor.ViewModels
             }
         }
 
-        public ObservableCollection<PdfObjectViewModel> PdfTree { get; }
+        public PdfTreeViewModel PdfTree
+        {
+            get { return _pdfTree; }
+            set
+            {
+                _pdfTree = value;
+                OnPropertyChanged(nameof(PdfTree));
+            }
+        }
 
         #endregion
 
@@ -122,7 +131,6 @@ namespace PdfCodeEditor.ViewModels
             _dialogService = dialogService;
             Document = new TextDocument();
             Navigator = new NavigatorViewModel(Document);
-            PdfTree = new ObservableCollection<PdfObjectViewModel>();
         }
 
         #endregion
@@ -139,11 +147,7 @@ namespace PdfCodeEditor.ViewModels
                 Navigator.Document = _document;
 
                 IPdfObjectProvider provider = new PdfObjectiTextProvider(filePath);
-                var version = provider.GetPdfVersion();
-                var trailer = provider.GetTrailer();
-                version.ValuesCollection = trailer.ValuesCollection;
-
-                PdfTree.Add(new PdfObjectViewModel(version, provider));
+                PdfTree = new PdfTreeViewModel(provider);
             }
         }
 

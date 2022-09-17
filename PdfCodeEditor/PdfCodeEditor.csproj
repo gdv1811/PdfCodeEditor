@@ -152,6 +152,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\EnumToObjectConverter.cs" />
     <Compile Include="Editor\AvalonEdit.AddIn\ITextMarker.cs" />
     <Compile Include="Editor\AvalonEdit.AddIn\ITextMarkerService.cs" />
     <Compile Include="Editor\AvalonEdit.AddIn\TextMarker.cs" />
@@ -175,8 +176,12 @@
     <Compile Include="ViewModels\InvokeCommandAction.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\PdfObjectViewModel.cs" />
+    <Compile Include="ViewModels\PdfTreeViewModel.cs" />
     <Compile Include="Views\PdfDocumentView.xaml.cs">
       <DependentUpon>PdfDocumentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PdfObjectView.xaml.cs">
+      <DependentUpon>PdfObjectView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PdfTreeView.xaml.cs">
       <DependentUpon>PdfTreeView.xaml</DependentUpon>
@@ -197,6 +202,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\PdfDocumentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PdfObjectView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

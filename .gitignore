@@ -4,3 +4,6 @@ bin/
 packages/
 .vs/
 PdfCodeEditor.sln.DotSettings.user
+/PdfCodeEditor.Installer/PdfCodeEditor.Installer.wixproj.user
+/PdfCodeEditor/PdfCodeEditor.csproj.user
+/PdfCodeEditor/PdfCodeEditor.csproj.DotSettings.user

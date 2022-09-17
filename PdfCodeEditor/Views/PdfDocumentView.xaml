@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:editor="clr-namespace:PdfCodeEditor.Editor"
+             xmlns:views="clr-namespace:PdfCodeEditor.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300"
              d:DesignWidth="300"
@@ -62,28 +63,7 @@
         <GridSplitter Grid.Row="0" Grid.Column="1" ShowsPreview="False" Width="5"
                       HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
 
-        <TreeView Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Path=PdfTree}">
-            <TreeView.ItemContainerStyle>
-                <Style TargetType="{x:Type TreeViewItem}">
-                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                </Style>
-            </TreeView.ItemContainerStyle>
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding ValuesCollection}">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Foreground="Maroon">
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} : {1} ">
-                                    <Binding Path="Name" />
-                                    <Binding Path="Value" />
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                        <TextBlock Text="{Binding ValueRef}" Foreground="DarkCyan"/>
-                    </StackPanel>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
+        <views:PdfTreeView Grid.Row="0" Grid.Column="2" DataContext="{Binding PdfTree}"/>
 
         <StatusBar Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0">
             <Label Margin="5,-5,0,-5" Content="Offset:" />
