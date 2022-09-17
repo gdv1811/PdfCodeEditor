@@ -21,25 +21,27 @@ using System.Collections.ObjectModel;
 
 namespace PdfCodeEditor.ViewModels
 {
-    internal class PdfTreeViewModel:ViewModelBase
+    internal class PdfTreeViewModel : ViewModelBase
     {
 
         #region Properties
-        
-        public ObservableCollection<PdfObjectViewModel> PdfTree { get;set; }
+
+        public ObservableCollection<PdfObjectViewModel> PdfTree { get; set; }
 
         #endregion
 
 
         #region Constructors
 
-        public PdfTreeViewModel(IPdfObjectProvider provider)
+        public PdfTreeViewModel(IPdfObjectProvider provider, NavigatorViewModel navigator)
         {
             var version = provider.GetPdfVersion();
             var trailer = provider.GetTrailer();
             version.ValuesCollection = trailer.ValuesCollection;
 
-            PdfTree = new ObservableCollection<PdfObjectViewModel> { new PdfObjectViewModel(version, provider) };
+            PdfTree = new ObservableCollection<PdfObjectViewModel> {
+                new PdfObjectViewModel(version, provider, navigator) { IsExpanded = true }
+            };
         }
 
         #endregion

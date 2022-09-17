@@ -147,7 +147,7 @@ namespace PdfCodeEditor.ViewModels
                 Navigator.Document = _document;
 
                 IPdfObjectProvider provider = new PdfObjectiTextProvider(filePath);
-                PdfTree = new PdfTreeViewModel(provider);
+                PdfTree = new PdfTreeViewModel(provider, Navigator);
             }
         }
 

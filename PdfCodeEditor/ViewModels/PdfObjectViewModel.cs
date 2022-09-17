@@ -18,6 +18,7 @@
 
 using PdfCodeEditor.Models.Pdf;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace PdfCodeEditor.ViewModels
 {
@@ -33,6 +34,11 @@ namespace PdfCodeEditor.ViewModels
         private string _valueReference;
 
         private bool _isExpanded;
+        private bool _isSelected;
+
+        private NavigatorViewModel _navigator;
+
+        private RelayCommand _doubleClickCommand;
 
         public PdfObjectType Type
         {
@@ -74,7 +80,12 @@ namespace PdfCodeEditor.ViewModels
             }
         }
 
-        public ObservableCollection<PdfObjectViewModel> ValuesCollection { get; private set; } 
+        public ObservableCollection<PdfObjectViewModel> ValuesCollection { get; private set; }
+
+        public ICommand MouseDoubleClickCommand
+        {
+            get { return _doubleClickCommand ?? (_doubleClickCommand = new RelayCommand(arg => NavigateToThis())); }
+        }
 
         public bool IsExpanded
         {
@@ -100,12 +111,26 @@ namespace PdfCodeEditor.ViewModels
             }
         }
 
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+
+                if (_isSelected)
+                    NavigateToThis();
+            }
+        }
+
         public bool IsLoaded { get; private set; }
 
-        public PdfObjectViewModel(PdfObject obj, IPdfObjectProvider provider, PdfObjectViewModel parent = null)
+        public PdfObjectViewModel(PdfObject obj, IPdfObjectProvider provider, NavigatorViewModel navigator, PdfObjectViewModel parent = null)
         {
             _pdfObject = obj;
             _provider = provider;
+            _navigator = navigator;
             _parent = parent;
 
             Name = obj.Name;
@@ -130,6 +155,16 @@ namespace PdfCodeEditor.ViewModels
             IsLoaded = true;
         }
 
+        public void NavigateToThis()
+        {
+            if (_pdfObject.ValueReference != null)
+            {
+                _navigator.CaretOffset = (int)_pdfObject.ValueReference.Offset;
+                return;
+            }
+            _parent?.NavigateToThis();
+        }
+
         private void InitFromPdfObject(PdfObject obj, IPdfObjectProvider provider)
         {
             Type = obj.Type;
@@ -141,7 +176,7 @@ namespace PdfCodeEditor.ViewModels
             {
                 ValuesCollection = new ObservableCollection<PdfObjectViewModel>();
                 foreach (var item in obj.ValuesCollection)
-                    ValuesCollection.Add(new PdfObjectViewModel(item, provider, this));
+                    ValuesCollection.Add(new PdfObjectViewModel(item, provider, _navigator, this));
                 if (Value == null) 
                     Value = $"{obj.ValuesCollection.Count} entries";
             }
