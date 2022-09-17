@@ -81,10 +81,16 @@ namespace PdfCodeEditor.Models.Pdf
                         Value = lit.ToString()
                     };
                 case PdfString str:
+                    if (str.IsHexWriting())
+                        return new PdfObject
+                        {
+                            Type = PdfObjectType.HexString,
+                            Value = str.ToString() // todo: change presentation to hex
+                        };
                     return new PdfObject
                     {
-                        Type = PdfObjectType.HexString,
-                        Value = str.GetValue()//.ToString()
+                        Type = PdfObjectType.LiteralString,
+                        Value = str.ToString()
                     };
                 case PdfNull _:
                     return new PdfObject
