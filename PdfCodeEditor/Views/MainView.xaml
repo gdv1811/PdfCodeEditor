@@ -1,10 +1,9 @@
 ﻿<Window x:Class="PdfCodeEditor.Views.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
-        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:views="clr-namespace:PdfCodeEditor.Views"
-        xmlns:vm="clr-namespace:PdfCodeEditor.ViewModels"
+        xmlns:dockHelpers="clr-namespace:PdfCodeEditor.DockHelpers"
         Title="PdfCodeEditor"
         Width="1024"
         Height="500">
@@ -50,7 +49,7 @@
             </ToolBar>
         </ToolBarTray>
 
-        <avalonDock:DockingManager x:Name="DockManager"
+        <DockingManager x:Name="DockManager"
                                    Grid.Row="2"
                                    Margin="0,0,0,0"
                                    ActiveContent="{Binding CurrentPdfDocument,
@@ -59,25 +58,29 @@
                                    DocumentsSource="{Binding Documents}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Drop">
-                    <vm:InvokeCommandAction Command="{Binding DropCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Self}, Path=InvokeParameter}" />
+                    <i:InvokeCommandAction Command="{Binding DropCommand}" PassEventArgsToCommand="True"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
-            <avalonDock:DockingManager.LayoutItemTemplate>
-                <DataTemplate>
-                    <views:PdfDocumentView />
-                </DataTemplate>
-            </avalonDock:DockingManager.LayoutItemTemplate>
-            <avalonDock:DockingManager.LayoutItemContainerStyle>
-                <Style TargetType="{x:Type avalonDock:LayoutItem}">
+            <DockingManager.LayoutItemTemplateSelector>
+                <dockHelpers:TemplateSelector>
+                    <dockHelpers:TemplateSelector.PdfDocumentViewTemplate>
+                        <DataTemplate>
+                            <views:PdfDocumentView/>
+                        </DataTemplate>
+                    </dockHelpers:TemplateSelector.PdfDocumentViewTemplate>
+                </dockHelpers:TemplateSelector>
+            </DockingManager.LayoutItemTemplateSelector>
+            <DockingManager.LayoutItemContainerStyle>
+                <Style TargetType="{x:Type LayoutItem}">
                     <Setter Property="Title" Value="{Binding Model.Title}" />
                     <Setter Property="ToolTip" Value="{Binding Model.FilePath}" />
                 </Style>
-            </avalonDock:DockingManager.LayoutItemContainerStyle>
-            <avalonDock:LayoutRoot>
-                <avalonDock:LayoutPanel Orientation="Horizontal">
-                    <avalonDock:LayoutDocumentPane x:Name="DocumentHost" />
-                </avalonDock:LayoutPanel>
-            </avalonDock:LayoutRoot>
-        </avalonDock:DockingManager>
+            </DockingManager.LayoutItemContainerStyle>
+            <LayoutRoot>
+                <LayoutPanel Orientation="Horizontal">
+                    <LayoutDocumentPane x:Name="DocumentHost" DockHeight="*" DockWidth="*" />
+                </LayoutPanel>
+            </LayoutRoot>
+        </DockingManager>
     </Grid>
 </Window>
