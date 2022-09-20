@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2016 Dmitry Goryachev
+﻿// Copyright (c) 2022 Dmitry Goryachev
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
@@ -17,10 +17,12 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Document;
 using PdfCodeEditor.Models;
+using PdfCodeEditor.Models.Pdf;
 using PdfCodeEditor.Services;
 
 namespace PdfCodeEditor.ViewModels
@@ -36,6 +38,7 @@ namespace PdfCodeEditor.ViewModels
         private ICommand _saveCommand;
         private ICommand _saveAsCommand;
         private NavigatorViewModel _navigator;
+        private PdfTreeViewModel _pdfTree;
 
         #endregion
 
@@ -90,6 +93,16 @@ namespace PdfCodeEditor.ViewModels
             }
         }
 
+        public PdfTreeViewModel PdfTree
+        {
+            get { return _pdfTree; }
+            set
+            {
+                _pdfTree = value;
+                OnPropertyChanged(nameof(PdfTree));
+            }
+        }
+
         #endregion
 
         #region Properties-commands
@@ -132,6 +145,9 @@ namespace PdfCodeEditor.ViewModels
             {
                 _document = new TextDocument(FileManager.ReadTextFile(_filePath));
                 Navigator.Document = _document;
+
+                IPdfObjectProvider provider = new PdfObjectiTextProvider(filePath);
+                PdfTree = new PdfTreeViewModel(provider, Navigator);
             }
         }
 

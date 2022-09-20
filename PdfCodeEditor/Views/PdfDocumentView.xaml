@@ -3,27 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:editor="clr-namespace:PdfCodeEditor.Editor"
+             xmlns:views="clr-namespace:PdfCodeEditor.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="1*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <editor:PdfTextEditor x:Name="Editor"
-                              Grid.Row="1"
-                              CaretOffset="{Binding Path=Navigator.CaretOffset,
+                                  Grid.Row="0"
+                                  Grid.Column="0"
+                                  CaretOffset="{Binding Path=Navigator.CaretOffset,
                                                     Mode=TwoWay}"
-                              Document="{Binding Document}"
-                              FontFamily="Consolas"
-                              FontSize="10pt"
-                              IsModified="{Binding IsModified,
+                                  Document="{Binding Document}"
+                                  FontFamily="Consolas"
+                                  FontSize="10pt"
+                                  IsModified="{Binding IsModified,
                                                    Mode=TwoWay}"
-                              ShowLineNumbers="True"
-                              SyntaxHighlighting="Pdf">
+                                  ShowLineNumbers="True"
+                                  SyntaxHighlighting="Pdf">
             <editor:PdfTextEditor.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="{Binding Navigator.GoToDefinitionCommand}"
@@ -54,7 +60,12 @@
             </editor:PdfTextEditor.InputBindings>
         </editor:PdfTextEditor>
 
-        <StatusBar Grid.Row="2">
+        <GridSplitter Grid.Row="0" Grid.Column="1" ShowsPreview="False" Width="5"
+                      HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+
+        <views:PdfTreeView Grid.Row="0" Grid.Column="2" DataContext="{Binding PdfTree}"/>
+
+        <StatusBar Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0">
             <Label Margin="5,-5,0,-5" Content="Offset:" />
             <TextBox Width="100"
                      Margin="-10,-1,0,-1"
