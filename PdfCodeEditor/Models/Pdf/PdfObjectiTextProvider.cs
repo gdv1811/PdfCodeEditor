@@ -25,6 +25,7 @@ namespace PdfCodeEditor.Models.Pdf
     internal class PdfObjectiTextProvider:IPdfObjectProvider
     {
         private readonly PdfDocument _document;
+
         public PdfObjectiTextProvider(string path)
         {
             var reader = new PdfReader(path);
@@ -33,29 +34,42 @@ namespace PdfCodeEditor.Models.Pdf
 
         public PdfObject GetPdfVersion()
         {
-            try
-            {
-                var vers = _document.GetPdfVersion();
-                return new PdfObject
+            PdfVersion vers = null;
+            PdfObject obj;
+            if (TryExecute(() => { vers = _document.GetPdfVersion(); }, out var exception))
+                obj = new PdfObject
                 {
                     Type = PdfObjectType.Numeric,
-                    Name = "Version",
                     Value = vers.ToString()
                 };
-            }
-            catch (Exception ex)
-            {
-                return new PdfExceptionObject(ex.GetType().Name, ex.Message);
-            }
+            else
+                obj = exception;
+
+            obj.Name = "Version";
+            return obj;
         }
 
         public PdfObject GetTrailer()
         {
-            var trailer = _document.GetTrailer();
-            var obj = FromObject(trailer);
+            PdfDictionary trailer = null;
+            PdfObject obj;
+            if (TryExecute(() => { trailer = _document.GetTrailer(); }, out var exception))
+                obj = FromObject(trailer);
+            else
+                obj = exception;
+
             obj.Name = "trailer";
 
             return obj;
+        }
+
+        public PdfObject GetPdfObject(PdfReference reference)
+        {
+            iText.Kernel.Pdf.PdfObject obj = null;
+            if (!TryExecute(() => { obj = _document.GetPdfObject(reference.Id); }, out var exception))
+                return exception;
+
+            return FromObject(obj);
         }
 
         private PdfObject FromObject(iText.Kernel.Pdf.PdfObject srcObj)
@@ -139,7 +153,9 @@ namespace PdfCodeEditor.Models.Pdf
             };
             for (int i = 0; i < array.Size(); i++)
             {
-                var childObj = FromObject(array.Get(i, false));
+                iText.Kernel.Pdf.PdfObject item = null;
+                PdfObject childObj = TryExecute(() => { item = array.Get(i, false); }, out var exception) ?
+                    FromObject(item) : exception;
                 childObj.Name = $"[{i}]";
                 obj.ValuesCollection.Add(childObj);
             }
@@ -155,8 +171,10 @@ namespace PdfCodeEditor.Models.Pdf
             };
             foreach (var key in dict.KeySet())
             {
-                var item = dict.Get(key, false);
-                var childObj = FromObject(item);
+                iText.Kernel.Pdf.PdfObject item = null;
+                PdfObject childObj = TryExecute(() => { item = dict.Get(key, false); }, out var exception) ?
+                    FromObject(item) : exception;
+
                 childObj.Name = key.ToString();
                 obj.ValuesCollection.Add(childObj);
             }
@@ -169,10 +187,19 @@ namespace PdfCodeEditor.Models.Pdf
             return obj;
         }
 
-        public PdfObject GetPdfObject(PdfReference reference)
+        private bool TryExecute(Action action, out PdfExceptionObject exception)
         {
-            var obj = _document.GetPdfObject(reference.Id);
-            return FromObject(obj);
+            exception = null;
+            try
+            {
+                action();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                exception = new PdfExceptionObject(ex.GetType().Name, ex.Message);
+                return false;
+            }
         }
 
     }

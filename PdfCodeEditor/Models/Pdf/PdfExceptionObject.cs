@@ -20,11 +20,10 @@ namespace PdfCodeEditor.Models.Pdf
 {
     internal class PdfExceptionObject:PdfObject
     {
-        public PdfExceptionObject(string type, string message)
+        public PdfExceptionObject(string exceptionType, string message)
         {
             Type = PdfObjectType.Exception;
-            Name = type;
-            Value = message;
+            Value = $"{exceptionType} {{{message}}}"; // todo: move message to the extended view
         }
     }
 }
