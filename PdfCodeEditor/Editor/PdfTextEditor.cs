@@ -51,6 +51,7 @@ namespace PdfCodeEditor.Editor
                 SetValue(CaretOffsetProperty, value);
                 base.CaretOffset = value;
                 TextArea.Caret.BringCaretToView();
+                TextArea.Caret.Show();
             }
         }
 

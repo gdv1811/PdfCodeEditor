@@ -17,10 +17,10 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Document;
+using PdfCodeEditor.Editor;
 using PdfCodeEditor.Models;
 using PdfCodeEditor.Models.Pdf;
 using PdfCodeEditor.Services;
@@ -146,7 +146,8 @@ namespace PdfCodeEditor.ViewModels
                 _document = new TextDocument(FileManager.ReadTextFile(_filePath));
                 Navigator.Document = _document;
 
-                IPdfObjectProvider provider = new PdfObjectiTextProvider(filePath);
+                var stm = new TextDocumentStream(_document);
+                IPdfObjectProvider provider = new PdfObjectiTextProvider(stm);
                 PdfTree = new PdfTreeViewModel(provider, Navigator);
             }
         }

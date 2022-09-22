@@ -19,12 +19,20 @@
 using iText.Kernel.Pdf;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace PdfCodeEditor.Models.Pdf
 {
     internal class PdfObjectiTextProvider:IPdfObjectProvider
     {
         private readonly PdfDocument _document;
+
+
+        public PdfObjectiTextProvider(Stream stream)
+        {
+            var reader = new PdfReader(stream);
+            _document = new PdfDocument(reader);
+        }
 
         public PdfObjectiTextProvider(string path)
         {
