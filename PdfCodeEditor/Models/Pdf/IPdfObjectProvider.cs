@@ -23,5 +23,6 @@ namespace PdfCodeEditor.Models.Pdf
         PdfObject GetPdfVersion();
         PdfObject GetTrailer();
         PdfObject GetPdfObject(PdfReference reference);
+        void Reset();
     }
 }

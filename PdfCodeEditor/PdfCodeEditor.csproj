@@ -17,6 +17,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\CopyImage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\PdfDictionary.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -67,6 +70,9 @@
     <Content Include="Resources\BackwardImage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\UpdateImage.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dirkster.AvalonDock" Version="4.70.2" />
@@ -83,5 +89,9 @@
   <ItemGroup>
     <Compile Remove="Dock\LayoutUpdateStategy.cs" />
     <Compile Remove="Dock\PanesTemplateSelector.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Resources\CopyImage.png" />
+    <None Remove="Resources\UpdateImage.png" />
   </ItemGroup>
 </Project>

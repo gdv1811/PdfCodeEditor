@@ -17,15 +17,28 @@
 // DEALINGS IN THE SOFTWARE.
 
 using PdfCodeEditor.Models.Pdf;
+using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows.Input;
 
 namespace PdfCodeEditor.ViewModels
 {
-    internal class PdfTreeViewModel : ViewModelBase
+    internal class PdfTreeViewModel : ToolViewModel
     {
         #region Fields
 
-        private string _filePath;
+        private ICommand _refreshCommand;
+        private ICommand _openInNewTabCommand;
+
+        private NavigatorViewModel _navigator;
+        private IPdfObjectProvider _objectProvider;
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler<EventArgs> NewTabRequired;
 
         #endregion
 
@@ -33,32 +46,59 @@ namespace PdfCodeEditor.ViewModels
 
         public ObservableCollection<PdfObjectViewModel> PdfTree { get; set; }
 
-        public string FilePath
-        {
-            get { return _filePath; }
-            set
-            {
-                if (_filePath == value)
-                    return;
-                _filePath = value;
-                OnPropertyChanged(nameof(FilePath));
-            }
-        }
+        public override string Title => Path.GetFileName(FilePath) + " - Object tree";
 
         #endregion
 
+        #region Properties-commands
+
+        public ICommand RefreshCommand
+        {
+            get { return _refreshCommand ?? (_refreshCommand = new RelayCommand(arg => Refresh())); }
+        }
+
+        public ICommand OpenInNewTabCommand
+        {
+            get { return _openInNewTabCommand ?? (_openInNewTabCommand = new RelayCommand(arg => OnNewTabRequired())); }
+        }
+
+        #endregion
 
         #region Constructors
 
         public PdfTreeViewModel(IPdfObjectProvider provider, NavigatorViewModel navigator)
         {
+            _objectProvider = provider;
+            _navigator = navigator;
+            Init(provider, navigator);
+        }
+
+        private void Init(IPdfObjectProvider provider, NavigatorViewModel navigator)
+        {
             var version = provider.GetPdfVersion();
             var trailer = provider.GetTrailer();
             version.ValuesCollection = trailer.ValuesCollection;
 
-            PdfTree = new ObservableCollection<PdfObjectViewModel> {
-                new PdfObjectViewModel(version, provider, navigator) { IsExpanded = true }
-            };
+            if (PdfTree == null)
+                PdfTree = new ObservableCollection<PdfObjectViewModel>();
+            else
+                PdfTree.Clear();
+            PdfTree.Add(new PdfObjectViewModel(version, provider, navigator) { IsExpanded = true });
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private void Refresh()
+        {
+            _objectProvider.Reset();
+            Init(_objectProvider, _navigator);
+        }
+
+        private void OnNewTabRequired() 
+        {
+            NewTabRequired?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion

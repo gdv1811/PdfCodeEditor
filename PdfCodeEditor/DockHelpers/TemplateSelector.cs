@@ -36,7 +36,13 @@ namespace PdfCodeEditor.DockHelpers
             set;
         }
 
-        public DataTemplate ToolViewTemplate
+        public DataTemplate PdfTreeViewTemplate
+        {
+            get;
+            set;
+        }
+
+        public DataTemplate ContentToolViewTemplate
         {
             get;
             set;
@@ -49,8 +55,11 @@ namespace PdfCodeEditor.DockHelpers
             if (item is PdfDocumentViewModel)
                 return PdfDocumentViewTemplate;
 
-            if (item is ToolViewModel)
-                return ToolViewTemplate;
+            if (item is PdfTreeViewModel)
+                return PdfTreeViewTemplate;
+
+            if (item is ContentToolViewModel)
+                return ContentToolViewTemplate;
 
             return base.SelectTemplate(item, container);
         }

@@ -68,11 +68,16 @@
                             <views:PdfDocumentView/>
                         </DataTemplate>
                     </dockHelpers:TemplateSelector.PdfDocumentViewTemplate>
-                    <dockHelpers:TemplateSelector.ToolViewTemplate>
+                    <dockHelpers:TemplateSelector.PdfTreeViewTemplate>
                         <DataTemplate>
-                            <views:ToolView/>
+                            <views:PdfTreeView/>
                         </DataTemplate>
-                    </dockHelpers:TemplateSelector.ToolViewTemplate>
+                    </dockHelpers:TemplateSelector.PdfTreeViewTemplate>
+                    <dockHelpers:TemplateSelector.ContentToolViewTemplate>
+                        <DataTemplate>
+                            <views:PdfTreeView/>
+                        </DataTemplate>
+                    </dockHelpers:TemplateSelector.ContentToolViewTemplate>
                 </dockHelpers:TemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
             <DockingManager.LayoutItemContainerStyle>
@@ -83,8 +88,20 @@
             </DockingManager.LayoutItemContainerStyle>
             <LayoutRoot>
                 <LayoutPanel Orientation="Horizontal">
-                    <LayoutDocumentPane x:Name="DocumentHost" DockHeight="*" DockWidth="*" />
-                    <LayoutAnchorablePane Name="ToolsPane" DockMinWidth="200"/>
+                    <LayoutDocumentPane x:Name="DocumentHost" DockHeight="*" DockWidth="2*" />
+                    <LayoutPanel Orientation="Vertical" DockWidth="1*">
+                        <LayoutAnchorablePane Name="ToolsPane" DockMinWidth="200">
+                            <LayoutAnchorable Title="Object tree" 
+                                              CanClose="False">
+                                <views:PdfTreeView DataContext="{Binding CurrentPdfDocument.PdfTree}"/>
+                            </LayoutAnchorable>
+                        </LayoutAnchorablePane>
+                        <!--<LayoutAnchorablePane Name="ContentToolsPane" DockMinWidth="200" DockMinHeight="200">
+                            <LayoutAnchorable>
+                                <views:ToolView DataContext="{Binding ContentTool}"/>
+                            </LayoutAnchorable>
+                        </LayoutAnchorablePane>-->
+                    </LayoutPanel>
                 </LayoutPanel>
             </LayoutRoot>
         </DockingManager>

@@ -25,11 +25,13 @@ namespace PdfCodeEditor.Models.Pdf
 {
     internal class PdfObjectiTextProvider:IPdfObjectProvider
     {
-        private readonly PdfDocument _document;
+        private readonly Stream _sourceStream;
+        private PdfDocument _document;
 
 
         public PdfObjectiTextProvider(Stream stream)
         {
+            _sourceStream = stream;
             var reader = new PdfReader(stream);
             _document = new PdfDocument(reader);
         }
@@ -37,6 +39,13 @@ namespace PdfCodeEditor.Models.Pdf
         public PdfObjectiTextProvider(string path)
         {
             var reader = new PdfReader(path);
+            _document = new PdfDocument(reader);
+        }
+
+        public void Reset()
+        {
+            _sourceStream.Seek(0, SeekOrigin.Begin);
+            var reader = new PdfReader(_sourceStream);
             _document = new PdfDocument(reader);
         }
 

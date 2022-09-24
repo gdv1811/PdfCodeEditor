@@ -16,27 +16,16 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System.IO;
-
 namespace PdfCodeEditor.ViewModels
 {
-    internal class ToolViewModel : ViewModelBase
+    internal class ContentToolViewModel : ViewModelBase
     {
-        private string _filePath;
-
-        public string FilePath
+        public string Title { get; set; } = "ContentTool";
+        public ContentToolViewModel(string title=null)
         {
-            get { return _filePath; }
-            set
-            {
-                if (_filePath == value)
-                    return;
-                _filePath = value;
-                OnPropertyChanged(nameof(FilePath));
-                OnPropertyChanged(nameof(Title));
-            }
+            if (title == null)
+                return;
+            Title = title;
         }
-
-        public virtual string Title => Path.GetFileName(_filePath);
     }
 }

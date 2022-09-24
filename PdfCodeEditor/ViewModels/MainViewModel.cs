@@ -48,9 +48,6 @@ namespace PdfCodeEditor.ViewModels
             set
             {
                 _currentPdfDocument = value;
-                if (Tools.Count == 0)
-                    Tools.Add(new ToolViewModel());
-                Tools[0].Tree = _currentPdfDocument.PdfTree;
                 OnPropertyChanged(nameof(CurrentPdfDocument));
             }
         }
@@ -102,13 +99,8 @@ namespace PdfCodeEditor.ViewModels
 
             var doc = new PdfDocumentViewModel(_dialogService);
             doc.Open(path);
-
+            doc.PdfTree.NewTabRequired += (o, a) => { Tools.Add(doc.PdfTree); };
             Documents.Add(doc);
-
-            if(Tools.Count == 0)
-                Tools.Add(new ToolViewModel());
-            Tools[0].Tree = doc.PdfTree;
-
             CurrentPdfDocument = doc;
         }
 

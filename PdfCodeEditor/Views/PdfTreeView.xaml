@@ -7,7 +7,22 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <TreeView Grid.Row="0" Grid.Column="2" ItemsSource="{Binding Path=PdfTree}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ToolBarTray Grid.Row="0" IsLocked="True">
+            <ToolBar>
+                <Button Command="{Binding OpenInNewTabCommand}" ToolTip="Open in the new tab">
+                    <Image Source="../Resources/CopyImage.png" />
+                </Button>
+                <Button Command="{Binding RefreshCommand}" ToolTip="Referesh object tree">
+                    <Image Source="../Resources/UpdateImage.png" />
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+
+        <TreeView Grid.Row="1" ItemsSource="{Binding Path=PdfTree}">
             <TreeView.ItemContainerStyle>
                 <Style TargetType="{x:Type TreeViewItem}">
                     <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
