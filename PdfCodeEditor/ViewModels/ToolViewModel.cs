@@ -16,51 +16,34 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using PdfCodeEditor.Models.Pdf;
-using System.Collections.ObjectModel;
+using System.IO;
 
 namespace PdfCodeEditor.ViewModels
 {
-    internal class PdfTreeViewModel : ViewModelBase
+    internal class ToolViewModel : ViewModelBase
     {
-        #region Fields
+        private PdfTreeViewModel _tree;
 
-        private string _filePath;
-
-        #endregion
-
-        #region Properties
-
-        public ObservableCollection<PdfObjectViewModel> PdfTree { get; set; }
-
-        public string FilePath
+        public PdfTreeViewModel Tree
         {
-            get { return _filePath; }
+            get => _tree;
             set
             {
-                if (_filePath == value)
-                    return;
-                _filePath = value;
+                _tree = value;
+                OnPropertyChanged(nameof(Tree));
                 OnPropertyChanged(nameof(FilePath));
+                OnPropertyChanged(nameof(FileName));
+                OnPropertyChanged(nameof(Title));
             }
         }
 
-        #endregion
-
-
-        #region Constructors
-
-        public PdfTreeViewModel(IPdfObjectProvider provider, NavigatorViewModel navigator)
+        public string FilePath
         {
-            var version = provider.GetPdfVersion();
-            var trailer = provider.GetTrailer();
-            version.ValuesCollection = trailer.ValuesCollection;
-
-            PdfTree = new ObservableCollection<PdfObjectViewModel> {
-                new PdfObjectViewModel(version, provider, navigator) { IsExpanded = true }
-            };
+            get { return Tree?.FilePath; }
         }
 
-        #endregion
+        public string FileName => Path.GetFileName(FilePath);
+
+        public string Title =>"Tree - " + Path.GetFileName(FilePath);
     }
 }

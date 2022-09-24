@@ -40,6 +40,7 @@ namespace PdfCodeEditor.ViewModels
         #region Properties
 
         public ObservableCollection<PdfDocumentViewModel> Documents { get; }
+        public ObservableCollection<ToolViewModel> Tools { get; }
 
         public PdfDocumentViewModel CurrentPdfDocument
         {
@@ -47,6 +48,9 @@ namespace PdfCodeEditor.ViewModels
             set
             {
                 _currentPdfDocument = value;
+                if (Tools.Count == 0)
+                    Tools.Add(new ToolViewModel());
+                Tools[0].Tree = _currentPdfDocument.PdfTree;
                 OnPropertyChanged(nameof(CurrentPdfDocument));
             }
         }
@@ -73,6 +77,7 @@ namespace PdfCodeEditor.ViewModels
         {
             _dialogService = dialogService;
             Documents = new ObservableCollection<PdfDocumentViewModel>();
+            Tools = new ObservableCollection<ToolViewModel>();
 
             var args = Environment.GetCommandLineArgs();
             foreach (var path in args.Where(File.Exists).Where(path => Path.GetExtension(path) == ".pdf"))
@@ -99,6 +104,11 @@ namespace PdfCodeEditor.ViewModels
             doc.Open(path);
 
             Documents.Add(doc);
+
+            if(Tools.Count == 0)
+                Tools.Add(new ToolViewModel());
+            Tools[0].Tree = doc.PdfTree;
+
             CurrentPdfDocument = doc;
         }
 

@@ -13,11 +13,6 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
         <editor:PdfTextEditor x:Name="Editor"
                                   Grid.Row="0"
                                   Grid.Column="0"
@@ -59,11 +54,6 @@
                             Modifiers="Control+Shift" />
             </editor:PdfTextEditor.InputBindings>
         </editor:PdfTextEditor>
-
-        <GridSplitter Grid.Row="0" Grid.Column="1" ShowsPreview="False" Width="5"
-                      HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
-
-        <views:PdfTreeView Grid.Row="0" Grid.Column="2" DataContext="{Binding PdfTree}"/>
 
         <StatusBar Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0">
             <Label Margin="5,-5,0,-5" Content="Offset:" />

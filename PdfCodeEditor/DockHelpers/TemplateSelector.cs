@@ -36,11 +36,11 @@ namespace PdfCodeEditor.DockHelpers
             set;
         }
 
-        //public DataTemplate FileStatsViewTemplate
-        //{
-        //    get;
-        //    set;
-        //}
+        public DataTemplate ToolViewTemplate
+        {
+            get;
+            set;
+        }
 
         public override System.Windows.DataTemplate SelectTemplate(object item, System.Windows.DependencyObject container)
         {
@@ -49,8 +49,8 @@ namespace PdfCodeEditor.DockHelpers
             if (item is PdfDocumentViewModel)
                 return PdfDocumentViewTemplate;
 
-            //if (item is FileStatsViewModel)
-            //    return FileStatsViewTemplate;
+            if (item is ToolViewModel)
+                return ToolViewTemplate;
 
             return base.SelectTemplate(item, container);
         }

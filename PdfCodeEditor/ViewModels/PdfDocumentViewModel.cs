@@ -149,6 +149,7 @@ namespace PdfCodeEditor.ViewModels
                 var stm = new TextDocumentStream(_document);
                 IPdfObjectProvider provider = new PdfObjectiTextProvider(stm);
                 PdfTree = new PdfTreeViewModel(provider, Navigator);
+                PdfTree.FilePath = filePath;
             }
         }
 
