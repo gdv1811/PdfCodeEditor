@@ -48,6 +48,8 @@ namespace PdfCodeEditor.Editor
             get { return base.CaretOffset; }
             set
             {
+                if (value < 0)
+                    return;
                 SetValue(CaretOffsetProperty, value);
                 base.CaretOffset = value;
                 TextArea.Caret.BringCaretToView();

@@ -32,21 +32,19 @@ namespace PdfCodeEditor.Models.Pdf
         public PdfObjectiTextProvider(Stream stream)
         {
             _sourceStream = stream;
-            var reader = new PdfReader(stream);
-            _document = new PdfDocument(reader);
         }
 
-        public PdfObjectiTextProvider(string path)
+        public bool TryInit(out PdfExceptionObject exception)
         {
-            var reader = new PdfReader(path);
-            _document = new PdfDocument(reader);
-        }
-
-        public void Reset()
-        {
-            _sourceStream.Seek(0, SeekOrigin.Begin);
-            var reader = new PdfReader(_sourceStream);
-            _document = new PdfDocument(reader);
+            var result = TryExecute(() =>
+            {
+                _sourceStream.Seek(0, SeekOrigin.Begin);
+                var reader = new PdfReader(_sourceStream);
+                _document = new PdfDocument(reader);
+            }, out exception);
+            if (exception != null)
+                exception.Name = "InitException";
+            return result;
         }
 
         public PdfObject GetPdfVersion()

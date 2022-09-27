@@ -157,7 +157,7 @@ namespace PdfCodeEditor.ViewModels
 
         public void NavigateToThis()
         {
-            if (_pdfObject.ValueReference != null)
+            if (_pdfObject.ValueReference != null && _pdfObject.ValueReference.Offset >= 0)
             {
                 _navigator.CaretOffset = (int)_pdfObject.ValueReference.Offset;
                 return;

@@ -75,15 +75,22 @@ namespace PdfCodeEditor.ViewModels
 
         private void Init(IPdfObjectProvider provider, NavigatorViewModel navigator)
         {
-            var version = provider.GetPdfVersion();
-            var trailer = provider.GetTrailer();
-            version.ValuesCollection = trailer.ValuesCollection;
+            PdfObjectViewModel rootObj;
+            if (provider.TryInit(out PdfExceptionObject ex))
+            {
+                var version = provider.GetPdfVersion();
+                var trailer = provider.GetTrailer();
+                version.ValuesCollection = trailer.ValuesCollection;
+                rootObj = new PdfObjectViewModel(version, provider, navigator) { IsExpanded = true };
+            }
+            else
+                rootObj = new PdfObjectViewModel(ex, provider, navigator);
 
             if (PdfTree == null)
                 PdfTree = new ObservableCollection<PdfObjectViewModel>();
             else
                 PdfTree.Clear();
-            PdfTree.Add(new PdfObjectViewModel(version, provider, navigator) { IsExpanded = true });
+            PdfTree.Add(rootObj);
         }
 
         #endregion
@@ -92,7 +99,6 @@ namespace PdfCodeEditor.ViewModels
 
         private void Refresh()
         {
-            _objectProvider.Reset();
             Init(_objectProvider, _navigator);
         }
 

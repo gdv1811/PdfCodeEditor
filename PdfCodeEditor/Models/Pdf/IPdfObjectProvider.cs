@@ -20,9 +20,9 @@ namespace PdfCodeEditor.Models.Pdf
 {
     internal interface IPdfObjectProvider
     {
+        bool TryInit(out PdfExceptionObject exception);
         PdfObject GetPdfVersion();
         PdfObject GetTrailer();
         PdfObject GetPdfObject(PdfReference reference);
-        void Reset();
     }
 }

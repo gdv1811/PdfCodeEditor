@@ -1,150 +1,691 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <?include $(var.ProjectDir)/Common.wxi?>
-  
-  <Fragment>
-    <DirectoryRef Id="INSTALLFOLDER">
-      <Directory Id="dir242DC17B8DFC53C13CAF172FC08B730A" Name="de" />
-      <Directory Id="dir1710C20C4C4513ACEA8627A52788727F" Name="en" />
-      <Directory Id="dir9AE38F4F5CB5E565E774521E138F44FD" Name="es" />
-      <Directory Id="dirB55DFDA91FEE7CCCBC65CA7493B75748" Name="fr" />
-      <Directory Id="dir937629FDAC3D30087170D6DA46E383A6" Name="hu" />
-      <Directory Id="dir45DE18DD71F3E8DD6BE4A0E2B48778C8" Name="it" />
-      <Directory Id="dir997B58958EFAE06BB705E870622AB899" Name="ja" />
-      <Directory Id="dirF152986C1E6339E5EF84FD1370841521" Name="ko" />
-      <Directory Id="dir339F53F3A11C56B053FD1FEC9B438810" Name="pt-BR" />
-      <Directory Id="dirBD3668345143F8EFDFB86A9B73810966" Name="ro" />
-      <Directory Id="dirE9205C68F964857267FD3312DBFF9A91" Name="ru" />
-      <Directory Id="dir8FBB04D7AB5FE55FCF40758128EC763E" Name="sv" />
-      <Directory Id="dir4A8DD77DBC79775EC39CACBC8AA06107" Name="zh-Hans" />
-      <Directory Id="dir083BC4C92455CD933FA93376E7459C85" Name="zh-Hant" />
-    </DirectoryRef>
-  </Fragment>
-  <Fragment>
-    <ComponentGroup Id="AssembliesGroupId">
-      <Component Id="cmp8D1543ABCB80F210097DE6C692F8E7D3" Directory="INSTALLFOLDER" Guid="{638A27FD-FB88-48B5-8CB2-106D60020118}">
-        <File Id="fil5F3739B9F27C9025F95EE63EBCEC5060" KeyPath="yes" Source="$(var.AssembliesPath)\ICSharpCode.AvalonEdit.dll" />
-      </Component>
-      <Component Id="cmp6BC90F520153B7983EB75BBCCFA7DF61" Directory="INSTALLFOLDER" Guid="{FB5EFE04-D576-4716-96ED-8E933BE04D5D}">
-        <File Id="fil86BD0E8CB2106607E5AA4E731CBA0823" KeyPath="yes" Source="$(var.AssembliesPath)\ICSharpCode.AvalonEdit.pdb" />
-      </Component>
-      <Component Id="cmp49B7E2349C1C6CCE1B4FD4C22D3CCABA" Directory="INSTALLFOLDER" Guid="{A734600C-5806-4202-80B9-E93D4F081F38}">
-        <File Id="fil5B4F1091F902F2A36A367DF9CE8CEF81" KeyPath="yes" Source="$(var.AssembliesPath)\ICSharpCode.AvalonEdit.xml" />
-      </Component>
-      <Component Id="cmpF5F4EA03ED589A49D83AAA27FBF28226" Directory="INSTALLFOLDER" Guid="{E387D286-7B73-45E6-8359-31B4D863E5C6}">
-        <File Id="fil7FAF8E4E6003C4FD8CC7760A8822C90F" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.exe" />
-      </Component>
-      <Component Id="cmpC79487DB65192E2C95BA0CE5260F90B3" Directory="INSTALLFOLDER" Guid="{58010BE4-A70C-476D-BF8F-589A8C2C8484}">
-        <File Id="fil8B493ACFB1F5724383E33CA653350976" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.exe.config" />
-      </Component>
-      <Component Id="cmp14FA118AD21AC106FF674FF7ABB2C6C8" Directory="INSTALLFOLDER" Guid="{D39C42E8-5F1E-4EC3-8B32-37E79C1642AB}">
-        <File Id="fil722CC5F11102B0CED653CA558AD1213D" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.pdb" />
-      </Component>
-      <Component Id="cmpEE99FE6E41938CB96B10A83FAC26701E" Directory="INSTALLFOLDER" Guid="{5B4D5DE0-F295-4B3D-A190-C4242A559C47}">
-        <File Id="filC9268FE627F020CCE76ED47912AFF136" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.vshost.exe" />
-      </Component>
-      <Component Id="cmp4E00D38329FFDF0025BBA16BCCAECB17" Directory="INSTALLFOLDER" Guid="{2B24E80D-14F4-46E9-BF9B-B37F1A1328E4}">
-        <File Id="filEC887C372CC3B9668A8DBBF5551EF963" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.vshost.exe.config" />
-      </Component>
-      <!--<Component Id="cmpAC666EAF8A8EF9528098A85A0E66B101" Directory="INSTALLFOLDER" Guid="{5672A936-BEFE-4439-99B5-8C453A4F3D6C}">
-        <File Id="fil16DD4552FEE3CACEEC4CD49C579B41E8" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.vshost.exe.manifest" />
-      </Component>-->
-      <Component Id="cmp017BFB3832A5B110A2B3A350E13F2A5C" Directory="INSTALLFOLDER" Guid="{5B47216F-C494-403F-B70A-31BEC8D3EB59}">
-        <File Id="fil17E34524E8398461D615894C92558FE9" KeyPath="yes" Source="$(var.AssembliesPath)\System.Windows.Interactivity.dll" />
-      </Component>
-      <Component Id="cmpB5AC76F2952CC9DFFEAE55F2225097DA" Directory="INSTALLFOLDER" Guid="{AAE40367-3AFE-4136-961C-6840F7DC3A50}">
-        <File Id="fil6AA069CB067F41A6BD8EE397FDA8959D" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.dll" />
-      </Component>
-      <Component Id="cmp9CED7B4908D9ABE753756EF36FC6DE73" Directory="INSTALLFOLDER" Guid="{C431EA0A-B307-4BE9-B33C-DDE60A878E26}">
-        <File Id="fil5DBA5F30EADBDD2A0691161B7AF09B82" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.pdb" />
-      </Component>
-      <Component Id="cmp2A23BAA07F6AEF1BAC39F167324A8F3A" Directory="INSTALLFOLDER" Guid="{23D52B7E-4C82-4A12-ADF5-A7CC76AB26B5}">
-        <File Id="filBC3F4C1166E0142D06933250742EA7C2" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
-      </Component>
-      <Component Id="cmpAC805E9BB0FF5D5FB5E78DE2FD748346" Directory="INSTALLFOLDER" Guid="{6E2675AD-2E4F-4A37-8F39-A72C3A3E2A7B}">
-        <File Id="fil1671DED2F851D87B90B3CEE390EECFFE" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.Aero.pdb" />
-      </Component>
-      <Component Id="cmpCBEDF89CCCB8836AD8FD2785A4D7892C" Directory="INSTALLFOLDER" Guid="{A5ADC171-8BDA-41F4-A4C8-379B930C4173}">
-        <File Id="filD17C5DE3CB89608AC1F89DB51875BB6D" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.Expression.dll" />
-      </Component>
-      <Component Id="cmp0937B7E233D5BA3A43198AAD76D312EA" Directory="INSTALLFOLDER" Guid="{A77C8670-B051-4A60-8173-9C2D7CA05772}">
-        <File Id="filAC1B1C56366304FD3E6E5EE54770F1DA" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.Expression.pdb" />
-      </Component>
-      <Component Id="cmpD2BBFD2B0371F68A1185CC644A1BEA64" Directory="INSTALLFOLDER" Guid="{8898CF73-9107-474C-AB2B-63729C7454CC}">
-        <File Id="fil4DFF05E2DF20649A72E2FB5FBC3CBA2E" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
-      </Component>
-      <Component Id="cmpDB997B0993CB9D7B171E72C8C51C5E84" Directory="INSTALLFOLDER" Guid="{EEC9B8DF-7767-4479-A68E-A6BCCBAB7A5E}">
-        <File Id="fil58C1D93974D73BA2B8E3BAC9A718409A" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.Metro.pdb" />
-      </Component>
-      <Component Id="cmpFFB651FFCBD1B293A7B0FE113C056F8F" Directory="INSTALLFOLDER" Guid="{14FAFB41-CD21-4AC4-A6E8-51286A1DA5D0}">
-        <File Id="filEFDE58C5ABCFCB31E073211560F487D2" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
-      </Component>
-      <Component Id="cmpAC963C9C8C3E18EC3142C74A13BA4773" Directory="INSTALLFOLDER" Guid="{0E77E56A-C90F-4D4E-899A-4E1CE90072DD}">
-        <File Id="fil7291423AC0ECDA69688BD3B7C9BA2AC9" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.Themes.VS2010.pdb" />
-      </Component>
-      <Component Id="cmp139591141CFE19A16FA77DFA69691224" Directory="INSTALLFOLDER" Guid="{7C0E31B3-5675-431A-AC91-A2A4B720C1BA}">
-        <File Id="fil82DB0980FAF570684E3DEA67A301AE51" KeyPath="yes" Source="$(var.AssembliesPath)\Xceed.Wpf.AvalonDock.xml" />
-      </Component>
-      <Component Id="cmpB6C532107EB144C39ABD2F56C39306D7" Directory="dir242DC17B8DFC53C13CAF172FC08B730A" Guid="{23B60FE1-3737-42DA-8B8E-D08EC2F6ADD3}">
-        <File Id="filB82126AFB787AA36F5EA53128AA09AD6" KeyPath="yes" Source="$(var.AssembliesPath)\de\System.Windows.Interactivity.resources.dll" />
-      </Component>
-      <Component Id="cmp5C894AE3FF956FCDDF4DFFE3BA89B9C1" Directory="dir242DC17B8DFC53C13CAF172FC08B730A" Guid="{80B91339-F7FE-4353-B6D9-F72F1FAFEACB}">
-        <File Id="filB1C9AEB28739722A7265C14C29D55B54" KeyPath="yes" Source="$(var.AssembliesPath)\de\Xceed.Wpf.AvalonDock.resources.dll" />
-      </Component>
-      <Component Id="cmpBDA498F45CBE57A7E58B97EB43FF456D" Directory="dir1710C20C4C4513ACEA8627A52788727F" Guid="{F400D485-B5CD-4949-909C-45546B5DB6AD}">
-        <File Id="fil8247BA0D347E881CD049EEA945490A2D" KeyPath="yes" Source="$(var.AssembliesPath)\en\System.Windows.Interactivity.resources.dll" />
-      </Component>
-      <Component Id="cmpF764B4878911C9E76FF5841A7C142D5B" Directory="dir9AE38F4F5CB5E565E774521E138F44FD" Guid="{D0EC6353-6F50-4F5B-8AA1-02E4692FFC57}">
-        <File Id="filDBA036C5FD580E692829FCEB8187B07B" KeyPath="yes" Source="$(var.AssembliesPath)\es\System.Windows.Interactivity.resources.dll" />
-      </Component>
-      <Component Id="cmp6EFE3E0288B5FA57D98FB920AB342897" Directory="dir9AE38F4F5CB5E565E774521E138F44FD" Guid="{5FD788B7-07AD-4614-A9CD-4E736B6D4F66}">
-        <File Id="fil87AEDF35E30560161D787B0A3BF3750B" KeyPath="yes" Source="$(var.AssembliesPath)\es\Xceed.Wpf.AvalonDock.resources.dll" />
-      </Component>
-      <Component Id="cmpBAAD9C9143AE7C0B0FDD591C9F1E9C94" Directory="dirB55DFDA91FEE7CCCBC65CA7493B75748" Guid="{4E243561-B876-4E76-B618-C3C357AE6928}">
-        <File Id="fil0A662AF4309B4F02F6D483738F3546DA" KeyPath="yes" Source="$(var.AssembliesPath)\fr\System.Windows.Interactivity.resources.dll" />
-      </Component>
-      <Component Id="cmp3EB7F17B0DCBDF3729FDAAAF0CF6B665" Directory="dirB55DFDA91FEE7CCCBC65CA7493B75748" Guid="{708AE236-470B-4D38-AD96-3AC8293AC228}">
-        <File Id="fil894A87B41983376BAAE165DD02D4FB6C" KeyPath="yes" Source="$(var.AssembliesPath)\fr\Xceed.Wpf.AvalonDock.resources.dll" />
-      </Component>
-      <Component Id="cmpFB118A47202A6B98ED49B3C952C22F35" Directory="dir937629FDAC3D30087170D6DA46E383A6" Guid="{D1531FD8-A91B-4045-BDFC-1D299491ADB2}">
-        <File Id="fil0686FF7DCF04C68D53BD45FE0C2A8BF6" KeyPath="yes" Source="$(var.AssembliesPath)\hu\Xceed.Wpf.AvalonDock.resources.dll" />
-      </Component>
-      <Component Id="cmpDDE8AC599B8C0E23E5C8BE3E7214DE22" Directory="dir45DE18DD71F3E8DD6BE4A0E2B48778C8" Guid="{460AE001-F2B6-4085-8034-720063CD1E7F}">
-        <File Id="fil13C2B017904B1016CBDC7DB6A2E3C27B" KeyPath="yes" Source="$(var.AssembliesPath)\it\System.Windows.Interactivity.resources.dll" />
-      </Component>
-      <Component Id="cmp0B9527E49327DF46736C8F6F58634C01" Directory="dir45DE18DD71F3E8DD6BE4A0E2B48778C8" Guid="{EA8AF152-F9DE-4AEA-9F9C-DEEABFBB181D}">
-        <File Id="fil0B4AABB0E6DE194FF7BBE1F51933E675" KeyPath="yes" Source="$(var.AssembliesPath)\it\Xceed.Wpf.AvalonDock.resources.dll" />
-      </Component>
-      <Component Id="cmp787B2F46EF38D81FD1CD49F7588076FD" Directory="dir997B58958EFAE06BB705E870622AB899" Guid="{0A47AEA2-E065-4122-85CD-F28FE7DD9CB8}">
-        <File Id="fil7E3C71A6B5B22C8B4C5B815B286585F1" KeyPath="yes" Source="$(var.AssembliesPath)\ja\System.Windows.Interactivity.resources.dll" />
-      </Component>
-      <Component Id="cmpCD6B880858C68ABB3F57724B5F04B96F" Directory="dirF152986C1E6339E5EF84FD1370841521" Guid="{B95DA073-CEF2-4AF8-8BF1-52CEC37F8DA6}">
-        <File Id="fil2EF764D0D9E392B8577C36C394ABF0B4" KeyPath="yes" Source="$(var.AssembliesPath)\ko\System.Windows.Interactivity.resources.dll" />
-      </Component>
-      <Component Id="cmp78E3AC4B6177179C5F50ECB1A8B16D85" Directory="dir339F53F3A11C56B053FD1FEC9B438810" Guid="{D15EB6EA-716B-4092-84CF-D99215F47529}">
-        <File Id="fil449CD491C0135989D68E91371269A3B8" KeyPath="yes" Source="$(var.AssembliesPath)\pt-BR\Xceed.Wpf.AvalonDock.resources.dll" />
-      </Component>
-      <Component Id="cmp1540E6C17030090C628A142AB815893D" Directory="dirBD3668345143F8EFDFB86A9B73810966" Guid="{C4A06B13-2BE7-4A28-AFA5-95D075BCC7ED}">
-        <File Id="filA53F285204ABC84BDD30D704D3AD1488" KeyPath="yes" Source="$(var.AssembliesPath)\ro\Xceed.Wpf.AvalonDock.resources.dll" />
-      </Component>
-      <Component Id="cmp73293AD8C7D9FD73E65D2E412CA7E1A3" Directory="dirE9205C68F964857267FD3312DBFF9A91" Guid="{4875900C-2459-440C-AC35-E39FCDB35C36}">
-        <File Id="fil46122418162C66762372FD8D22B080D0" KeyPath="yes" Source="$(var.AssembliesPath)\ru\System.Windows.Interactivity.resources.dll" />
-      </Component>
-      <Component Id="cmp0D4BE05FC1DE55590C9709CA01911525" Directory="dirE9205C68F964857267FD3312DBFF9A91" Guid="{3253EEFC-F7BD-460A-B185-2884B4FE50F0}">
-        <File Id="fil4C2ED72F2BA64BA2A890779CC3B77DA4" KeyPath="yes" Source="$(var.AssembliesPath)\ru\Xceed.Wpf.AvalonDock.resources.dll" />
-      </Component>
-      <Component Id="cmpC21D9CCB5856693FB3CE2A23AFB7DD83" Directory="dir8FBB04D7AB5FE55FCF40758128EC763E" Guid="{B2DD1DA1-AEB2-4C19-82B7-412DC288EC8F}">
-        <File Id="fil75EA045A69F3E238DA47EBBABBF5DCD8" KeyPath="yes" Source="$(var.AssembliesPath)\sv\Xceed.Wpf.AvalonDock.resources.dll" />
-      </Component>
-      <Component Id="cmpDFF0AA886ED74AF38A556E1272567BC4" Directory="dir4A8DD77DBC79775EC39CACBC8AA06107" Guid="{C9DA5901-7BF9-48FC-98A7-5DCB4E062B4A}">
-        <File Id="fil444DDAAFA1E48FBB303308C0EDC4DCCB" KeyPath="yes" Source="$(var.AssembliesPath)\zh-Hans\System.Windows.Interactivity.resources.dll" />
-      </Component>
-      <Component Id="cmp11A3FE50B66CC04F854A4486A5199C89" Directory="dir4A8DD77DBC79775EC39CACBC8AA06107" Guid="{DF327232-D4A4-4819-836D-1FA5A9C879A9}">
-        <File Id="fil6EE1E4B1FB2A7DF0A95E3D283E73ADFA" KeyPath="yes" Source="$(var.AssembliesPath)\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll" />
-      </Component>
-      <Component Id="cmp4CEAD35821858DFE561EC729EBFF4141" Directory="dir083BC4C92455CD933FA93376E7459C85" Guid="{8864E352-F45C-46A8-B8CD-3A0D432C110F}">
-        <File Id="filC9B280E3E65CFFD0F1875043957BC24B" KeyPath="yes" Source="$(var.AssembliesPath)\zh-Hant\System.Windows.Interactivity.resources.dll" />
-      </Component>
-    </ComponentGroup>
-  </Fragment>
+    <Fragment>
+        <DirectoryRef Id="INSTALLFOLDER">
+            <Directory Id="dir3AC91777364664279954680D11761783" Name="ca-ES" />
+            <Directory Id="dirB15F4604371D144EAEEAD44FE901D873" Name="cs" />
+            <Directory Id="dir685A0806E2E8E14FA0BEED541D816845" Name="cs-CZ" />
+            <Directory Id="dir242DC17B8DFC53C13CAF172FC08B730A" Name="de" />
+            <Directory Id="dir9AE38F4F5CB5E565E774521E138F44FD" Name="es" />
+            <Directory Id="dirB55DFDA91FEE7CCCBC65CA7493B75748" Name="fr" />
+            <Directory Id="dir937629FDAC3D30087170D6DA46E383A6" Name="hu" />
+            <Directory Id="dir45DE18DD71F3E8DD6BE4A0E2B48778C8" Name="it" />
+            <Directory Id="dir997B58958EFAE06BB705E870622AB899" Name="ja" />
+            <Directory Id="dirF152986C1E6339E5EF84FD1370841521" Name="ko" />
+            <Directory Id="dir4B74599EEC7C992EE101A3FAC2E3F9DA" Name="nl-BE" />
+            <Directory Id="dirB6C57608593BDEA87B90E388CF59E0E8" Name="pl" />
+            <Directory Id="dir8606A94F8723F2ACAF42032E593433C7" Name="pt" />
+            <Directory Id="dir339F53F3A11C56B053FD1FEC9B438810" Name="pt-BR" />
+            <Directory Id="dir41772C233BE465DE0D167364B3BB566C" Name="Resources" />
+            <Directory Id="dirBD3668345143F8EFDFB86A9B73810966" Name="ro" />
+            <Directory Id="dirE9205C68F964857267FD3312DBFF9A91" Name="ru" />
+            <Directory Id="dir58E8247E2885C01898CAD009F9EFD8BA" Name="runtimes" />
+            <Directory Id="dir8FBB04D7AB5FE55FCF40758128EC763E" Name="sv" />
+            <Directory Id="dirE562A4656FE03253EA39D17E8127BA05" Name="tr" />
+            <Directory Id="dir4A8DD77DBC79775EC39CACBC8AA06107" Name="zh-Hans" />
+            <Directory Id="dir083BC4C92455CD933FA93376E7459C85" Name="zh-Hant" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="AssembliesGroupId">
+            <Component Id="cmp82A2CBE29BECCC29124FEEA9A6BC0A12" Directory="INSTALLFOLDER" Guid="{01532D54-328B-4774-AC3D-6BFD557E4C21}">
+                <File Id="fil5B37D238FD9AFD6FA05BBEFAEE6B7B49" KeyPath="yes" Source="$(var.AssembliesPath)\AvalonDock.dll" />
+            </Component>
+            <Component Id="cmpCF9B3A227754E55B2A4622BDADF51333" Directory="INSTALLFOLDER" Guid="{B582C625-DDA1-4B4C-BD1C-DE0EDA4E926D}">
+                <File Id="fil244CDAED28510644E512EA1DBCB9390F" KeyPath="yes" Source="$(var.AssembliesPath)\BouncyCastle.Crypto.dll" />
+            </Component>
+            <Component Id="cmp8D1543ABCB80F210097DE6C692F8E7D3" Directory="INSTALLFOLDER" Guid="{BA4A5162-6900-4EBB-9E59-F640CD717C85}">
+                <File Id="fil5F3739B9F27C9025F95EE63EBCEC5060" KeyPath="yes" Source="$(var.AssembliesPath)\ICSharpCode.AvalonEdit.dll" />
+            </Component>
+            <Component Id="cmp353FCB63A792C43A60F7237E4C156972" Directory="INSTALLFOLDER" Guid="{501C4ED6-A24D-478F-AB4E-42CDE6B4757F}">
+                <File Id="filD27CA513C5594710A643EC5105EDED52" KeyPath="yes" Source="$(var.AssembliesPath)\itext.barcodes.dll" />
+            </Component>
+            <Component Id="cmp2A1997D2A8F3D29262819FB005CB5DC0" Directory="INSTALLFOLDER" Guid="{417810EF-AF0F-4EE4-8541-B559A4E4CEC9}">
+                <File Id="fil9B83AF503905B6320BFBF544C91771B1" KeyPath="yes" Source="$(var.AssembliesPath)\itext.commons.dll" />
+            </Component>
+            <Component Id="cmpDAAD44A6F31E9384DC7498D6E5DA16BC" Directory="INSTALLFOLDER" Guid="{190D9BED-E9D5-45F6-B7A6-8FFBC1849254}">
+                <File Id="fil2D621EB63B5B0E28122D7ACDC983B0FE" KeyPath="yes" Source="$(var.AssembliesPath)\itext.forms.dll" />
+            </Component>
+            <Component Id="cmp2331F32DFD90A18159E2AF28D876FB6E" Directory="INSTALLFOLDER" Guid="{2066FA24-CC56-4DD3-9638-53E41A4ABBD1}">
+                <File Id="fil10E06E2AD134760B9089317124219C52" KeyPath="yes" Source="$(var.AssembliesPath)\itext.io.dll" />
+            </Component>
+            <Component Id="cmpC898D880A2401AD1520397C34B1F1D1D" Directory="INSTALLFOLDER" Guid="{E5EA8374-3A7C-405A-B2F7-6A2DB07F5742}">
+                <File Id="fil1A0623B9141FA5A582352CD8A91EDF67" KeyPath="yes" Source="$(var.AssembliesPath)\itext.kernel.dll" />
+            </Component>
+            <Component Id="cmp8D8B4EF96A670A683B8B382D6EFD0DF9" Directory="INSTALLFOLDER" Guid="{75D36297-7E77-498F-91A7-A4D1DAF92ABE}">
+                <File Id="filA816A940F12D52C10FFBD61C58F1D3F8" KeyPath="yes" Source="$(var.AssembliesPath)\itext.layout.dll" />
+            </Component>
+            <Component Id="cmp5DE9BF4074F35105DD3D1F54AFF1E911" Directory="INSTALLFOLDER" Guid="{6E3401CF-159B-4862-82C5-F9D35395DF30}">
+                <File Id="fil314A7D628AC9C1A32504188C00F571D1" KeyPath="yes" Source="$(var.AssembliesPath)\itext.pdfa.dll" />
+            </Component>
+            <Component Id="cmpBFB298C8A209B08DDEC573BA6A5D93AF" Directory="INSTALLFOLDER" Guid="{9A00AD79-E3A5-4486-94BF-D0CA535D87D7}">
+                <File Id="fil95B14FCB331CA1A01779EFF6D9AE6FD8" KeyPath="yes" Source="$(var.AssembliesPath)\itext.sign.dll" />
+            </Component>
+            <Component Id="cmp347AD5D5E9BF1B68FC1208B7B8E1C244" Directory="INSTALLFOLDER" Guid="{43DCDF34-588D-46C2-997D-AD549AC230D7}">
+                <File Id="fil4B5FF2E29CD2C0256C86C0EF3F664619" KeyPath="yes" Source="$(var.AssembliesPath)\itext.styledxmlparser.dll" />
+            </Component>
+            <Component Id="cmp15897A97B602185F83041E3A44896EEA" Directory="INSTALLFOLDER" Guid="{F44ACD75-6C73-4384-9BC0-7A12C8459BE7}">
+                <File Id="filF68B8B346C503CC7A42B5DB01415A399" KeyPath="yes" Source="$(var.AssembliesPath)\itext.svg.dll" />
+            </Component>
+            <Component Id="cmp20E5A82EE1F53BB560782568696E50EF" Directory="INSTALLFOLDER" Guid="{94474DA1-6A97-4905-B073-A4E2D12E0BD3}">
+                <File Id="fil2E537F5E44EFF72FBE1AF325D6F073A2" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.Bcl.AsyncInterfaces.dll" />
+            </Component>
+            <Component Id="cmp8829932782E2062A8292EB806216CC80" Directory="INSTALLFOLDER" Guid="{4243E1FC-D109-4EA1-A215-087D081305CF}">
+                <File Id="fil7E65EF656EF556143E801F8F85E3AC17" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.DotNet.PlatformAbstractions.dll" />
+            </Component>
+            <Component Id="cmp198468A4AE980CD6955CB6EB86083726" Directory="INSTALLFOLDER" Guid="{948ADFD9-09E1-4C65-865C-C8AF4FB07B53}">
+                <File Id="fil02E4E4D119BFC4831CEA5A71F1288443" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp493E9BC44885B6BC5C57BDB1302C40D9" Directory="INSTALLFOLDER" Guid="{C2535ABA-9A02-4DA1-99EE-991E2CE53580}">
+                <File Id="filA40291A4FBD4719B6995DEB783A39A65" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.Extensions.DependencyInjection.dll" />
+            </Component>
+            <Component Id="cmp828BABCAA179DFEF8C123894E628FE4B" Directory="INSTALLFOLDER" Guid="{68A0C463-E0C9-4CE3-B78D-3D23812858B2}">
+                <File Id="filF6E569B7A4467871DC459846AD8CAB0C" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.Extensions.DependencyModel.dll" />
+            </Component>
+            <Component Id="cmp8C674FD6A69988A60A77A4CEE0F53781" Directory="INSTALLFOLDER" Guid="{42D7E214-5985-491B-B767-720BED7F20D7}">
+                <File Id="fil72342637E9F74EE945317D4603CEBA2F" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.Extensions.Logging.Abstractions.dll" />
+            </Component>
+            <Component Id="cmp835034F744990576E31C2DBC7C9293BF" Directory="INSTALLFOLDER" Guid="{D3F5FC93-663B-4300-A730-C76D34BCCF28}">
+                <File Id="fil71DD299EE7649E964200A4127797D1C0" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.Extensions.Logging.dll" />
+            </Component>
+            <Component Id="cmp33F6A38332D557045329F60C77B93E9F" Directory="INSTALLFOLDER" Guid="{643F2DE1-472B-47D2-8CD3-504A66BDCC4F}">
+                <File Id="fil3B8F8A8FF12321276B16B774E878E793" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.Extensions.ObjectPool.dll" />
+            </Component>
+            <Component Id="cmp3279C150AE8DF554FD7EEE2085672A2B" Directory="INSTALLFOLDER" Guid="{F7904536-837E-4AEF-BA8C-D8F35709D83D}">
+                <File Id="filA8D1F5D61FD7BC25099F707CBF5B1F24" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.Extensions.Options.dll" />
+            </Component>
+            <Component Id="cmp946145B53A7DCDFA822B0EFD2314FAB6" Directory="INSTALLFOLDER" Guid="{B987FA9C-13AE-4AC3-9027-4CA2FDE249F5}">
+                <File Id="fil773F29942324AAB2A7E1977E1AC63609" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.Extensions.Primitives.dll" />
+            </Component>
+            <Component Id="cmp8AC833CFB7DC6722697152FE46DA157A" Directory="INSTALLFOLDER" Guid="{04179FFF-890B-44AE-B417-3C1CE5067157}">
+                <File Id="filD3CAD095889A5DE7EAAE25C73BC9910A" KeyPath="yes" Source="$(var.AssembliesPath)\Microsoft.Xaml.Behaviors.dll" />
+            </Component>
+            <Component Id="cmpBC4FC00A26E7D32479D42D3411317FC5" Directory="INSTALLFOLDER" Guid="{237CFFC9-386B-41D3-9870-419F638297EC}">
+                <File Id="fil90A8AAD9FC612906D405476D61CEA3F4" KeyPath="yes" Source="$(var.AssembliesPath)\Newtonsoft.Json.dll" />
+            </Component>
+            <Component Id="cmp633F921831147E360CE4CFB12DFA4C70" Directory="INSTALLFOLDER" Guid="{80F21D85-4169-44A3-B49B-D16FE04F49D4}">
+                <File Id="filF82E983818FCA2C1082174F8D8125655" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.deps.json" />
+            </Component>
+            <Component Id="cmp290E21A8282CDFF847A6A65B980AC8BF" Directory="INSTALLFOLDER" Guid="{7228200B-5C1A-4B58-A9B6-8B2F47E100C6}">
+                <File Id="fil3A1E0BAAD458065A28B1020CA17A4C39" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.dll" />
+            </Component>
+            <Component Id="cmp15BBF2FEFFCE5EC3E256D75691D4C0EA" Directory="INSTALLFOLDER" Guid="{7A8EA3A9-6948-4003-B939-8A132303471E}">
+                <File Id="fil9C78F5689487E082EF75F1901DED9165" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.dll.config" />
+            </Component>
+            <Component Id="cmpF5F4EA03ED589A49D83AAA27FBF28226" Directory="INSTALLFOLDER" Guid="{DFB62D40-E258-4F07-AB2E-F0A3B6ADDB1C}">
+                <File Id="fil7FAF8E4E6003C4FD8CC7760A8822C90F" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.exe" />
+            </Component>
+            <Component Id="cmp14FA118AD21AC106FF674FF7ABB2C6C8" Directory="INSTALLFOLDER" Guid="{40C7EE94-7862-457E-BC33-3229B72EEC10}">
+                <File Id="fil722CC5F11102B0CED653CA558AD1213D" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.pdb" />
+            </Component>
+            <Component Id="cmp7D425A6F28D358B1FCFBFF40873FFBD9" Directory="INSTALLFOLDER" Guid="{B9B44BDD-5872-47E5-8CFF-73AF584561E7}">
+                <File Id="fil22CE85C4F267CAA63FC97142B0396386" KeyPath="yes" Source="$(var.AssembliesPath)\PdfCodeEditor.runtimeconfig.json" />
+            </Component>
+            <Component Id="cmp704B16B386E9703C1412E6AFBDE594C6" Directory="INSTALLFOLDER" Guid="{8DE29BB0-DCB3-4A22-BFF9-F7349FB6487E}">
+                <File Id="filEED5A5DFA9D4B404BB75226F55378079" KeyPath="yes" Source="$(var.AssembliesPath)\System.ComponentModel.Composition.dll" />
+            </Component>
+            <Component Id="cmpCB3207CB8152A24C1B0C4FAA6C42381E" Directory="INSTALLFOLDER" Guid="{7A492937-F124-4F30-BD54-E03E0FB2D4B6}">
+                <File Id="fil8B8DAA4524DD98C93C8A44C222B65032" KeyPath="yes" Source="$(var.AssembliesPath)\System.ComponentModel.Composition.Registration.dll" />
+            </Component>
+            <Component Id="cmp285EB902192036F35723B53E81178402" Directory="INSTALLFOLDER" Guid="{C940D460-8CAE-44FD-9B9C-80D7A2843B06}">
+                <File Id="filA4C2A691CD4485CFDD326269313A8E28" KeyPath="yes" Source="$(var.AssembliesPath)\System.Data.Odbc.dll" />
+            </Component>
+            <Component Id="cmp94E20494377646A4D9567D7D153DC7F8" Directory="INSTALLFOLDER" Guid="{E54A2A54-251D-4B57-8348-E643F29C15AF}">
+                <File Id="fil0F6452769AB6165B903F49BE66D5CDED" KeyPath="yes" Source="$(var.AssembliesPath)\System.Data.OleDb.dll" />
+            </Component>
+            <Component Id="cmp7FFA1CFB45EDA1442E42E34E1F3DB27E" Directory="INSTALLFOLDER" Guid="{63752779-F3BD-4778-9545-DE6C789C5C76}">
+                <File Id="filEF4B8F9C45AD18CA9F559E7A542D0C98" KeyPath="yes" Source="$(var.AssembliesPath)\System.Data.SqlClient.dll" />
+            </Component>
+            <Component Id="cmp393D17DF285570A405EEC657FF77C3B4" Directory="INSTALLFOLDER" Guid="{E31BF486-70CE-4800-9A91-4E4EAE8FEB03}">
+                <File Id="filDBD5127B654D9C88A94771DC5CCBC33E" KeyPath="yes" Source="$(var.AssembliesPath)\System.DirectoryServices.AccountManagement.dll" />
+            </Component>
+            <Component Id="cmp248A5E0AE153624D5F53B2EA60C293FE" Directory="INSTALLFOLDER" Guid="{1D880413-5CCE-452E-80F9-6F67479F6B44}">
+                <File Id="fil34F44A46E7C41FF75B888D32A7A48422" KeyPath="yes" Source="$(var.AssembliesPath)\System.DirectoryServices.Protocols.dll" />
+            </Component>
+            <Component Id="cmpAA71AC0ED023C2C24B4F61CC98B27F64" Directory="INSTALLFOLDER" Guid="{9957D9E6-E6E3-46C9-8CD7-3DFE5BBABA7D}">
+                <File Id="fil49D56705AF9A04B1D7C05BA68795D333" KeyPath="yes" Source="$(var.AssembliesPath)\System.IO.Ports.dll" />
+            </Component>
+            <Component Id="cmpB2F9EBAF385E9E29B5A93F58B0D73177" Directory="INSTALLFOLDER" Guid="{4B837E29-7820-45C8-AFD4-E2C69C9AECE0}">
+                <File Id="filA39AFD83E426A11FDBCFCA1B11CFEE01" KeyPath="yes" Source="$(var.AssembliesPath)\System.Management.dll" />
+            </Component>
+            <Component Id="cmp63C479140D6F537A76E0B638D87E2951" Directory="INSTALLFOLDER" Guid="{E9223A1B-3411-4904-ADB2-E03F479F0E17}">
+                <File Id="filDD8716D1D4DF6945930C352517ED36AB" KeyPath="yes" Source="$(var.AssembliesPath)\System.Private.ServiceModel.dll" />
+            </Component>
+            <Component Id="cmp4111B70664EF5581AD36096A4B36A7E6" Directory="INSTALLFOLDER" Guid="{8AA6508C-BD1A-40E8-8297-C59067332742}">
+                <File Id="fil9AFD93DBF39D6FFE171FABA8DF8C0E8D" KeyPath="yes" Source="$(var.AssembliesPath)\System.Reflection.Context.dll" />
+            </Component>
+            <Component Id="cmp3704D619BA8176CC239C4E2E3DE22240" Directory="INSTALLFOLDER" Guid="{AE355290-6187-4A5F-8821-325BDFD936F7}">
+                <File Id="fil33F3D184398B14A49BD98032A8871B75" KeyPath="yes" Source="$(var.AssembliesPath)\System.Runtime.Caching.dll" />
+            </Component>
+            <Component Id="cmpC8B4E2670FF4E41E22F95F7602D47941" Directory="INSTALLFOLDER" Guid="{E6DF7792-442A-4AAF-AA78-4F2D86381813}">
+                <File Id="filD24E7EB030C37BD02FFD79DEBC566F07" KeyPath="yes" Source="$(var.AssembliesPath)\System.ServiceModel.dll" />
+            </Component>
+            <Component Id="cmp51AA3CB97BB5B405B92BE7CE51FE7C0B" Directory="INSTALLFOLDER" Guid="{0EF76656-F104-484A-A117-7C003FF3AC76}">
+                <File Id="fil0AF2E10A67C130F9048A1E447DAD6412" KeyPath="yes" Source="$(var.AssembliesPath)\System.ServiceModel.Duplex.dll" />
+            </Component>
+            <Component Id="cmp3758397F1270BF5124FBA146AB2161CD" Directory="INSTALLFOLDER" Guid="{0E66C643-B9B7-4C26-A860-81ACDBB0DBEC}">
+                <File Id="filF0310C7B21D09F08E8BEE2BB130AF97D" KeyPath="yes" Source="$(var.AssembliesPath)\System.ServiceModel.Http.dll" />
+            </Component>
+            <Component Id="cmpE13F8923BB47DFDF5AB91563AC78D9CE" Directory="INSTALLFOLDER" Guid="{E932C862-5B3E-4CB8-8EBA-B22939D79E9B}">
+                <File Id="filA4B12DF91C127E080EFEF3E2E2ECF1D6" KeyPath="yes" Source="$(var.AssembliesPath)\System.ServiceModel.NetTcp.dll" />
+            </Component>
+            <Component Id="cmpF9FE3EF269B462CCFCD03056FED69C64" Directory="INSTALLFOLDER" Guid="{C89F7C19-D94E-4D3F-937B-56789AE8D8AD}">
+                <File Id="fil4FCB7A69DE1E01B29199EA8BD9B5E458" KeyPath="yes" Source="$(var.AssembliesPath)\System.ServiceModel.Primitives.dll" />
+            </Component>
+            <Component Id="cmp112D508FECE5F4C9F2B5C7AC4CA6D773" Directory="INSTALLFOLDER" Guid="{7EC194C0-6457-4AB2-97EA-907424A98DB4}">
+                <File Id="filD63E8C2208F8D05C2F145141C54ECA66" KeyPath="yes" Source="$(var.AssembliesPath)\System.ServiceModel.Security.dll" />
+            </Component>
+            <Component Id="cmpE860E8D2FA636B89DE467619318BC289" Directory="INSTALLFOLDER" Guid="{096D847B-5ED6-408D-80BE-E313EA7C0A4A}">
+                <File Id="filA318982EA57A53F7009A93969927308B" KeyPath="yes" Source="$(var.AssembliesPath)\System.ServiceModel.Syndication.dll" />
+            </Component>
+            <Component Id="cmp3C5190B580EDFB87D0BC5E835BB950DE" Directory="INSTALLFOLDER" Guid="{5C181E3F-A7FE-4F40-BEEE-EC25B96D401D}">
+                <File Id="fil0B6369FF78F990F18A525D5F0CC6D1AB" KeyPath="yes" Source="$(var.AssembliesPath)\System.ServiceProcess.ServiceController.dll" />
+            </Component>
+            <Component Id="cmp00D7C080B69FD5A5E7F96F9ABFC8E76F" Directory="INSTALLFOLDER" Guid="{04B52BF9-AA77-42CF-8D79-C2CA71FBB09D}">
+                <File Id="filDBD7B603EE731395159C8F5E0A12B457" KeyPath="yes" Source="$(var.AssembliesPath)\System.Speech.dll" />
+            </Component>
+            <Component Id="cmp39FDE7A57BC414559C3F1FA6E51EDFE1" Directory="INSTALLFOLDER" Guid="{295FC6CD-F1BD-4F87-ADB0-B0758F4D4A19}">
+                <File Id="filBE93FAEC8A073A60D90CE4A90C24447A" KeyPath="yes" Source="$(var.AssembliesPath)\System.Web.Services.Description.dll" />
+            </Component>
+            <Component Id="cmp73ADED2CBDAB4FB37341FC38B2E56864" Directory="dir3AC91777364664279954680D11761783" Guid="{AFD02BBA-7EFB-479F-AE24-29731BF9B98D}">
+                <File Id="filF1E2D8FC379233950EC47C429AB0803A" KeyPath="yes" Source="$(var.AssembliesPath)\ca-ES\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmp1065958023FDB71EE0CC0085E5EEE07D" Directory="dirB15F4604371D144EAEEAD44FE901D873" Guid="{0BC44F43-AFFB-44BA-B9D7-235C50E6E2E7}">
+                <File Id="fil7387CAA7C8F6FDB3AE9F7BEBD59E02B6" KeyPath="yes" Source="$(var.AssembliesPath)\cs\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmp22E2F6D60D882C89ADFFE1C730526B00" Directory="dirB15F4604371D144EAEEAD44FE901D873" Guid="{E75B6E7B-D590-497D-AC83-5505AB0C51AB}">
+                <File Id="fil3192F8E263D9891206243470BB3D4365" KeyPath="yes" Source="$(var.AssembliesPath)\cs\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmpAEDF5F80698C3487CF481B0EFD16F769" Directory="dir685A0806E2E8E14FA0BEED541D816845" Guid="{2BAC8C3C-C415-457B-A0B5-19639E99E410}">
+                <File Id="fil114DC46F3C5B853F666E1F2D6F34683F" KeyPath="yes" Source="$(var.AssembliesPath)\cs-CZ\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmp54E8F23A2BAEA4EF7FDF211FF5DB1700" Directory="dir242DC17B8DFC53C13CAF172FC08B730A" Guid="{1319FE77-E11A-42D8-8FCC-0FE1A26F3C07}">
+                <File Id="fil1A873174F28CC03B59985BAA203425C3" KeyPath="yes" Source="$(var.AssembliesPath)\de\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmpE73B4B717F489ECEF244F8B2BD643939" Directory="dir242DC17B8DFC53C13CAF172FC08B730A" Guid="{FA23440C-96F9-47B6-AECF-44F5AB2A3269}">
+                <File Id="fil3FBDA7CB03C2AF9F2AADF7E4E6C01241" KeyPath="yes" Source="$(var.AssembliesPath)\de\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmp0C5A24458E20D7C412C9792F0C43AAD1" Directory="dir242DC17B8DFC53C13CAF172FC08B730A" Guid="{F3BFBDDE-382A-4D56-9830-55E7FE6A27E5}">
+                <File Id="fil8D3BD6D4741B2251AA7738D0F466D7B2" KeyPath="yes" Source="$(var.AssembliesPath)\de\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmpC8B61C54AD946C4A3E6864ECFB95B550" Directory="dir9AE38F4F5CB5E565E774521E138F44FD" Guid="{BE175087-A9ED-4A36-92DB-FD4322AD9906}">
+                <File Id="filA17DFC292A9CFEDA326623D5F52FFB73" KeyPath="yes" Source="$(var.AssembliesPath)\es\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmpF6E665B73588CA68D57C8A32C84DDE60" Directory="dir9AE38F4F5CB5E565E774521E138F44FD" Guid="{54F158E0-EF25-4E67-8DE0-2517F8A141FC}">
+                <File Id="fil6A356611CD7EFD19D7FD3532FC4EE718" KeyPath="yes" Source="$(var.AssembliesPath)\es\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmp446F7C40B9C59E40E70F01DBF98D86E6" Directory="dir9AE38F4F5CB5E565E774521E138F44FD" Guid="{A221B8D2-F73A-4F9B-BB08-F9FAF279D2F5}">
+                <File Id="fil53678B26E1FF9CBFD818F9A739FFB05F" KeyPath="yes" Source="$(var.AssembliesPath)\es\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmp8798CF131C254C8F4A8A0CAB96BC1111" Directory="dirB55DFDA91FEE7CCCBC65CA7493B75748" Guid="{20B485D5-E446-44FC-B5DD-6A8E1F48AB6E}">
+                <File Id="filEBB5F2F1B675AD27066A190F2EC6D17B" KeyPath="yes" Source="$(var.AssembliesPath)\fr\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmp96F86443713EE79C1514D9981C44CB09" Directory="dirB55DFDA91FEE7CCCBC65CA7493B75748" Guid="{966FF22C-2A05-4D2C-A9B0-672EE3FDCA4B}">
+                <File Id="filB34CAA3E7C396F8FBD7C08CA8B3B3547" KeyPath="yes" Source="$(var.AssembliesPath)\fr\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmp5A92F9A90D6411BEE1F27CD14EE64014" Directory="dirB55DFDA91FEE7CCCBC65CA7493B75748" Guid="{74472765-6DA5-4B80-A319-4E961DB5064E}">
+                <File Id="filFDD70F714A3781E6D17C0869F6F823E2" KeyPath="yes" Source="$(var.AssembliesPath)\fr\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmp30458A7BF924A9151E4B5AD258278C1C" Directory="dir937629FDAC3D30087170D6DA46E383A6" Guid="{308E7CE7-22A0-413D-8689-17DDF9BF84F8}">
+                <File Id="fil3CB949C40964C1822F4BBFFF412D623A" KeyPath="yes" Source="$(var.AssembliesPath)\hu\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmpDC60845994B41BD6C066E7C54739AC06" Directory="dir45DE18DD71F3E8DD6BE4A0E2B48778C8" Guid="{D8CD8F5E-DF61-4A77-81AA-A853DDF7817E}">
+                <File Id="filD5B1500F949059B1FD0480088841D937" KeyPath="yes" Source="$(var.AssembliesPath)\it\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmp40B1B232CFCA3F1DE60AB1D892BF7AB0" Directory="dir45DE18DD71F3E8DD6BE4A0E2B48778C8" Guid="{B2EB3652-2DBE-4A1F-BE15-5AE8A63E9A81}">
+                <File Id="fil9E75B4FC93032FD9315BFCA3CA44D6D1" KeyPath="yes" Source="$(var.AssembliesPath)\it\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmpAF349C0A1D684016CBDE93111F31856A" Directory="dir45DE18DD71F3E8DD6BE4A0E2B48778C8" Guid="{0802A837-2D36-4138-B078-FECF3BFE2254}">
+                <File Id="filC877FBB71DF3E5F833E94825E56ABEDE" KeyPath="yes" Source="$(var.AssembliesPath)\it\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmpBCDA775134F93D9AA08401C427DE8909" Directory="dir997B58958EFAE06BB705E870622AB899" Guid="{F6C8ED16-321B-42CF-9785-31543C9F3A75}">
+                <File Id="filB9FBA2DDA9DD982C2FA3351A2577AF84" KeyPath="yes" Source="$(var.AssembliesPath)\ja\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmpA040A861A79E080F1A763ABEDC9028F8" Directory="dir997B58958EFAE06BB705E870622AB899" Guid="{8F952D64-6965-4C79-B181-CA6019A3C164}">
+                <File Id="fil3AA7B3982984462F1B3632C89ADC28C2" KeyPath="yes" Source="$(var.AssembliesPath)\ja\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmpA601B19749A99758D710A9D39B2C2F26" Directory="dir997B58958EFAE06BB705E870622AB899" Guid="{3BB288D6-C8F5-4076-AFF0-4DD6F465197B}">
+                <File Id="filE58AB149AD0786D2BE92A8B5544F5788" KeyPath="yes" Source="$(var.AssembliesPath)\ja\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmp9CE645F5E28A5D075F7D6CF33BB310CE" Directory="dirF152986C1E6339E5EF84FD1370841521" Guid="{8E036C6D-42D4-495D-AA40-5CB2065DD25B}">
+                <File Id="filAB41E271457121D50E86745C82C8B35E" KeyPath="yes" Source="$(var.AssembliesPath)\ko\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmpE153D8B0E538B94D178E9A779791AAFD" Directory="dirF152986C1E6339E5EF84FD1370841521" Guid="{1D20B54D-6BAA-421C-807F-582EFC14BB8B}">
+                <File Id="fil8ED406CE847FB710F53B814AFA73AAC2" KeyPath="yes" Source="$(var.AssembliesPath)\ko\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmpE98AE17AC74A50524CE113CB2725B0E8" Directory="dirF152986C1E6339E5EF84FD1370841521" Guid="{BD85BB38-9462-4EDE-8A7C-4E53E5227FD2}">
+                <File Id="fil36C499F1D01D5D52CA8911B81152424A" KeyPath="yes" Source="$(var.AssembliesPath)\ko\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmpC3A42E175E8BC7EB858357B8B2E8E2A8" Directory="dir4B74599EEC7C992EE101A3FAC2E3F9DA" Guid="{C93B3C28-0598-4B25-8038-D1F5D0DF12FB}">
+                <File Id="fil240F9A671FDE105E1F7C5D3B3B9318CE" KeyPath="yes" Source="$(var.AssembliesPath)\nl-BE\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmpCE76851BEC31A21731A53CF64E367FEC" Directory="dirB6C57608593BDEA87B90E388CF59E0E8" Guid="{1F7F16A5-6EEE-4D0D-8949-00D90057168E}">
+                <File Id="fil65DFC85B3858D7424BB02AC24499F30E" KeyPath="yes" Source="$(var.AssembliesPath)\pl\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmpD404B29631F002210CDDCE049AB886AD" Directory="dirB6C57608593BDEA87B90E388CF59E0E8" Guid="{12996AFB-D417-4C45-A9F0-35AD3BC77DAC}">
+                <File Id="fil9BF6497309A497BE6EE6B26A89916440" KeyPath="yes" Source="$(var.AssembliesPath)\pl\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmp4BEE27DF081ED86ADA5BB3E1E467EE6C" Directory="dirB6C57608593BDEA87B90E388CF59E0E8" Guid="{2FE6245A-362E-4F10-AE90-9C639D2CD3AF}">
+                <File Id="fil6136426B8839EBE697EA75475ED82195" KeyPath="yes" Source="$(var.AssembliesPath)\pl\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmpC9FC57983317CB0ACAAB186D507889CA" Directory="dir8606A94F8723F2ACAF42032E593433C7" Guid="{C29CE4E6-9394-4E21-BCF1-E0BAEC5916F9}">
+                <File Id="filD78506769A9BFD644296E3C08DA6B601" KeyPath="yes" Source="$(var.AssembliesPath)\pt\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmp765BBEB09E2EB9DA3C4C7DC388344D77" Directory="dir339F53F3A11C56B053FD1FEC9B438810" Guid="{C234BDEB-6BFE-4995-B6D7-B0A6EDDD126A}">
+                <File Id="filD93D895A0E849BAC9EC46DE95740C1FE" KeyPath="yes" Source="$(var.AssembliesPath)\pt-BR\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmp19D5AF75520DAA9E00EFD4B83D26016B" Directory="dir339F53F3A11C56B053FD1FEC9B438810" Guid="{C3A1630C-76AA-4C7D-9F57-CB891A75000F}">
+                <File Id="fil5EE918B0C00AEA7C32339F90B50952EC" KeyPath="yes" Source="$(var.AssembliesPath)\pt-BR\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmp59E981670979826ACFE0F003A2B2E6B0" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{2B1D8CB7-BADA-4FD3-8598-F3B25A0F7341}">
+                <File Id="fil65C29743EB24CEBF28F1625ED31BA6B5" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\BackwardImage.png" />
+            </Component>
+            <Component Id="cmpF4EAE34440C49516F8EBE4C5A941A61B" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{6BDA3037-0BD6-441C-9FBF-15053927F4AB}">
+                <File Id="filCD5504340C36CC29C2090E1A978AEA84" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\CopyImage.png" />
+            </Component>
+            <Component Id="cmp57CF3B9818A8B39F293FDA45C4F8ED04" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{69E59B23-818B-4C18-A8CB-6D65A0DB694C}">
+                <File Id="fil39E6A18B75EB136B8BDDEF2FCA135BFF" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\exclamation.png" />
+            </Component>
+            <Component Id="cmp160A5D2B4F1F1E4D1301847D6C70C0F5" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{47DED351-768D-43F3-BE4D-5DE4CFB4BF6A}">
+                <File Id="filC6537538FEA4DFFB06A7DAEA2E2C4C34" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\FolderImage.png" />
+            </Component>
+            <Component Id="cmp22577C4595DBF680066EC63B9AC87DE6" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{FB26ED52-1573-47F3-A658-F05195E074D1}">
+                <File Id="filBAA57D94EC88F8C0BCFA3A316C91D545" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\ForwardImage.png" />
+            </Component>
+            <Component Id="cmp7431C9D64DB1E1E7EBF398E501F5149B" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{E2DC8A3E-1765-4CD4-BB65-2F60FA80A1E9}">
+                <File Id="fil56718BB5BEF66F42050ABE9B1B2F0520" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\PdfArray.png" />
+            </Component>
+            <Component Id="cmpE117B4E72AAD489DAF30AA52A170F339" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{0D1C818D-0A28-454A-AE9D-38E45F86CAC7}">
+                <File Id="filD1A27F0828F2F0C54DD93DE40AD38E01" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\PdfBool.png" />
+            </Component>
+            <Component Id="cmp0761EE53AB089E88D042943C23E7BD8B" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{DC997BAF-B062-46FE-9446-0C332782E1F3}">
+                <File Id="fil76036D701614FA7F6C96F3EFA7501A63" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\PdfDictionary.png" />
+            </Component>
+            <Component Id="cmp6BA0936CEBF1E572425C1A348B86BD49" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{FD5D0A65-D9DF-49FD-AAAD-4395A15E34BC}">
+                <File Id="fil610921EC8D307479B0A54CFB806C547F" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\PdfHex.png" />
+            </Component>
+            <Component Id="cmp62813DC45613D37C062237B5F692CBE6" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{CE26A5EE-AA1D-4B72-A5F6-1E40ADC3E011}">
+                <File Id="filFFCD7FA2A2F77E41E070EB67AF26456A" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\PdfName.png" />
+            </Component>
+            <Component Id="cmp709CA656F3B1D5584152C5FE881180C8" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{F56E3C5D-4C8C-4F10-80E5-9DC47C06B59B}">
+                <File Id="fil1D1441873B6ABBB491EA3A479BFB1A51" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\PdfNull.png" />
+            </Component>
+            <Component Id="cmpF09D92FCC512B34654F805101265D35F" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{23FF74C3-D2A8-403B-88E9-921AF51D4D09}">
+                <File Id="fil00BA95C3ACB5B9DCFB5AB7E621C66858" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\PdfNumber.png" />
+            </Component>
+            <Component Id="cmp2B293515CB3A2693A23086BF2042E923" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{264F81E1-15B6-4702-B8F1-F0E149F32A8A}">
+                <File Id="fil61297265812E53104AD9772A695AF5C3" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\PdfStream.png" />
+            </Component>
+            <Component Id="cmp91B283F45DB044DA0CCF183C78CD22C0" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{08EA6C32-9014-4921-86B7-88BA7F0965D6}">
+                <File Id="filA310C5B7F5ACC89B74DD3221BA420AFE" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\PdfText.png" />
+            </Component>
+            <Component Id="cmpD01AC0AE7FBAD34BAF995031A3D367F3" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{84C06224-6738-4CDE-B701-32FA1A1D1515}">
+                <File Id="fil724C205B63F5EBA27BF40AB2C5217216" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\RedoImage.png" />
+            </Component>
+            <Component Id="cmpB0E2B9B5DD40634B28F613AF96B8F5BE" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{F0AB393A-31D6-4DC3-BBB5-7E15A53F02F1}">
+                <File Id="filBE12E2F69D38AF48BBCEA40645F39512" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\SaveImage.png" />
+            </Component>
+            <Component Id="cmpCD9033DEFBF7A0A0661B0A47E09F727E" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{5E611E94-6BFC-4401-A2F3-B077613CD11F}">
+                <File Id="fil9DD66511799C3F0C8D927ABE723ABAC5" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\UndoImage.png" />
+            </Component>
+            <Component Id="cmpAEFACF0ABB65D80BA03C904F02E61CAE" Directory="dir41772C233BE465DE0D167364B3BB566C" Guid="{B16DFE21-C85A-4883-9A55-EC7AF4264549}">
+                <File Id="filE033377EE0379042615EA6E9F6B6574E" KeyPath="yes" Source="$(var.AssembliesPath)\Resources\UpdateImage.png" />
+            </Component>
+            <Component Id="cmpA7A30D65E417A844FDE89A8E77BFFBD0" Directory="dirBD3668345143F8EFDFB86A9B73810966" Guid="{A59CAD3B-AC21-47C3-A716-2D81213B7436}">
+                <File Id="fil2E9F153D0F7117A2541C78AC44A6CAAD" KeyPath="yes" Source="$(var.AssembliesPath)\ro\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmpC94B34CFA3069BB6261411AA31333F15" Directory="dirE9205C68F964857267FD3312DBFF9A91" Guid="{1611845D-2A35-4869-8CFE-AAF66ED75F2C}">
+                <File Id="filF3A83217CE36C692A93CB2757EF01575" KeyPath="yes" Source="$(var.AssembliesPath)\ru\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmp013A7636372796A0DC21D4DD660B9A03" Directory="dirE9205C68F964857267FD3312DBFF9A91" Guid="{62100B1A-5DCF-45E6-B8C6-8A623F7C905A}">
+                <File Id="filCEE0231E7DBCD079D7EAFD61ADF7504C" KeyPath="yes" Source="$(var.AssembliesPath)\ru\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmp5972C2FE008B457752012F949C70035D" Directory="dirE9205C68F964857267FD3312DBFF9A91" Guid="{CFF8AC4F-CACA-4106-AAAC-716DD65A71C4}">
+                <File Id="fil77600877A9442A958E4361F401569A63" KeyPath="yes" Source="$(var.AssembliesPath)\ru\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmp387B7B96FEE617E7568CFE1BCB4CDF51" Directory="dir6C4D98CA2024DE212EC775D0537181F4" Guid="{1A132589-857E-4404-B235-5B916D8AECFE}">
+                <File Id="fil068053E473005FFB24C9B1A76AC7F4E7" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\freebsd\lib\net6.0\System.Data.Odbc.dll" />
+            </Component>
+            <Component Id="cmp2B18513E0DA5E830DDE44524527A24BC" Directory="dir99A7E39DD3298920FAD270C2C1FC655D" Guid="{B334B33C-C4B9-407D-9C14-51C8D0AF32CC}">
+                <File Id="fil94D8C73F252C3C517DBDD56D0EE31782" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\illumos\lib\net6.0\System.Data.Odbc.dll" />
+            </Component>
+            <Component Id="cmpAE8B2F4394A89A614D9F3AB93B8D6082" Directory="dirD9A1281B772D0E3514ACD2514C4DE8E4" Guid="{F6A3F879-64BC-40E2-AF5D-F556E80CE5DF}">
+                <File Id="fil36E1731688C5C5077C09C41CA6C5F73B" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\ios\lib\net6.0\System.Data.Odbc.dll" />
+            </Component>
+            <Component Id="cmp65F72D09CC67BA2F3A6B4F7007F667E0" Directory="dir53BCA55AFC8320B9A3849AE97CC802B3" Guid="{05038D58-DBEA-4938-9929-DFC0238427F3}">
+                <File Id="fil7A5CEEEC0948D1AEE43BB8255774CAC7" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\linux\lib\net6.0\System.Data.Odbc.dll" />
+            </Component>
+            <Component Id="cmp6445EE215A5619E1E776AFD7C33E854F" Directory="dir53BCA55AFC8320B9A3849AE97CC802B3" Guid="{F1D49B46-006C-4A4A-A359-673F76FB4767}">
+                <File Id="fil630E6FDCD98F639F134E941D16A88AC7" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\linux\lib\net6.0\System.DirectoryServices.Protocols.dll" />
+            </Component>
+            <Component Id="cmp280CA51366DBDBE494390D741E510539" Directory="dirDE2B6474A7AE43169B31CD69645DD47A" Guid="{086D60D1-D1FE-4531-82E5-CBE5665B2DD6}">
+                <File Id="filCFA65FEC1E61E5C1410FB189E4DDC6D9" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\linux-arm\native\libSystem.IO.Ports.Native.so" />
+            </Component>
+            <Component Id="cmpA5DCC1EC6CC35B2066C91F037055DBD7" Directory="dirD4D406B0649E8BA45C0D436FC1C3D7B7" Guid="{BFDCA386-3727-4C32-AFF8-85CDBBB7A2DF}">
+                <File Id="fil88D61011EB77E6D2BDACF5100A785CC6" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\linux-arm64\native\libSystem.IO.Ports.Native.so" />
+            </Component>
+            <Component Id="cmpF5FD3E25EB57522BE42D92E3C953CD4F" Directory="dirE1E651EB5B4F1522E5E10B81FEA70677" Guid="{BB567C56-51EC-40FB-9084-10C60DD89C08}">
+                <File Id="fil4BBD21896089B94874D22332306120EF" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\linux-x64\native\libSystem.IO.Ports.Native.so" />
+            </Component>
+            <Component Id="cmpD1F1A2985A56E9AB07139CD3D174A190" Directory="dir62E4EC72C95AB53FEFE542112BAF6EE1" Guid="{49E89184-C330-4B43-9B72-19F6B08F4A3B}">
+                <File Id="fil1F7EFC11BBFC90FABDB31B22782583ED" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\osx\lib\net6.0\System.Data.Odbc.dll" />
+            </Component>
+            <Component Id="cmpF569F37F2E22FBFBD971E2F6ED2C36DB" Directory="dir62E4EC72C95AB53FEFE542112BAF6EE1" Guid="{04B1508E-CABF-42D6-B03F-219C73E0ED82}">
+                <File Id="fil6EC04922B100AF5587B0F05DB0E23716" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\osx\lib\net6.0\System.DirectoryServices.Protocols.dll" />
+            </Component>
+            <Component Id="cmp7FE6A73F916C32B74F2AAC82875FFB30" Directory="dir2A5033986A8D1FF1B6E317B1A9949571" Guid="{27311D34-3939-40E5-8A29-3C3DD2AF2C35}">
+                <File Id="fil6222348F4CA252DF1BDC6C997D3E5E4E" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\osx-arm64\native\libSystem.IO.Ports.Native.dylib" />
+            </Component>
+            <Component Id="cmpD36B1EEEC5491AF65B4412E9F5CE3425" Directory="dir71D0D403061D4DE071C64AEB774E16CF" Guid="{39F19180-B664-43A9-9E6F-3003D299912F}">
+                <File Id="filDB5D30749D6E61F70BBF67F36DCB0BC1" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\osx-x64\native\libSystem.IO.Ports.Native.dylib" />
+            </Component>
+            <Component Id="cmpB7200C758DE9C904AA0DE60CBE5FB0BB" Directory="dir53ECD76D3EF50F6977FC629ACE752EE8" Guid="{AE586BFA-4D49-40BE-8541-45D4E2327E9B}">
+                <File Id="filDF681CA2F5E07E60A947C660C4120311" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\solaris\lib\net6.0\System.Data.Odbc.dll" />
+            </Component>
+            <Component Id="cmp5D230534C2C819809A7FAD5116880DE5" Directory="dirEAD667BFD78A738585489C5F36EC3CA7" Guid="{16F24DAB-71BF-4487-A66E-B7749967EC3B}">
+                <File Id="fil04FBB7FD482077D679A3ED7A36A9A714" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\tvos\lib\net6.0\System.Data.Odbc.dll" />
+            </Component>
+            <Component Id="cmp0AE72CCD094F62B12AD954835D8CDFE2" Directory="dir70B13B22BA0E5EB86DCE930F65836210" Guid="{AE298EC5-40D5-4F55-9B3C-20C61C5DF710}">
+                <File Id="filE91825E8ADD0FB16DEAEB9CF648BE38D" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\unix\lib\net6.0\System.IO.Ports.dll" />
+            </Component>
+            <Component Id="cmp52265459CE0E3735C070A841DE38FB3D" Directory="dir6FAA93F403AFB5CB578180C70AA97B20" Guid="{388533CF-C409-4EC1-9679-1955A45E5B64}">
+                <File Id="fil574701FF4B1EAF3F8619654B87031E82" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll" />
+            </Component>
+            <Component Id="cmp42BA177173B3E4F64B7E322E44E17FF7" Directory="dir9BB0B260BBA5033E79CCD59197EFEB1D" Guid="{0BBC840D-5BA9-4883-8861-F9D379CED4A6}">
+                <File Id="fil370FEB53660EC70F72F981E45F344A3A" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\net6.0\System.Data.Odbc.dll" />
+            </Component>
+            <Component Id="cmp560D796A15F4B7668B590A44268A1748" Directory="dir9BB0B260BBA5033E79CCD59197EFEB1D" Guid="{0C185B34-B40F-43C2-869C-F1644A6E2B6D}">
+                <File Id="filE4C12E9A90DF2EDBBC6CDB57906BEA28" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\net6.0\System.Data.OleDb.dll" />
+            </Component>
+            <Component Id="cmpA654941D69CEC0A9DB57BFBC601159F9" Directory="dir9BB0B260BBA5033E79CCD59197EFEB1D" Guid="{54428F14-B6B2-41B6-A064-B0BCC3B17361}">
+                <File Id="fil522A88635BD4C7D7BEA0DE37C8795F69" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.Messages.dll" />
+            </Component>
+            <Component Id="cmpD561DD557E1149FF5B8747FB88079447" Directory="dir9BB0B260BBA5033E79CCD59197EFEB1D" Guid="{E1F211F4-B42C-44D8-B890-6553C297AF63}">
+                <File Id="fil8D85E19A5D04DB880053477B936AC42C" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\net6.0\System.DirectoryServices.AccountManagement.dll" />
+            </Component>
+            <Component Id="cmpB8EA400BD6A511AB6AA10ACF6DB560BF" Directory="dir9BB0B260BBA5033E79CCD59197EFEB1D" Guid="{CC9A570B-28CA-4D51-9B19-AE3B791516B4}">
+                <File Id="fil86AC9C4BB81759454AB094B4D51D20FA" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\net6.0\System.DirectoryServices.Protocols.dll" />
+            </Component>
+            <Component Id="cmpD59F7B044164CC762A1D8142B891BB1E" Directory="dir9BB0B260BBA5033E79CCD59197EFEB1D" Guid="{866FA8B9-6025-4204-BF6A-D4407BAD6940}">
+                <File Id="fil93F96752BEBD5AD2EEEE15A62A37204B" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\net6.0\System.IO.Ports.dll" />
+            </Component>
+            <Component Id="cmpA6E4337CF28F8F32563899549C6AE5EF" Directory="dir9BB0B260BBA5033E79CCD59197EFEB1D" Guid="{1D416050-9BA8-413F-ACC7-6B6A8BF8DBB5}">
+                <File Id="filB95E4A75FF86C066C5F05911B5E853EE" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\net6.0\System.Management.dll" />
+            </Component>
+            <Component Id="cmpC2B50BA5C30A29F82805D45B3D64A48B" Directory="dir9BB0B260BBA5033E79CCD59197EFEB1D" Guid="{D1D3A704-A049-4BF6-BA2D-025FBDC01A0D}">
+                <File Id="filFBD284EA05EB3CB689FEF7AEB99EC6B5" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\net6.0\System.Runtime.Caching.dll" />
+            </Component>
+            <Component Id="cmp389DF905B07EF804DAD06AE99C4446B0" Directory="dir9BB0B260BBA5033E79CCD59197EFEB1D" Guid="{9F3769EA-CCEA-4F88-8D36-12BC4A187A22}">
+                <File Id="filF53A9A4870E1BE52E36AE55EFBAAA227" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\net6.0\System.ServiceProcess.ServiceController.dll" />
+            </Component>
+            <Component Id="cmp42E536140963C53EE4A116508DB36643" Directory="dir9BB0B260BBA5033E79CCD59197EFEB1D" Guid="{9BDB4A4B-5D3F-4B9A-BAD2-73F783B3525A}">
+                <File Id="filB67F14D199B86232216EA9F9F07D259C" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\net6.0\System.Speech.dll" />
+            </Component>
+            <Component Id="cmp0C8EB2A341EF26254BB3DDAF4477B7B4" Directory="dirC7A12D033E10A7A61C2BB3B7672AF3F7" Guid="{970693CC-4FDB-429D-8FE4-9C8623F89BBC}">
+                <File Id="filB5E554704B74F71F567EBF3E7327F0E1" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll" />
+            </Component>
+            <Component Id="cmp3002D02E8CBA7FB0714D10077A135748" Directory="dir65EC979D52EB501E3A656AA03EE4F2F5" Guid="{8D780A7A-16B1-4BEC-AFAC-C4D6356978E7}">
+                <File Id="fil9C23EE39EC9930FF59D47EAD3A8DCA11" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win-arm64\native\sni.dll" />
+            </Component>
+            <Component Id="cmp2132F8D4914AC627374DF6B641DED868" Directory="dir1F9DF9DD2FB29AE2942604FAC206D5C4" Guid="{74764FAD-5156-4DFF-BA9E-D8F40C75184A}">
+                <File Id="filF502A2486EBDDB05E379A61C52926963" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win-x64\native\sni.dll" />
+            </Component>
+            <Component Id="cmpA69E1C886BEA900FBD4C325C11705F70" Directory="dir2B43AAE918D399CEF13EC6CBA2D3D5EA" Guid="{B1B56410-51D8-4F62-8BAB-3E95421A52CB}">
+                <File Id="fil0714DC5AB4297BE12792CA5DAD04698C" KeyPath="yes" Source="$(var.AssembliesPath)\runtimes\win-x86\native\sni.dll" />
+            </Component>
+            <Component Id="cmp64DD107EB7918F702003C30AF88E7D76" Directory="dir8FBB04D7AB5FE55FCF40758128EC763E" Guid="{0272EB64-8A98-4FD4-BC17-8C824665E80B}">
+                <File Id="fil159991EFFF97197C55F9AE0C4058ABA8" KeyPath="yes" Source="$(var.AssembliesPath)\sv\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmpAE85BAF3518A09CC1DBDCEBA9D06F227" Directory="dirE562A4656FE03253EA39D17E8127BA05" Guid="{E00BA792-7AA0-4D79-8F27-9BB22E1BBFA6}">
+                <File Id="fil6BD8869B3A2C3BB75E6DB1CE22B20ABD" KeyPath="yes" Source="$(var.AssembliesPath)\tr\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmp32989E5EBE56BCF9F8D58431D8A6C745" Directory="dirE562A4656FE03253EA39D17E8127BA05" Guid="{9AD179C6-ABB5-4F8F-82A4-95F79676E82C}">
+                <File Id="fil4DCC87B2277BACA972A022D540DAB3CA" KeyPath="yes" Source="$(var.AssembliesPath)\tr\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmp72B89A24393BB3E642794BC925E675F4" Directory="dir4A8DD77DBC79775EC39CACBC8AA06107" Guid="{96938364-62EB-46CB-9A24-9586CC23E41D}">
+                <File Id="filDA7C14201CBD9AF901818C95495E543A" KeyPath="yes" Source="$(var.AssembliesPath)\zh-Hans\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmp54B96FDF5D88B8359A86C563AAAEE67F" Directory="dir4A8DD77DBC79775EC39CACBC8AA06107" Guid="{3B7F6269-9E37-4C58-932B-778BA1C211BF}">
+                <File Id="fil868DFCC7003709E64EB7A18D211B9221" KeyPath="yes" Source="$(var.AssembliesPath)\zh-Hans\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmp7C8A1D9E11A2C820CB2D03F65B5BAB85" Directory="dir4A8DD77DBC79775EC39CACBC8AA06107" Guid="{F8FEE2A5-F57D-421D-8F36-CB7349E4EE3B}">
+                <File Id="fil7482237B1289F0DD5F1514DA5F006531" KeyPath="yes" Source="$(var.AssembliesPath)\zh-Hans\System.Web.Services.Description.resources.dll" />
+            </Component>
+            <Component Id="cmp3C64D55D523523852BB702E76CF754CC" Directory="dir083BC4C92455CD933FA93376E7459C85" Guid="{6EA29245-11D7-484D-9308-480387ABAA5F}">
+                <File Id="fil485D6E3A236777E217B41B17783217A0" KeyPath="yes" Source="$(var.AssembliesPath)\zh-Hant\AvalonDock.resources.dll" />
+            </Component>
+            <Component Id="cmp717E211E752A0ECB933C4F4E68DA71BA" Directory="dir083BC4C92455CD933FA93376E7459C85" Guid="{A87B2585-8BE9-47A3-A7C2-3C0B4CFC3284}">
+                <File Id="fil02D8D439C8CEA91DB75DA88A3B33C18F" KeyPath="yes" Source="$(var.AssembliesPath)\zh-Hant\System.Private.ServiceModel.resources.dll" />
+            </Component>
+            <Component Id="cmp249DA711F7195D6D9C2FC8B2A1DADF63" Directory="dir083BC4C92455CD933FA93376E7459C85" Guid="{49696AD8-E4FB-4C06-9267-966F07EE8DD4}">
+                <File Id="fil7CF06E49C1F639DA1140831B9C529C0E" KeyPath="yes" Source="$(var.AssembliesPath)\zh-Hant\System.Web.Services.Description.resources.dll" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dir05AA2C1281F899D21E554DFEF9B6E399" Name="freebsd" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir3DA9BA8D811ABA6F3AFA391339C320BE">
+            <Directory Id="dir110FA5569245E7C688740B82832BE4A1" Name="lib" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirC7230BC451B6DBDFFD8460627BFBB81F">
+            <Directory Id="dir11125780C842440341C878075FA1EAA3" Name="lib" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirB9C75524282911E40C3C964A8836A714">
+            <Directory Id="dir1F9DF9DD2FB29AE2942604FAC206D5C4" Name="native" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir2F16A789372805F097C242E23779E164">
+            <Directory Id="dir2A5033986A8D1FF1B6E317B1A9949571" Name="native" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir92F336DAA82E5A629052407A3F87EF27">
+            <Directory Id="dir2B43AAE918D399CEF13EC6CBA2D3D5EA" Name="native" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dir2F16A789372805F097C242E23779E164" Name="osx-arm64" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dir3DA9BA8D811ABA6F3AFA391339C320BE" Name="osx" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dir42B901FB10752B2744AE05D46EAF35EC" Name="osx-x64" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dir4368456DE80A31A0FABEF422CF868A74" Name="linux-arm64" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir7374CAE61E9DB76B82A0ACBBC9E29E90">
+            <Directory Id="dir53BCA55AFC8320B9A3849AE97CC802B3" Name="net6.0" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirC89408DE13B1E2B6F85F8C51D51BA679">
+            <Directory Id="dir53ECD76D3EF50F6977FC629ACE752EE8" Name="net6.0" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir110FA5569245E7C688740B82832BE4A1">
+            <Directory Id="dir62E4EC72C95AB53FEFE542112BAF6EE1" Name="net6.0" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirFF6AADC4B618984E1542CDA5FCBD7BB1">
+            <Directory Id="dir65EC979D52EB501E3A656AA03EE4F2F5" Name="native" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirBBF4FFE0DFF6A7509C88673E3AE76EEC">
+            <Directory Id="dir6C4D98CA2024DE212EC775D0537181F4" Name="net6.0" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dir6F75383DB633D8F130457F52F58EA410" Name="linux-arm" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirF5C312D00ABBDC163194A7BEF01BFACF">
+            <Directory Id="dir6FAA93F403AFB5CB578180C70AA97B20" Name="netcoreapp2.1" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirF5C312D00ABBDC163194A7BEF01BFACF">
+            <Directory Id="dir70B13B22BA0E5EB86DCE930F65836210" Name="net6.0" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir42B901FB10752B2744AE05D46EAF35EC">
+            <Directory Id="dir71D0D403061D4DE071C64AEB774E16CF" Name="native" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirCE399588CF2C45BB07F861A308CAE456">
+            <Directory Id="dir7374CAE61E9DB76B82A0ACBBC9E29E90" Name="lib" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirE465C44A7FDA28A920867A2946BA9344">
+            <Directory Id="dir79115D470D7ADCAE2AB79DA3F474BB44" Name="lib" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dir92F336DAA82E5A629052407A3F87EF27" Name="win-x86" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dir986BEF73997BE02DCDBC34E856C19B36" Name="linux-x64" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir9AB6776CCEBB27B4C790C7497B005978">
+            <Directory Id="dir99A7E39DD3298920FAD270C2C1FC655D" Name="net6.0" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirC996A8FA79EE21857588FB50EECA4EB2">
+            <Directory Id="dir9AB6776CCEBB27B4C790C7497B005978" Name="lib" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirD19B0610952D1EE2D417EB5361695989">
+            <Directory Id="dir9BB0B260BBA5033E79CCD59197EFEB1D" Name="net6.0" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dir9BE9104649A116CC7BCCF4D9CCD3331B" Name="win" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dirB9C75524282911E40C3C964A8836A714" Name="win-x64" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir05AA2C1281F899D21E554DFEF9B6E399">
+            <Directory Id="dirBBF4FFE0DFF6A7509C88673E3AE76EEC" Name="lib" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dirC7230BC451B6DBDFFD8460627BFBB81F" Name="ios" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirD19B0610952D1EE2D417EB5361695989">
+            <Directory Id="dirC7A12D033E10A7A61C2BB3B7672AF3F7" Name="netcoreapp2.1" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirC8C652F351803A4C4EFC1261B3A3B169">
+            <Directory Id="dirC89408DE13B1E2B6F85F8C51D51BA679" Name="lib" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dirC8C652F351803A4C4EFC1261B3A3B169" Name="solaris" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dirC996A8FA79EE21857588FB50EECA4EB2" Name="illumos" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dirCE399588CF2C45BB07F861A308CAE456" Name="linux" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir9BE9104649A116CC7BCCF4D9CCD3331B">
+            <Directory Id="dirD19B0610952D1EE2D417EB5361695989" Name="lib" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir4368456DE80A31A0FABEF422CF868A74">
+            <Directory Id="dirD4D406B0649E8BA45C0D436FC1C3D7B7" Name="native" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir11125780C842440341C878075FA1EAA3">
+            <Directory Id="dirD9A1281B772D0E3514ACD2514C4DE8E4" Name="net6.0" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dirDD6F90495A1A6169171F36CE85E975B6" Name="unix" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir6F75383DB633D8F130457F52F58EA410">
+            <Directory Id="dirDE2B6474A7AE43169B31CD69645DD47A" Name="native" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir986BEF73997BE02DCDBC34E856C19B36">
+            <Directory Id="dirE1E651EB5B4F1522E5E10B81FEA70677" Name="native" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dirE465C44A7FDA28A920867A2946BA9344" Name="tvos" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir79115D470D7ADCAE2AB79DA3F474BB44">
+            <Directory Id="dirEAD667BFD78A738585489C5F36EC3CA7" Name="net6.0" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dirDD6F90495A1A6169171F36CE85E975B6">
+            <Directory Id="dirF5C312D00ABBDC163194A7BEF01BFACF" Name="lib" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="dir58E8247E2885C01898CAD009F9EFD8BA">
+            <Directory Id="dirFF6AADC4B618984E1542CDA5FCBD7BB1" Name="win-arm64" />
+        </DirectoryRef>
+    </Fragment>
 </Wix>
