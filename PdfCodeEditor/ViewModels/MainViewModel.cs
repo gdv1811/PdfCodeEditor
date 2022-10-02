@@ -32,6 +32,8 @@ namespace PdfCodeEditor.ViewModels
 
         private readonly IDialogService _dialogService;
         private PdfDocumentViewModel _currentPdfDocument;
+        private ToolViewModel _currentToolView;
+        private ViewModelBase _currentContent;
         private ICommand _openCommand;
         private ICommand _dropCommand;
 
@@ -48,7 +50,39 @@ namespace PdfCodeEditor.ViewModels
             set
             {
                 _currentPdfDocument = value;
+                _currentContent = _currentPdfDocument;
                 OnPropertyChanged(nameof(CurrentPdfDocument));
+                OnPropertyChanged(nameof(CurrentContent));
+            }
+        }
+
+        public ToolViewModel CurrentToolView
+        {
+            get { return _currentToolView; }
+            set
+            {
+                _currentToolView = value;
+                _currentContent = _currentToolView;
+                OnPropertyChanged(nameof(CurrentToolView));
+                OnPropertyChanged(nameof(CurrentContent));
+            }
+        }
+
+        public ViewModelBase CurrentContent
+        {
+            get { return _currentContent; }
+            set
+            {
+                _currentContent = value;
+                switch (_currentContent)
+                {
+                    case PdfDocumentViewModel doc:
+                        CurrentPdfDocument = doc;
+                        break;
+                    case ToolViewModel tool:
+                        CurrentToolView = tool;
+                        break;
+                }
             }
         }
 
@@ -99,7 +133,12 @@ namespace PdfCodeEditor.ViewModels
 
             var doc = new PdfDocumentViewModel(_dialogService);
             doc.Open(path);
-            doc.PdfTree.NewTabRequired += (o, a) => { Tools.Add(doc.PdfTree); };
+            doc.PdfTree.NewTabRequired += (o, a) => 
+            { 
+                Tools.Add(doc.PdfTree);
+                CurrentToolView = doc.PdfTree;
+                doc.PdfTree.IsSelected = true;
+            };
             Documents.Add(doc);
             CurrentPdfDocument = doc;
         }

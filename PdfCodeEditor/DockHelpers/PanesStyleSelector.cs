@@ -16,38 +16,36 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System.IO;
+using PdfCodeEditor.ViewModels;
+using System.Windows;
+using System.Windows.Controls;
 
-namespace PdfCodeEditor.ViewModels
+namespace PdfCodeEditor.DockHelpers
 {
-    internal class ToolViewModel : ViewModelBase
+    internal class PanesStyleSelector : StyleSelector
     {
-        private string _filePath;
-        private bool _isSelected;
-
-        public string FilePath
+        public Style PdfDocumentStyle
         {
-            get { return _filePath; }
-            set
-            {
-                if (_filePath == value)
-                    return;
-                _filePath = value;
-                OnPropertyChanged(nameof(FilePath));
-                OnPropertyChanged(nameof(Title));
-            }
+            get;
+            set;
         }
 
-        public virtual string Title => Path.GetFileName(_filePath);
-
-        public bool IsSelected
+        public Style ToolStyle
         {
-            get => _isSelected;
-            set
-            {
-                _isSelected = value;
-                OnPropertyChanged(nameof(IsSelected));
-            }
+            get;
+            set;
+        }
+
+
+        public override Style SelectStyle(object item, System.Windows.DependencyObject container)
+        {
+            if (item is PdfDocumentViewModel)
+                return PdfDocumentStyle;
+
+            if (item is ToolViewModel)
+                return ToolStyle;
+
+            return base.SelectStyle(item, container);
         }
     }
 }

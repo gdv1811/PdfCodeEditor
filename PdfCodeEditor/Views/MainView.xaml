@@ -4,9 +4,13 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:views="clr-namespace:PdfCodeEditor.Views"
         xmlns:dockHelpers="clr-namespace:PdfCodeEditor.DockHelpers"
+        xmlns:converters="clr-namespace:PdfCodeEditor.Converters"
         Title="PdfCodeEditor"
         Width="1024"
         Height="500">
+    <Window.Resources>
+        <converters:ActiveContentConverter x:Key="ActiveContentConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -52,8 +56,8 @@
         <DockingManager x:Name="DockManager"
                         Grid.Row="2"
                         Margin="0,0,0,0"
-                        ActiveContent="{Binding CurrentPdfDocument, Mode=TwoWay}"
                         AllowDrop="True"
+                        ActiveContent="{Binding CurrentPdfDocument, Mode=TwoWay, Converter={StaticResource ActiveContentConverter}}"
                         DocumentsSource="{Binding Documents}"
                         AnchorablesSource="{Binding Tools}">
             <i:Interaction.Triggers>
@@ -80,12 +84,23 @@
                     </dockHelpers:TemplateSelector.ContentToolViewTemplate>
                 </dockHelpers:TemplateSelector>
             </DockingManager.LayoutItemTemplateSelector>
-            <DockingManager.LayoutItemContainerStyle>
-                <Style TargetType="{x:Type LayoutItem}">
-                    <Setter Property="Title" Value="{Binding Model.Title}" />
-                    <Setter Property="ToolTip" Value="{Binding Model.FilePath}" />
-                </Style>
-            </DockingManager.LayoutItemContainerStyle>
+            <DockingManager.LayoutItemContainerStyleSelector>
+                <dockHelpers:PanesStyleSelector>
+                    <dockHelpers:PanesStyleSelector.ToolStyle>
+                        <Style TargetType="{x:Type LayoutAnchorableItem}">
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="ToolTip" Value="{Binding Model.FilePath}" />
+                            <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
+                        </Style>
+                    </dockHelpers:PanesStyleSelector.ToolStyle>
+                    <dockHelpers:PanesStyleSelector.PdfDocumentStyle>
+                        <Style TargetType="{x:Type LayoutItem}">
+                            <Setter Property="Title" Value="{Binding Model.Title}" />
+                            <Setter Property="ToolTip" Value="{Binding Model.FilePath}" />
+                        </Style>
+                    </dockHelpers:PanesStyleSelector.PdfDocumentStyle>
+                </dockHelpers:PanesStyleSelector>
+            </DockingManager.LayoutItemContainerStyleSelector>
             <LayoutRoot>
                 <LayoutPanel Orientation="Horizontal">
                     <LayoutDocumentPane x:Name="DocumentHost" DockHeight="*" DockWidth="2*" />

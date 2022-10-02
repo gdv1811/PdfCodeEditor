@@ -16,38 +16,33 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System.IO;
+using PdfCodeEditor.ViewModels;
+using System;
+using System.Globalization;
+using System.Windows.Data;
 
-namespace PdfCodeEditor.ViewModels
+namespace PdfCodeEditor.Converters
 {
-    internal class ToolViewModel : ViewModelBase
+    internal class ActiveContentConverter : IValueConverter
     {
-        private string _filePath;
-        private bool _isSelected;
-
-        public string FilePath
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            get { return _filePath; }
-            set
+            return value switch
             {
-                if (_filePath == value)
-                    return;
-                _filePath = value;
-                OnPropertyChanged(nameof(FilePath));
-                OnPropertyChanged(nameof(Title));
-            }
+                PdfDocumentViewModel => value,
+                ToolViewModel => value,
+                _ => Binding.DoNothing
+            };
         }
 
-        public virtual string Title => Path.GetFileName(_filePath);
-
-        public bool IsSelected
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            get => _isSelected;
-            set
+            return value switch
             {
-                _isSelected = value;
-                OnPropertyChanged(nameof(IsSelected));
-            }
+                PdfDocumentViewModel => value,
+                ToolViewModel => value,
+                _ => Binding.DoNothing
+            };
         }
     }
 }
