@@ -37,6 +37,7 @@ namespace PdfCodeEditor.ViewModels
         private bool _isModified;
         private ICommand _saveCommand;
         private ICommand _saveAsCommand;
+        private ICommand _closeCommand;
         private NavigatorViewModel _navigator;
         private PdfTreeViewModel _pdfTree;
 
@@ -105,21 +106,29 @@ namespace PdfCodeEditor.ViewModels
 
         #endregion
 
+        #region Events
+
+        public event EventHandler<EventArgs> DocumentClosing;
+
+        #endregion
+
         #region Properties-commands
 
         public ICommand SaveCommand
         {
-            get { return _saveCommand ?? (_saveCommand = new RelayCommand(arg => Save(FilePath))); }
+            get { return _saveCommand ??= new RelayCommand(arg => Save(FilePath)); }
         }
 
         public ICommand SaveAsCommand
         {
             get
             {
-                return _saveAsCommand ??
-                       (_saveAsCommand =
-                           new RelayCommand(arg => Save(_dialogService.ShowSaveDialog("PDF|*.pdf|No extension|*.*"))));
+                return _saveAsCommand ??= new RelayCommand(arg => Save(_dialogService.ShowSaveDialog("PDF|*.pdf|No extension|*.*")));
             }
+        }
+        public ICommand CloseCommand
+        {
+            get { return _closeCommand ??= new RelayCommand(arg => OnDocumentClosing()); }
         }
 
         #endregion
@@ -170,7 +179,16 @@ namespace PdfCodeEditor.ViewModels
                 _dialogService.ShowErrorMessage(ex.Message, "Save error");
             }
         }
+        
+        #endregion
 
+        #region Private methods
+
+        private void OnDocumentClosing()
+        {
+            DocumentClosing?.Invoke(this, EventArgs.Empty);
+        }
+        
         #endregion
     }
 }

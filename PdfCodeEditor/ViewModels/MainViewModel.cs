@@ -139,6 +139,12 @@ namespace PdfCodeEditor.ViewModels
                 CurrentToolView = doc.PdfTree;
                 doc.PdfTree.IsSelected = true;
             };
+            doc.DocumentClosing += (o, a) =>
+            {
+                Documents.Remove(doc);
+                while (Tools.Remove(doc.PdfTree))
+                { }
+            };
             Documents.Add(doc);
             CurrentPdfDocument = doc;
         }

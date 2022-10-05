@@ -97,6 +97,7 @@
                         <Style TargetType="{x:Type LayoutItem}">
                             <Setter Property="Title" Value="{Binding Model.Title}" />
                             <Setter Property="ToolTip" Value="{Binding Model.FilePath}" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
                         </Style>
                     </dockHelpers:PanesStyleSelector.PdfDocumentStyle>
                 </dockHelpers:PanesStyleSelector>
