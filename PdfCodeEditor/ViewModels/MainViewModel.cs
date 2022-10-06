@@ -144,6 +144,8 @@ namespace PdfCodeEditor.ViewModels
                 Documents.Remove(doc);
                 while (Tools.Remove(doc.PdfTree))
                 { }
+
+                doc.PdfTree = null;
             };
             Documents.Add(doc);
             CurrentPdfDocument = doc;

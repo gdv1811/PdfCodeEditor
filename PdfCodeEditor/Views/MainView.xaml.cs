@@ -17,6 +17,8 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Xml;
 using ICSharpCode.AvalonEdit.Highlighting;
 
@@ -45,6 +47,14 @@ namespace PdfCodeEditor.Views
             HighlightingManager.Instance.RegisterHighlighting("Pdf", new[] { ".pdf" }, pdfHighlighting);
 
             InitializeComponent();
+        }
+        private void TextBoxOnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                OffsetTextBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                e.Handled = true;
+            }
         }
     }
 }

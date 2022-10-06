@@ -29,6 +29,7 @@ namespace PdfCodeEditor.ViewModels
         #region Fields
 
         private int _caretOffset;
+        private int _selectionLength;
 
         private readonly History<int> _history = new History<int>();
         private ICommand _forwardCommand;
@@ -41,11 +42,21 @@ namespace PdfCodeEditor.ViewModels
 
         public int CaretOffset
         {
-            get { return _caretOffset; }
+            get => _caretOffset;
             set
             {
                 _caretOffset = value;
                 OnPropertyChanged(nameof(CaretOffset));
+            }
+        }
+
+        public int SelectionLength
+        {
+            get => _selectionLength;
+            set
+            {
+                _selectionLength = value;
+                OnPropertyChanged(nameof(SelectionLength));
             }
         }
 

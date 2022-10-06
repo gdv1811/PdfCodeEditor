@@ -16,7 +16,7 @@
                 <Button Command="{Binding OpenInNewTabCommand}" ToolTip="Open in the new tab">
                     <Image Source="../Resources/CopyImage.png" />
                 </Button>
-                <Button Command="{Binding RefreshCommand}" ToolTip="Referesh object tree">
+                <Button Command="{Binding RefreshCommand}" ToolTip="Refresh object tree">
                     <Image Source="../Resources/UpdateImage.png" />
                 </Button>
             </ToolBar>

@@ -18,7 +18,7 @@
 
 using System;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Threading;
 using ICSharpCode.AvalonEdit;
 
 namespace PdfCodeEditor.Editor
@@ -37,7 +37,13 @@ namespace PdfCodeEditor.Editor
         }
 
         public static DependencyProperty SelectionLengthProperty = DependencyProperty.Register(nameof(SelectionLength),
-            typeof(int), typeof(PdfTextEditor), null); 
+            typeof(int), typeof(PdfTextEditor), new PropertyMetadata(OnSelectionLengthPropertyChanged));
+
+        private static void OnSelectionLengthPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var target = (PdfTextEditor)obj;
+            target.SelectionLength = (int)args.NewValue;
+        }
 
         #endregion
 
@@ -45,7 +51,7 @@ namespace PdfCodeEditor.Editor
 
         public new int CaretOffset
         {
-            get { return base.CaretOffset; }
+            get => base.CaretOffset;
             set
             {
                 if (value < 0)
@@ -53,11 +59,20 @@ namespace PdfCodeEditor.Editor
                 SetValue(CaretOffsetProperty, value);
                 base.CaretOffset = value;
                 TextArea.Caret.BringCaretToView();
-                TextArea.Caret.Show();
+                Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() => Focus()));
             }
         }
 
-        public new int SelectionLength => TextArea.Selection.Length; 
+        public new int SelectionLength
+        {
+            get => base.SelectionLength;// TextArea.Selection.Length;
+            set
+            {
+                SetValue(SelectionLengthProperty, value);
+                base.SelectionLength = value;
+                TextArea.Caret.BringCaretToView();
+            }
+        }
 
         #endregion
 
@@ -67,6 +82,7 @@ namespace PdfCodeEditor.Editor
         {
             TextArea.Caret.PositionChanged += CaretOnPositionChanged;
             TextArea.SelectionChanged += TextAreaOnSelectionChanged;
+            Focusable = true;
         }
 
         #endregion

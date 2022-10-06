@@ -18,6 +18,7 @@
                                   Grid.Column="0"
                                   CaretOffset="{Binding Path=Navigator.CaretOffset,
                                                     Mode=TwoWay}"
+                                  SelectionLength="{Binding Path=Navigator.SelectionLength}"
                                   Document="{Binding Document}"
                                   FontFamily="Consolas"
                                   FontSize="10pt"
@@ -54,21 +55,5 @@
                             Modifiers="Control+Shift" />
             </editor:PdfTextEditor.InputBindings>
         </editor:PdfTextEditor>
-
-        <StatusBar Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0">
-            <Label Margin="5,-5,0,-5" Content="Offset:" />
-            <TextBox Width="100"
-                     Margin="-10,-1,0,-1"
-                     PreviewKeyDown="TextBoxOnPreviewKeyDown"
-                     Text="{Binding ElementName=Editor,
-                                    Path=CaretOffset,
-                                    Mode=TwoWay,
-                                    UpdateSourceTrigger=PropertyChanged}"
-                     TextAlignment="Right" />
-            <Label Margin="5,-5"
-                   Content="{Binding ElementName=Editor,
-                                     Path=SelectionLength}"
-                   ContentStringFormat="Selected: {0}" />
-        </StatusBar>
     </Grid>
 </UserControl>

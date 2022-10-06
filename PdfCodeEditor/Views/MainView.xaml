@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Menu>
@@ -121,5 +122,19 @@
                 </LayoutPanel>
             </LayoutRoot>
         </DockingManager>
+                     
+        <StatusBar Grid.Row="3">
+            <Label Margin="5,-5,0,-5" Content="Offset:" />
+            <TextBox x:Name="OffsetTextBox" 
+                     Width="100"
+                     Margin="-10,-1,0,-1"
+                     Text="{Binding Path=CurrentPdfDocument.Navigator.CaretOffset,
+                                    Mode=TwoWay}"
+                     PreviewKeyDown="TextBoxOnPreviewKeyDown"
+                     TextAlignment="Right" />
+            <Label Margin="5,-5"
+                   Content="{Binding Path=CurrentPdfDocument.Navigator.SelectionLength}"
+                   ContentStringFormat="Selected: {0}" />
+        </StatusBar>
     </Grid>
 </Window>
