@@ -24,6 +24,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using PdfCodeEditor.Services;
+using Squirrel;
 
 namespace PdfCodeEditor.ViewModels
 {
@@ -31,13 +32,19 @@ namespace PdfCodeEditor.ViewModels
     {
         #region Fields
 
+        private string _gitHubProjectPath = "https://github.com/gdv1811/PdfCodeEditor";
+        private UpdateManager _updateManager;
+
         private readonly IDialogService _dialogService;
         private PdfDocumentViewModel _currentPdfDocument;
         private ToolViewModel _currentToolView;
         private ViewModelBase _currentContent;
+        private bool _isUpdateAvailable;
+
         private ICommand _openCommand;
         private ICommand _dropCommand;
         private ICommand _gitHubCommand;
+        private ICommand _updateAppCommand;
 
         #endregion
 
@@ -48,7 +55,7 @@ namespace PdfCodeEditor.ViewModels
 
         public PdfDocumentViewModel CurrentPdfDocument
         {
-            get { return _currentPdfDocument; }
+            get => _currentPdfDocument;
             set
             {
                 _currentPdfDocument = value;
@@ -60,7 +67,7 @@ namespace PdfCodeEditor.ViewModels
 
         public ToolViewModel CurrentToolView
         {
-            get { return _currentToolView; }
+            get => _currentToolView;
             set
             {
                 _currentToolView = value;
@@ -72,7 +79,7 @@ namespace PdfCodeEditor.ViewModels
 
         public ViewModelBase CurrentContent
         {
-            get { return _currentContent; }
+            get => _currentContent;
             set
             {
                 _currentContent = value;
@@ -88,13 +95,23 @@ namespace PdfCodeEditor.ViewModels
             }
         }
 
+        public bool IsUpdateAvailable
+        {
+            get => _isUpdateAvailable;
+            set
+            {
+                _isUpdateAvailable = value;
+                OnPropertyChanged(nameof(IsUpdateAvailable));
+            }
+        }
+
         #endregion
 
         #region Properties-commands
 
         public ICommand OpenCommand
         {
-            get { return _openCommand ??= new RelayCommand(arg => Open()); }
+            get { return _openCommand ??= new RelayCommand(_ => Open()); }
         }
 
         public ICommand DropCommand
@@ -104,7 +121,12 @@ namespace PdfCodeEditor.ViewModels
 
         public ICommand GitHubCommand
         {
-            get { return _gitHubCommand ??= new RelayCommand(arg => OpenGitHubProjectPage()); }
+            get { return _gitHubCommand ??= new RelayCommand(_ => OpenGitHubProjectPage()); }
+        }
+
+        public ICommand UpdateAppCommand
+        {
+            get { return _updateAppCommand ??= new RelayCommand(_ => UpdateApp()); }
         }
 
         #endregion
@@ -122,6 +144,8 @@ namespace PdfCodeEditor.ViewModels
             {
                 Open(path);
             }
+
+            InitUpdateManager();
         }
 
         #endregion
@@ -173,7 +197,37 @@ namespace PdfCodeEditor.ViewModels
 
         private void OpenGitHubProjectPage()
         {
-            Process.Start(new ProcessStartInfo("https://github.com/gdv1811/PdfCodeEditor") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(_gitHubProjectPath) { UseShellExecute = true });
+        }
+
+        private async void InitUpdateManager()
+        {
+            try
+            {
+                _updateManager = await UpdateManager.GitHubUpdateManager(_gitHubProjectPath);
+                var updateInfo = await _updateManager.CheckForUpdate();
+
+                IsUpdateAvailable = updateInfo.ReleasesToApply.Count > 0;
+            }
+            catch
+            {
+                //todo add to log
+            }
+        }
+
+        private async void UpdateApp()
+        {
+            try
+            {
+                await _updateManager.UpdateApp();
+
+                IsUpdateAvailable = false;
+                _dialogService.ShowMessage("Update completed successfully!\nPlease, restart application.", "Update");
+            }
+            catch (Exception ex)
+            {
+                _dialogService.ShowErrorMessage(ex.Message, "Update error");
+            }
         }
 
         #endregion

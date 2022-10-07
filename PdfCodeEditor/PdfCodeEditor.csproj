@@ -88,6 +88,11 @@
   <ItemGroup>
     <PackageReference Include="itext7" Version="7.2.2" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="squirrel.windows" Version="1.9.0" />
+    <PackageReference Include="NuGet.CommandLine" Version="5.8.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Dock\LayoutUpdateStategy.cs" />
@@ -98,4 +103,22 @@
     <None Remove="Resources\PdfCodeEditor.ico" />
     <None Remove="Resources\UpdateImage.png" />
   </ItemGroup>
+  <PropertyGroup>
+    <NugetTools>$(PkgNuGet_CommandLine)\tools</NugetTools>
+    <SquirrelTools>$(Pkgsquirrel_windows)\tools</SquirrelTools>
+
+    <Version>1.0.0</Version>
+
+    <NuspecFile>$(SolutionDir)PdfCodeEditor\PdfCodeEditor.nuspec</NuspecFile>
+  </PropertyGroup>
+
+  <Target Name="GenerateRelease" AfterTargets="AfterBuild" Condition="$(Configuration) == Release">
+    <XmlPeek XmlInputPath="$(NuspecFile)" Query="/package/metadata/id/text()">
+      <Output TaskParameter="Result" ItemName="ID" />
+    </XmlPeek>
+
+    <Exec Command="$(NugetTools)\NuGet.exe pack $(NuspecFile) -Version $(Version) -Properties Configuration=Release -OutputDirectory $(SolutionDir)Deployment\GeneratedNugets" />
+
+    <Exec Command="$(SquirrelTools)\Squirrel.exe --releasify $(SolutionDir)Deployment\GeneratedNugets\@(ID).$(Version).nupkg --releaseDir=$(SolutionDir)Deployment\Releases"/>
+  </Target>
 </Project>

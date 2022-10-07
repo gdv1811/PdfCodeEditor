@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>PdfCodeEditor</id>
+    <version>0.0.0</version>
+    <title>PdfCodeEditor</title>
+    <authors>Dmitry Goryachev</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/gdv1811/PdfCodeEditor</projectUrl>
+    <description>Tool for viewing and editing code-behind PDF-files</description>
+    <copyright>Copyright © 2016-2022 Dmitry Goryachev</copyright>
+    <tags>PDF</tags>
+  </metadata>
+  <files>
+    <file src="bin\Release\net6.0-windows\**" target="lib\net45"/>
+  </files>
+</package>
