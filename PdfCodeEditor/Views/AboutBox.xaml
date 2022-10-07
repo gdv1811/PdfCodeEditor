@@ -1,0 +1,38 @@
+﻿<Window x:Class="PdfCodeEditor.Views.AboutBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:editor ="clr-namespace:PdfCodeEditor.Editor"
+        ResizeMode="NoResize" 
+        WindowStyle="ToolWindow"
+        ShowInTaskbar="False"
+        Closing="AboutBoxOnClosing"
+        Deactivated="AboutBoxOnDeactivated"
+        mc:Ignorable="d"
+        Title="About" 
+        Width="500" 
+        Height="370">
+    <Grid>
+        <editor:PdfTextEditor x:Name="AboutEditor" 
+                              HorizontalScrollBarVisibility="Hidden" 
+                              VerticalScrollBarVisibility="Hidden"
+                              FontFamily="Consolas"
+                              FontSize="10pt"
+                              ShowLineNumbers="True"
+                              SyntaxHighlighting="Pdf"
+                              IsReadOnly="True"/>
+        <Image Source="/Resources/PdfCodeEditor.ico" 
+               Width="48"
+               HorizontalAlignment="Right" 
+               VerticalAlignment="Top"
+               Margin="0,10,10,0"/>
+        <Button Content="OK" 
+                Width="100"
+                Height="20"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Center" 
+                Margin="0,0,0,5"
+                Click="OkButtonOnClick" />
+    </Grid>
+</Window>

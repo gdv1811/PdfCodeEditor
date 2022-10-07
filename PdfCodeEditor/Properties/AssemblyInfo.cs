@@ -31,7 +31,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("PdfCodeEditor")]
-[assembly: AssemblyCopyright("Copyright ©  2016 Dmitry Goryachev")]
+[assembly: AssemblyCopyright("Copyright © 2016-2022 Dmitry Goryachev")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

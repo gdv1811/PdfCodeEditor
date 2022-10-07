@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2016 Dmitry Goryachev
+﻿// Copyright (c) 2022 Dmitry Goryachev
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
@@ -18,6 +18,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -36,6 +37,7 @@ namespace PdfCodeEditor.ViewModels
         private ViewModelBase _currentContent;
         private ICommand _openCommand;
         private ICommand _dropCommand;
+        private ICommand _gitHubCommand;
 
         #endregion
 
@@ -92,12 +94,17 @@ namespace PdfCodeEditor.ViewModels
 
         public ICommand OpenCommand
         {
-            get { return _openCommand ?? (_openCommand = new RelayCommand(arg => Open())); }
+            get { return _openCommand ??= new RelayCommand(arg => Open()); }
         }
 
         public ICommand DropCommand
         {
-            get { return _dropCommand ?? (_dropCommand = new RelayCommand(arg => Drop(arg as DragEventArgs))); }
+            get { return _dropCommand ??= new RelayCommand(arg => Drop(arg as DragEventArgs)); }
+        }
+
+        public ICommand GitHubCommand
+        {
+            get { return _gitHubCommand ??= new RelayCommand(arg => OpenGitHubProjectPage()); }
         }
 
         #endregion
@@ -162,6 +169,11 @@ namespace PdfCodeEditor.ViewModels
             {
                 Open(file);
             }
+        }
+
+        private void OpenGitHubProjectPage()
+        {
+            Process.Start(new ProcessStartInfo("https://github.com/gdv1811/PdfCodeEditor") { UseShellExecute = true });
         }
 
         #endregion

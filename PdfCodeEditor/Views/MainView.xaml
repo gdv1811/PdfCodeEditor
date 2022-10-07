@@ -27,6 +27,11 @@
                 <MenuItem Command="{Binding CurrentPdfDocument.SaveCommand}" Header="Save" />
                 <MenuItem Command="{Binding CurrentPdfDocument.SaveAsCommand}" Header="Save As..." />
             </MenuItem>
+            <MenuItem Header="_Help">
+                <MenuItem Command="{Binding GitHubCommand}" Header="GitHub project"/>
+                <Separator />
+                <MenuItem Header="About" Click="AboutMenuItemOnClick"/>
+            </MenuItem>
         </Menu>
 
         <ToolBarTray Grid.Row="1">

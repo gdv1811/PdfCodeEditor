@@ -20,6 +20,9 @@
     <Content Include="Resources\CopyImage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\PdfCodeEditor.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\PdfDictionary.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -92,6 +95,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Resources\CopyImage.png" />
+    <None Remove="Resources\PdfCodeEditor.ico" />
     <None Remove="Resources\UpdateImage.png" />
   </ItemGroup>
 </Project>
