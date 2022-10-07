@@ -18,7 +18,7 @@
                                   Grid.Column="0"
                                   CaretOffset="{Binding Path=Navigator.CaretOffset,
                                                     Mode=TwoWay}"
-                                  SelectionLength="{Binding Path=Navigator.SelectionLength}"
+                                  BindableSelectionLength="{Binding Path=Navigator.SelectionLength, Mode=TwoWay}"
                                   Document="{Binding Document}"
                                   FontFamily="Consolas"
                                   FontSize="10pt"

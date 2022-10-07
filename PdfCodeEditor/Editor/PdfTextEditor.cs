@@ -36,13 +36,13 @@ namespace PdfCodeEditor.Editor
             target.CaretOffset = (int)args.NewValue;
         }
 
-        public static DependencyProperty SelectionLengthProperty = DependencyProperty.Register(nameof(SelectionLength),
-            typeof(int), typeof(PdfTextEditor), new PropertyMetadata(OnSelectionLengthPropertyChanged));
+        public static DependencyProperty BindableSelectionLengthProperty = DependencyProperty.Register(nameof(BindableSelectionLength),
+            typeof(int), typeof(PdfTextEditor), new PropertyMetadata(OnBindableSelectionLengthPropertyChanged));
 
-        private static void OnSelectionLengthPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        private static void OnBindableSelectionLengthPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             var target = (PdfTextEditor)obj;
-            target.SelectionLength = (int)args.NewValue;
+            target.BindableSelectionLength = (int)args.NewValue;
         }
 
         #endregion
@@ -63,14 +63,14 @@ namespace PdfCodeEditor.Editor
             }
         }
 
-        public new int SelectionLength
+        private int _bindableSelectionLength;
+        public int BindableSelectionLength
         {
-            get => base.SelectionLength;// TextArea.Selection.Length;
+            get => _bindableSelectionLength;
             set
             {
-                SetValue(SelectionLengthProperty, value);
-                base.SelectionLength = value;
-                TextArea.Caret.BringCaretToView();
+                _bindableSelectionLength = value;
+                SetValue(BindableSelectionLengthProperty, _bindableSelectionLength);
             }
         }
 
@@ -96,7 +96,7 @@ namespace PdfCodeEditor.Editor
 
         private void TextAreaOnSelectionChanged(object sender, EventArgs e)
         {
-            SetValue(SelectionLengthProperty, SelectionLength);
+            SetValue(BindableSelectionLengthProperty, SelectionLength);
         } 
 
         #endregion
