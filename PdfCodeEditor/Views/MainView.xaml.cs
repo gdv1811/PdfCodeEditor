@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2016 Dmitry Goryachev
+﻿// Copyright (c) 2022 Dmitry Goryachev
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
@@ -17,6 +17,9 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Xml;
 using ICSharpCode.AvalonEdit.Highlighting;
 
@@ -45,6 +48,20 @@ namespace PdfCodeEditor.Views
             HighlightingManager.Instance.RegisterHighlighting("Pdf", new[] { ".pdf" }, pdfHighlighting);
 
             InitializeComponent();
+        }
+        private void TextBoxOnPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                OffsetTextBox.GetBindingExpression(TextBox.TextProperty)?.UpdateSource();
+                e.Handled = true;
+            }
+        }
+
+        private void AboutMenuItemOnClick(object sender, RoutedEventArgs e)
+        {
+            var aboutBox = new AboutBox();
+            aboutBox.Show();
         }
     }
 }

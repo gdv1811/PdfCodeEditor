@@ -10,5 +10,5 @@
   <?define DialogBmp="$(var.SolutionDir)\PdfCodeEditor.Installer\Images\Dialog.bmp"?>
   <?define BannerBmp="$(var.SolutionDir)\PdfCodeEditor.Installer\Images\Banner.bmp"?>
   
-  <?define AssembliesPath = "$(var.SolutionDir)\PdfCodeEditor\bin\$(var.PdfCodeEditor.Configuration)"?>
+  <?define AssembliesPath = "$(var.SolutionDir)\PdfCodeEditor\bin\$(var.PdfCodeEditor.Configuration)\net6.0-windows"?>
 </Include>

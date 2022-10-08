@@ -3,27 +3,29 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:editor="clr-namespace:PdfCodeEditor.Editor"
+             xmlns:views="clr-namespace:PdfCodeEditor.Views"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              d:DesignHeight="300"
              d:DesignWidth="300"
              mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <editor:PdfTextEditor x:Name="Editor"
-                              Grid.Row="1"
-                              CaretOffset="{Binding Path=Navigator.CaretOffset,
+                                  Grid.Row="0"
+                                  Grid.Column="0"
+                                  CaretOffset="{Binding Path=Navigator.CaretOffset,
                                                     Mode=TwoWay}"
-                              Document="{Binding Document}"
-                              FontFamily="Consolas"
-                              FontSize="10pt"
-                              IsModified="{Binding IsModified,
+                                  BindableSelectionLength="{Binding Path=Navigator.SelectionLength, Mode=TwoWay}"
+                                  Document="{Binding Document}"
+                                  FontFamily="Consolas"
+                                  FontSize="10pt"
+                                  IsModified="{Binding IsModified,
                                                    Mode=TwoWay}"
-                              ShowLineNumbers="True"
-                              SyntaxHighlighting="Pdf">
+                                  ShowLineNumbers="True"
+                                  SyntaxHighlighting="Pdf">
             <editor:PdfTextEditor.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="{Binding Navigator.GoToDefinitionCommand}"
@@ -53,21 +55,5 @@
                             Modifiers="Control+Shift" />
             </editor:PdfTextEditor.InputBindings>
         </editor:PdfTextEditor>
-
-        <StatusBar Grid.Row="2">
-            <Label Margin="5,-5,0,-5" Content="Offset:" />
-            <TextBox Width="100"
-                     Margin="-10,-1,0,-1"
-                     PreviewKeyDown="TextBoxOnPreviewKeyDown"
-                     Text="{Binding ElementName=Editor,
-                                    Path=CaretOffset,
-                                    Mode=TwoWay,
-                                    UpdateSourceTrigger=PropertyChanged}"
-                     TextAlignment="Right" />
-            <Label Margin="5,-5"
-                   Content="{Binding ElementName=Editor,
-                                     Path=SelectionLength}"
-                   ContentStringFormat="Selected: {0}" />
-        </StatusBar>
     </Grid>
 </UserControl>

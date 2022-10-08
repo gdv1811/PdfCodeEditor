@@ -18,7 +18,7 @@
 
 using System;
 using System.Windows;
-using System.Windows.Input;
+using System.Windows.Threading;
 using ICSharpCode.AvalonEdit;
 
 namespace PdfCodeEditor.Editor
@@ -36,8 +36,14 @@ namespace PdfCodeEditor.Editor
             target.CaretOffset = (int)args.NewValue;
         }
 
-        public static DependencyProperty SelectionLengthProperty = DependencyProperty.Register(nameof(SelectionLength),
-            typeof(int), typeof(PdfTextEditor), null); 
+        public static DependencyProperty BindableSelectionLengthProperty = DependencyProperty.Register(nameof(BindableSelectionLength),
+            typeof(int), typeof(PdfTextEditor), new PropertyMetadata(OnBindableSelectionLengthPropertyChanged));
+
+        private static void OnBindableSelectionLengthPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        {
+            var target = (PdfTextEditor)obj;
+            target.BindableSelectionLength = (int)args.NewValue;
+        }
 
         #endregion
 
@@ -45,16 +51,28 @@ namespace PdfCodeEditor.Editor
 
         public new int CaretOffset
         {
-            get { return base.CaretOffset; }
+            get => base.CaretOffset;
             set
             {
+                if (value < 0)
+                    return;
                 SetValue(CaretOffsetProperty, value);
                 base.CaretOffset = value;
                 TextArea.Caret.BringCaretToView();
+                Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() => Focus()));
             }
         }
 
-        public new int SelectionLength => TextArea.Selection.Length; 
+        private int _bindableSelectionLength;
+        public int BindableSelectionLength
+        {
+            get => _bindableSelectionLength;
+            set
+            {
+                _bindableSelectionLength = value;
+                SetValue(BindableSelectionLengthProperty, _bindableSelectionLength);
+            }
+        }
 
         #endregion
 
@@ -64,6 +82,7 @@ namespace PdfCodeEditor.Editor
         {
             TextArea.Caret.PositionChanged += CaretOnPositionChanged;
             TextArea.SelectionChanged += TextAreaOnSelectionChanged;
+            Focusable = true;
         }
 
         #endregion
@@ -77,7 +96,7 @@ namespace PdfCodeEditor.Editor
 
         private void TextAreaOnSelectionChanged(object sender, EventArgs e)
         {
-            SetValue(SelectionLengthProperty, SelectionLength);
+            SetValue(BindableSelectionLengthProperty, SelectionLength);
         } 
 
         #endregion

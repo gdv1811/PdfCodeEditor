@@ -24,13 +24,14 @@
       <FindRelatedProducts Sequence="99" />
     </InstallUISequence>
 
-    <MediaTemplate />
+    <MediaTemplate EmbedCab="yes"/>
 
-    <Feature Id="ProductFeature" Title="PdfCodeEditor" Level="1">
+    <Feature Id="ProductFeature" Title="$(var.ProductName)" Level="1">
       <!--heat dir \..\PdfCodeEditor\bin\Release 
       -o Assemblies.wxs -scom -var var.AssembliesPath -frag -srd -sreg -gg -cg AssembliesGroupId -dr INSTALLFOLDER-->
       <ComponentGroupRef Id="AssembliesGroupId" />
       <ComponentGroupRef Id="RegistryEntries"/>
+      <ComponentRef Id="ApplicationShortcut" />
     </Feature>
 
     <Icon Id="icon.ico" SourceFile="$(var.IconPath)"/>
@@ -42,6 +43,17 @@
 
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER"/>
     <UIRef Id="WixUI_InstallDir"/>
+
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="*">
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="$(var.ProductName)"
+                  Target="[#fil7FAF8E4E6003C4FD8CC7760A8822C90F]"
+                  WorkingDirectory="INSTALLFOLDER"/>
+        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
   </Product>
 
   <Fragment>
@@ -97,7 +109,10 @@
   <Fragment>
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="ProgramFilesFolder">
-        <Directory Id="INSTALLFOLDER" Name="PdfCodeEditor"/>
+        <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)"/>
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="$(var.ProductName)"/>
       </Directory>
     </Directory>
   </Fragment>

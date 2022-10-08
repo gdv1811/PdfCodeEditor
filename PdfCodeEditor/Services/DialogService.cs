@@ -50,5 +50,10 @@ namespace PdfCodeEditor.Services
         {
             MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.Error);
         }
+
+        public void ShowMessage(string message, string caption)
+        {
+            MessageBox.Show(message, caption, MessageBoxButton.OK, MessageBoxImage.None);
+        }
     }
 }

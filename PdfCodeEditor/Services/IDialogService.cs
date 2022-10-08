@@ -20,6 +20,7 @@ namespace PdfCodeEditor.Services
 {
     internal interface IDialogService
     {
+        void ShowMessage(string message, string caption);
         void ShowErrorMessage(string message, string caption);
         string ShowOpenDialog(string filter);
         string ShowSaveDialog(string filter);

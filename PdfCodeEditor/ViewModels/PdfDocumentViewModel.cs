@@ -1,4 +1,4 @@
-﻿// Copyright (c) 2016 Dmitry Goryachev
+﻿// Copyright (c) 2022 Dmitry Goryachev
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this
 // software and associated documentation files (the "Software"), to deal in the Software
@@ -20,7 +20,9 @@ using System;
 using System.IO;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Document;
+using PdfCodeEditor.Editor;
 using PdfCodeEditor.Models;
+using PdfCodeEditor.Models.Pdf;
 using PdfCodeEditor.Services;
 
 namespace PdfCodeEditor.ViewModels
@@ -35,7 +37,9 @@ namespace PdfCodeEditor.ViewModels
         private bool _isModified;
         private ICommand _saveCommand;
         private ICommand _saveAsCommand;
+        private ICommand _closeCommand;
         private NavigatorViewModel _navigator;
+        private PdfTreeViewModel _pdfTree;
 
         #endregion
 
@@ -90,23 +94,41 @@ namespace PdfCodeEditor.ViewModels
             }
         }
 
+        public PdfTreeViewModel PdfTree
+        {
+            get { return _pdfTree; }
+            set
+            {
+                _pdfTree = value;
+                OnPropertyChanged(nameof(PdfTree));
+            }
+        }
+
+        #endregion
+
+        #region Events
+
+        public event EventHandler<EventArgs> DocumentClosing;
+
         #endregion
 
         #region Properties-commands
 
         public ICommand SaveCommand
         {
-            get { return _saveCommand ?? (_saveCommand = new RelayCommand(arg => Save(FilePath))); }
+            get { return _saveCommand ??= new RelayCommand(arg => Save(FilePath)); }
         }
 
         public ICommand SaveAsCommand
         {
             get
             {
-                return _saveAsCommand ??
-                       (_saveAsCommand =
-                           new RelayCommand(arg => Save(_dialogService.ShowSaveDialog("PDF|*.pdf|No extension|*.*"))));
+                return _saveAsCommand ??= new RelayCommand(arg => Save(_dialogService.ShowSaveDialog("PDF|*.pdf|No extension|*.*")));
             }
+        }
+        public ICommand CloseCommand
+        {
+            get { return _closeCommand ??= new RelayCommand(arg => OnDocumentClosing()); }
         }
 
         #endregion
@@ -132,6 +154,11 @@ namespace PdfCodeEditor.ViewModels
             {
                 _document = new TextDocument(FileManager.ReadTextFile(_filePath));
                 Navigator.Document = _document;
+
+                var stm = new TextDocumentStream(_document);
+                IPdfObjectProvider provider = new PdfObjectiTextProvider(stm);
+                PdfTree = new PdfTreeViewModel(provider, Navigator);
+                PdfTree.FilePath = filePath;
             }
         }
 
@@ -152,7 +179,16 @@ namespace PdfCodeEditor.ViewModels
                 _dialogService.ShowErrorMessage(ex.Message, "Save error");
             }
         }
+        
+        #endregion
 
+        #region Private methods
+
+        private void OnDocumentClosing()
+        {
+            DocumentClosing?.Invoke(this, EventArgs.Empty);
+        }
+        
         #endregion
     }
 }

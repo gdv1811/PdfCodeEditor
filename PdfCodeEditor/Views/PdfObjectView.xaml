@@ -1,0 +1,42 @@
+﻿<UserControl x:Class="PdfCodeEditor.Views.PdfObjectView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters ="clr-namespace:PdfCodeEditor.Converters"
+             xmlns:vm="clr-namespace:PdfCodeEditor.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignWidth="300" d:Background="White">
+    <UserControl.Resources>
+        <converters:EnumToObjectConverter x:Key="IconsConverter">
+            <ResourceDictionary>
+                <BitmapImage x:Key="Boolean" UriSource="../Resources/PdfBool.png" />
+                <BitmapImage x:Key="Numeric" UriSource="../Resources/PdfNumber.png" />
+                <BitmapImage x:Key="LiteralString" UriSource="../Resources/PdfText.png" />
+                <BitmapImage x:Key="HexString" UriSource="../Resources/PdfHex.png" />
+                <BitmapImage x:Key="Name" UriSource="../Resources/PdfName.png" />
+                <BitmapImage x:Key="Array" UriSource="../Resources/PdfArray.png" />
+                <BitmapImage x:Key="Dictionary" UriSource="../Resources/PdfDictionary.png" />
+                <BitmapImage x:Key="Stream" UriSource="../Resources/PdfStream.png" />
+                <BitmapImage x:Key="Null" UriSource="../Resources/PdfNull.png" />
+                <BitmapImage x:Key="Reference" UriSource="../Resources/exclamation.png" />
+                <BitmapImage x:Key="Exception" UriSource="../Resources/exclamation.png" />
+            </ResourceDictionary>
+        </converters:EnumToObjectConverter>
+
+        <vm:PdfObjectViewModel x:Key="DesignViewModel" Name="/SomeName" Value="2 entries" ValueRef="11 0 R" Type="Dictionary"/>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Horizontal" d:DataContext="{Binding Source={StaticResource DesignViewModel}}">
+        <Image Source="{Binding Type, Converter={StaticResource IconsConverter}}" Margin="1,1,5,1" Width="16" Height="16"/>
+        <TextBlock Foreground="Maroon">
+            <TextBlock.Text>
+                <MultiBinding StringFormat="{}{0} : {1} ">
+                    <Binding Path="Name" />
+                    <Binding Path="Value" />
+                </MultiBinding>
+            </TextBlock.Text>
+        </TextBlock>
+        <TextBlock Text="{Binding ValueRef}" Foreground="DarkCyan"/>
+    </StackPanel>
+</UserControl>
