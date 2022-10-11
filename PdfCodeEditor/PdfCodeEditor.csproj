@@ -89,7 +89,7 @@
     <PackageReference Include="itext7" Version="7.2.2" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="squirrel.windows" Version="1.9.0" />
-    <PackageReference Include="NuGet.CommandLine" Version="6.3.0">
+    <PackageReference Include="NuGet.CommandLine" Version="6.3.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
