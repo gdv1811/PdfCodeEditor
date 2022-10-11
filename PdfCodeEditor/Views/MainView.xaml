@@ -44,7 +44,7 @@
                 Converter={StaticResource BooleanToVisibilityConverter}}" 
                       Height="18" HorizontalAlignment="Right">
                 <MenuItem.Icon>
-                    <Image Source="/Resources/exclamation.png" Width="10"/>
+                    <Image Source="/Resources/DownloadImage.png" Width="16"/>
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>

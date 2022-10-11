@@ -21,6 +21,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace PdfCodeEditor.Views
 {
@@ -46,6 +47,8 @@ namespace PdfCodeEditor.Views
                                "startxref\n" +
                                $"{infoDict.Length + 16}\n" +
                                "%%EOF";
+
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new Action(() => AboutEditor.TextArea.Caret.Hide()));
         }
 
         private string GetInfoDict(string tool, string vers, string copyright)
