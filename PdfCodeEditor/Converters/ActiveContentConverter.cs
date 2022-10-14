@@ -30,7 +30,7 @@ namespace PdfCodeEditor.Converters
             return value switch
             {
                 PdfDocumentViewModel => value,
-                ToolViewModel => value,
+                //ToolViewModel => value,
                 _ => Binding.DoNothing
             };
         }
@@ -40,7 +40,7 @@ namespace PdfCodeEditor.Converters
             return value switch
             {
                 PdfDocumentViewModel => value,
-                ToolViewModel => value,
+                //ToolViewModel => value,
                 _ => Binding.DoNothing
             };
         }

@@ -16,60 +16,46 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System.Collections.ObjectModel;
+
 namespace PdfCodeEditor.ViewModels
 {
-    internal class ToolViewModel : ViewModelBase
+    internal class DockManagerViewModel:ViewModelBase
     {
-        private string _toolTip;
-        private string _title;
-        private bool _isSelected;
-        private ViewModelBase _content;
+        private PdfDocumentViewModel _currentPdfDocument;
+        private readonly ToolManagerViewModel _mainTreeManager;
+
+        public ObservableCollection<PdfDocumentViewModel> Documents { get; }
+        public ObservableCollection<ToolViewModel> Tools { get; }
         
-        public string ToolTip
+        public PdfDocumentViewModel CurrentPdfDocument
         {
-            get => _toolTip;
+            get => _currentPdfDocument;
             set
             {
-                _toolTip = value;
-                OnPropertyChanged(nameof(ToolTip));
+                _currentPdfDocument = value;
+                OnPropertyChanged(nameof(CurrentPdfDocument));
+                
+                _mainTreeManager.Tool.Content = _currentPdfDocument.PdfTree;
             }
         }
 
-        public string Title
+        public ToolManagerViewModel MainTreeManager
         {
-            get => _title;
-            set
+            get => _mainTreeManager;
+            private init
             {
-                _title = value;
-                OnPropertyChanged(nameof(Title));
+                _mainTreeManager = value;
+                OnPropertyChanged(nameof(MainTreeManager));
             }
         }
 
-        public bool IsSelected
+        public DockManagerViewModel()
         {
-            get => _isSelected;
-            set
-            {
-                _isSelected = value;
-                OnPropertyChanged(nameof(IsSelected));
-            }
-        }
-
-        public ViewModelBase Content
-        {
-            get => _content;
-            set
-            {
-                _content = value;
-                OnPropertyChanged(nameof(Content));
-            }
-        }
-        
-        public ToolViewModel(ViewModelBase content, string title, string toolTip)
-        {
-            _content = content;
-            _title = title;
-            _toolTip = toolTip;
+            Documents = new ObservableCollection<PdfDocumentViewModel>();
+            Tools = new ObservableCollection<ToolViewModel>();
+            MainTreeManager =
+                new ToolManagerViewModel(this, new ToolViewModel(PdfTreeViewModel.Empty, "Object tree", null));
         }
     }
 }

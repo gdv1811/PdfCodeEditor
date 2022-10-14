@@ -17,7 +17,6 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -34,12 +33,10 @@ namespace PdfCodeEditor.ViewModels
 
         private string _gitHubProjectPath = "https://github.com/gdv1811/PdfCodeEditor";
         private UpdateManager _updateManager;
+        private bool _isUpdateAvailable;
 
         private readonly IDialogService _dialogService;
-        private PdfDocumentViewModel _currentPdfDocument;
-        private ToolViewModel _currentToolView;
-        private ViewModelBase _currentContent;
-        private bool _isUpdateAvailable;
+        private DockManagerViewModel _dockManager;
 
         private ICommand _openCommand;
         private ICommand _dropCommand;
@@ -49,49 +46,14 @@ namespace PdfCodeEditor.ViewModels
         #endregion
 
         #region Properties
-
-        public ObservableCollection<PdfDocumentViewModel> Documents { get; }
-        public ObservableCollection<ToolViewModel> Tools { get; }
-
-        public PdfDocumentViewModel CurrentPdfDocument
+        
+        public DockManagerViewModel DockManager
         {
-            get => _currentPdfDocument;
+            get => _dockManager;
             set
             {
-                _currentPdfDocument = value;
-                _currentContent = _currentPdfDocument;
-                OnPropertyChanged(nameof(CurrentPdfDocument));
-                OnPropertyChanged(nameof(CurrentContent));
-            }
-        }
-
-        public ToolViewModel CurrentToolView
-        {
-            get => _currentToolView;
-            set
-            {
-                _currentToolView = value;
-                _currentContent = _currentToolView;
-                OnPropertyChanged(nameof(CurrentToolView));
-                OnPropertyChanged(nameof(CurrentContent));
-            }
-        }
-
-        public ViewModelBase CurrentContent
-        {
-            get => _currentContent;
-            set
-            {
-                _currentContent = value;
-                switch (_currentContent)
-                {
-                    case PdfDocumentViewModel doc:
-                        CurrentPdfDocument = doc;
-                        break;
-                    case ToolViewModel tool:
-                        CurrentToolView = tool;
-                        break;
-                }
+                _dockManager = value;
+                OnPropertyChanged(nameof(DockManager));
             }
         }
 
@@ -136,8 +98,7 @@ namespace PdfCodeEditor.ViewModels
         public MainViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
-            Documents = new ObservableCollection<PdfDocumentViewModel>();
-            Tools = new ObservableCollection<ToolViewModel>();
+            _dockManager = new DockManagerViewModel();
 
             var args = Environment.GetCommandLineArgs();
             foreach (var path in args.Where(File.Exists).Where(path => Path.GetExtension(path) == ".pdf"))
@@ -162,24 +123,10 @@ namespace PdfCodeEditor.ViewModels
             if(string.IsNullOrEmpty(path))
                 return;
 
-            var doc = new PdfDocumentViewModel(_dialogService);
+            var doc = new PdfDocumentViewModel(_dialogService, _dockManager);
             doc.Open(path);
-            doc.PdfTree.NewTabRequired += (o, a) => 
-            { 
-                Tools.Add(doc.PdfTree);
-                CurrentToolView = doc.PdfTree;
-                doc.PdfTree.IsSelected = true;
-            };
-            doc.DocumentClosing += (o, a) =>
-            {
-                Documents.Remove(doc);
-                while (Tools.Remove(doc.PdfTree))
-                { }
-
-                doc.PdfTree = null;
-            };
-            Documents.Add(doc);
-            CurrentPdfDocument = doc;
+            _dockManager.Documents.Add(doc);
+            _dockManager.CurrentPdfDocument = doc;
         }
 
         private void Drop(DragEventArgs arg)

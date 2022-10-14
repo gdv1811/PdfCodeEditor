@@ -16,50 +16,55 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System.Windows.Controls;
-using System.Windows;
-using PdfCodeEditor.ViewModels;
+using System.Windows.Input;
 
-namespace PdfCodeEditor.DockHelpers
+namespace PdfCodeEditor.ViewModels
 {
-    internal class TemplateSelector : DataTemplateSelector
+    internal class ToolManagerViewModel:ViewModelBase
     {
-        public TemplateSelector()
-        {
-        }
+        private readonly DockManagerViewModel _dockManager;
+        private bool _isToolOpen = false;
+        private ICommand _openToolCommand;
+        private ICommand _closeToolCommand;
 
+        public ToolViewModel Tool { get; }
 
-        public DataTemplate PdfDocumentViewTemplate
+        public bool IsToolOpen
         {
-            get;
-            set;
-        }
-
-        public DataTemplate PdfTreeViewTemplate
-        {
-            get;
-            set;
-        }
-
-        public DataTemplate ContentToolViewTemplate
-        {
-            get;
-            set;
-        }
-
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
-        {
-            switch (item)
+            get => _isToolOpen;
+            private set
             {
-                case PdfDocumentViewModel:
-                    return PdfDocumentViewTemplate;
-                case ToolViewModel tool when tool.Content is PdfTreeViewModel:
-                    return PdfTreeViewTemplate;
-                case ToolViewModel tool when tool.Content is ContentToolViewModel:
-                    return ContentToolViewTemplate;
-                default:
-                    return base.SelectTemplate(item, container);
+                _isToolOpen = value;
+                OnPropertyChanged(nameof(IsToolOpen));
             }
+        }
+
+        public ICommand OpenToolCommand
+        {
+            get { return _openToolCommand ??= new RelayCommand(_ => OpenTool()); }
+        }
+
+        public ICommand CloseToolCommand
+        {
+            get { return _closeToolCommand ??= new RelayCommand(_ => CloseTool()); }
+        }
+
+        public ToolManagerViewModel(DockManagerViewModel dockManager, ToolViewModel tool)
+        {
+            _dockManager = dockManager;
+            Tool = tool;
+        }
+
+        private void OpenTool()
+        {
+            _dockManager.Tools.Add(Tool);
+            _isToolOpen = true;
+        }
+
+        private void CloseTool()
+        {
+            _dockManager.Tools.Remove(Tool);
+            _isToolOpen = false;
         }
     }
 }

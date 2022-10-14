@@ -30,8 +30,21 @@
                 <!--<MenuItem Header="New" Command="{Binding NewCommand}"/>-->
                 <MenuItem Command="{Binding OpenCommand}" Header="Open" />
                 <Separator />
-                <MenuItem Command="{Binding CurrentPdfDocument.SaveCommand}" Header="Save" />
-                <MenuItem Command="{Binding CurrentPdfDocument.SaveAsCommand}" Header="Save As..." />
+                <MenuItem Command="{Binding DockManager.CurrentPdfDocument.SaveCommand}" Header="Save" />
+                <MenuItem Command="{Binding DockManager.CurrentPdfDocument.SaveAsCommand}" Header="Save As..." />
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="Object tree" IsCheckable="True" IsChecked="{Binding DockManager.MainTreeManager.IsToolOpen, Mode=OneWay}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Checked">
+                            <i:InvokeCommandAction Command="{Binding DockManager.MainTreeManager.OpenToolCommand }"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="Unchecked">
+                            <i:InvokeCommandAction Command="{Binding DockManager.MainTreeManager.CloseToolCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                </MenuItem>
+                <!--<MenuItem Header="Content" IsCheckable="True"/>-->
             </MenuItem>
             <MenuItem Header="_Help">
                 <MenuItem Command="{Binding GitHubCommand}" Header="GitHub project"/>
@@ -51,17 +64,17 @@
 
         <ToolBarTray Grid.Row="1">
             <ToolBar>
-                <Button Command="{Binding CurrentPdfDocument.Navigator.BackwardCommand}">
+                <Button Command="{Binding DockManager.CurrentPdfDocument.Navigator.BackwardCommand}">
                     <Image Source="../Resources/BackwardImage.png" />
                 </Button>
-                <Button Command="{Binding CurrentPdfDocument.Navigator.ForwardCommand}">
+                <Button Command="{Binding DockManager.CurrentPdfDocument.Navigator.ForwardCommand}">
                     <Image Source="../Resources/ForwardImage.png" />
                 </Button>
                 <Separator />
                 <Button Command="{Binding OpenCommand}">
                     <Image Source="../Resources/FolderImage.png" />
                 </Button>
-                <Button Command="{Binding CurrentPdfDocument.SaveCommand}">
+                <Button Command="{Binding DockManager.CurrentPdfDocument.SaveCommand}">
                     <Image Source="../Resources/SaveImage.png" />
                 </Button>
                 <Separator />
@@ -78,9 +91,9 @@
                         Grid.Row="2"
                         Margin="0,0,0,0"
                         AllowDrop="True"
-                        ActiveContent="{Binding CurrentPdfDocument, Mode=TwoWay, Converter={StaticResource ActiveContentConverter}}"
-                        DocumentsSource="{Binding Documents}"
-                        AnchorablesSource="{Binding Tools}">
+                        ActiveContent="{Binding DockManager.CurrentPdfDocument, Mode=TwoWay, Converter={StaticResource ActiveContentConverter}}"
+                        DocumentsSource="{Binding DockManager.Documents}"
+                        AnchorablesSource="{Binding DockManager.Tools}">
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="Drop">
                     <i:InvokeCommandAction Command="{Binding DropCommand}" PassEventArgsToCommand="True"/>
@@ -95,7 +108,7 @@
                     </dockHelpers:TemplateSelector.PdfDocumentViewTemplate>
                     <dockHelpers:TemplateSelector.PdfTreeViewTemplate>
                         <DataTemplate>
-                            <views:PdfTreeView/>
+                            <views:PdfTreeView DataContext="{Binding Content}"/>
                         </DataTemplate>
                     </dockHelpers:TemplateSelector.PdfTreeViewTemplate>
                     <dockHelpers:TemplateSelector.ContentToolViewTemplate>
@@ -110,7 +123,7 @@
                     <dockHelpers:PanesStyleSelector.ToolStyle>
                         <Style TargetType="{x:Type LayoutAnchorableItem}">
                             <Setter Property="Title" Value="{Binding Model.Title}" />
-                            <Setter Property="ToolTip" Value="{Binding Model.FilePath}" />
+                            <Setter Property="ToolTip" Value="{Binding Model.ToolTip}" />
                             <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
                         </Style>
                     </dockHelpers:PanesStyleSelector.ToolStyle>
@@ -128,10 +141,10 @@
                     <LayoutDocumentPane x:Name="DocumentHost" DockHeight="*" DockWidth="2*" />
                     <LayoutPanel Orientation="Vertical" DockWidth="1*">
                         <LayoutAnchorablePane Name="ToolsPane" DockMinWidth="200">
-                            <LayoutAnchorable Title="Object tree" 
-                                              CanClose="False">
-                                <views:PdfTreeView DataContext="{Binding CurrentPdfDocument.PdfTree}"/>
-                            </LayoutAnchorable>
+                            <!--<LayoutAnchorable Title="Object tree" 
+                                              CanClose="False" ContentId="CurrentTree">
+                                <views:PdfTreeView DataContext="{Binding DockManager.CurrentPdfDocument.PdfTree}"/>
+                            </LayoutAnchorable>-->
                         </LayoutAnchorablePane>
                         <!--<LayoutAnchorablePane Name="ContentToolsPane" DockMinWidth="200" DockMinHeight="200">
                             <LayoutAnchorable>
@@ -148,12 +161,12 @@
             <TextBox x:Name="OffsetTextBox" 
                      Width="100"
                      Margin="-10,-1,0,-1"
-                     Text="{Binding Path=CurrentPdfDocument.Navigator.CaretOffset,
+                     Text="{Binding Path=DockManager.CurrentPdfDocument.Navigator.CaretOffset,
                                     Mode=TwoWay}"
                      PreviewKeyDown="TextBoxOnPreviewKeyDown"
                      TextAlignment="Right" />
             <Label Margin="5,-5"
-                   Content="{Binding Path=CurrentPdfDocument.Navigator.SelectionLength}"
+                   Content="{Binding Path=DockManager.CurrentPdfDocument.Navigator.SelectionLength}"
                    ContentStringFormat="Selected: {0}" />
         </StatusBar>
     </Grid>
