@@ -8,7 +8,13 @@
         Title="PdfCodeEditor"
         Width="1024"
         Height="500">
-    <Window.Resources>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding CloseCommand }"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+        <Window.Resources>
         <converters:ActiveContentConverter x:Key="ActiveContentConverter"/>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
@@ -34,7 +40,7 @@
                 <MenuItem Command="{Binding DockManager.CurrentPdfDocument.SaveAsCommand}" Header="Save As..." />
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="Object tree" IsCheckable="True" IsChecked="{Binding DockManager.MainTreeManager.IsToolOpen, Mode=OneWay}">
+                <MenuItem Name="ObjectTreeButton" Header="Object tree" IsCheckable="True" IsChecked="{Binding DockManager.MainTreeManager.IsToolOpen, Mode=OneWay}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="Checked">
                             <i:InvokeCommandAction Command="{Binding DockManager.MainTreeManager.OpenToolCommand }"/>
@@ -122,9 +128,13 @@
                 <dockHelpers:PanesStyleSelector>
                     <dockHelpers:PanesStyleSelector.ToolStyle>
                         <Style TargetType="{x:Type LayoutAnchorableItem}">
+                            <Setter Property="ContentId" Value="{Binding Model.Title}" />
                             <Setter Property="Title" Value="{Binding Model.Title}" />
                             <Setter Property="ToolTip" Value="{Binding Model.ToolTip}" />
                             <Setter Property="IsSelected" Value="{Binding Model.IsSelected, Mode=TwoWay}" />
+                            <Setter Property="CanHide" Value="False" />
+                            <Setter Property="CanClose" Value="True" />
+                            <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}"/>
                         </Style>
                     </dockHelpers:PanesStyleSelector.ToolStyle>
                     <dockHelpers:PanesStyleSelector.PdfDocumentStyle>
@@ -136,15 +146,15 @@
                     </dockHelpers:PanesStyleSelector.PdfDocumentStyle>
                 </dockHelpers:PanesStyleSelector>
             </DockingManager.LayoutItemContainerStyleSelector>
+            <DockingManager.LayoutUpdateStrategy>
+                <dockHelpers:LayoutInitializer/>
+            </DockingManager.LayoutUpdateStrategy>
             <LayoutRoot>
                 <LayoutPanel Orientation="Horizontal">
                     <LayoutDocumentPane x:Name="DocumentHost" DockHeight="*" DockWidth="2*" />
                     <LayoutPanel Orientation="Vertical" DockWidth="1*">
                         <LayoutAnchorablePane Name="ToolsPane" DockMinWidth="200">
-                            <!--<LayoutAnchorable Title="Object tree" 
-                                              CanClose="False" ContentId="CurrentTree">
-                                <views:PdfTreeView DataContext="{Binding DockManager.CurrentPdfDocument.PdfTree}"/>
-                            </LayoutAnchorable>-->
+                            <LayoutAnchorable Title="Object tree" ContentId="Object tree"/>
                         </LayoutAnchorablePane>
                         <!--<LayoutAnchorablePane Name="ContentToolsPane" DockMinWidth="200" DockMinHeight="200">
                             <LayoutAnchorable>

@@ -42,6 +42,7 @@ namespace PdfCodeEditor.ViewModels
         private ICommand _dropCommand;
         private ICommand _gitHubCommand;
         private ICommand _updateAppCommand;
+        private ICommand _closeCommand;
 
         #endregion
 
@@ -89,6 +90,11 @@ namespace PdfCodeEditor.ViewModels
         public ICommand UpdateAppCommand
         {
             get { return _updateAppCommand ??= new RelayCommand(_ => UpdateApp()); }
+        }
+
+        public ICommand CloseCommand
+        {
+            get { return _closeCommand ??= new RelayCommand(_ => Close()); }
         }
 
         #endregion
@@ -175,6 +181,11 @@ namespace PdfCodeEditor.ViewModels
             {
                 _dialogService.ShowErrorMessage(ex.Message, "Update error");
             }
+        }
+
+        private void Close()
+        {
+            _dockManager.Close();
         }
 
         #endregion

@@ -122,8 +122,11 @@ namespace PdfCodeEditor.ViewModels
             if (_dockManager == null)
                 return;
 
-            var tool = new ToolViewModel(this,
-                Path.GetFileName(FilePath) + " - Object tree", FilePath);
+            var tool = new ToolViewModel(this, _dockManager)
+            {
+                Title = Path.GetFileName(FilePath) + " - Object tree",
+                ToolTip = FilePath
+            };
 
             _dockManager.Tools.Add(tool);
             tool.IsSelected = true;

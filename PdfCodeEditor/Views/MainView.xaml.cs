@@ -17,9 +17,11 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Threading;
 using System.Xml;
 using ICSharpCode.AvalonEdit.Highlighting;
 
@@ -30,6 +32,7 @@ namespace PdfCodeEditor.Views
     /// </summary>
     public partial class MainView
     {
+        private string _dockSettingsPath = @".\dockSettings.config";
         public MainView()
         {
             // Load our custom highlighting definition
@@ -48,7 +51,34 @@ namespace PdfCodeEditor.Views
             HighlightingManager.Instance.RegisterHighlighting("Pdf", new[] { ".pdf" }, pdfHighlighting);
 
             InitializeComponent();
+
+            this.Loaded += MainViewOnLoaded;
+            this.Closed += MainViewOnClosed;
         }
+
+        private void MainViewOnClosed(object sender, EventArgs e)
+        {
+            var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(DockManager);
+            serializer.Serialize(_dockSettingsPath);
+        }
+
+        private void MainViewOnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (!File.Exists(_dockSettingsPath))
+                return;
+
+            var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(DockManager);
+            serializer.LayoutSerializationCallback += (s, args) =>
+            {
+                args.Content = args.Content;
+                if (args.Model.ContentId == "Object tree")
+                    Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+                        new Action(() => ObjectTreeButton.IsChecked = true));
+            };
+
+            serializer.Deserialize(_dockSettingsPath);
+        }
+
         private void TextBoxOnPreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)

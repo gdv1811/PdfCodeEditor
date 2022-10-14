@@ -49,22 +49,22 @@ namespace PdfCodeEditor.ViewModels
             get { return _closeToolCommand ??= new RelayCommand(_ => CloseTool()); }
         }
 
-        public ToolManagerViewModel(DockManagerViewModel dockManager, ToolViewModel tool)
+        public ToolManagerViewModel(ToolViewModel tool, DockManagerViewModel dockManager)
         {
             _dockManager = dockManager;
             Tool = tool;
         }
 
-        private void OpenTool()
+        public void OpenTool()
         {
             _dockManager.Tools.Add(Tool);
-            _isToolOpen = true;
+            IsToolOpen = true;
         }
 
-        private void CloseTool()
+        public void CloseTool()
         {
             _dockManager.Tools.Remove(Tool);
-            _isToolOpen = false;
+            IsToolOpen = false;
         }
     }
 }

@@ -17,6 +17,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 using System.Collections.ObjectModel;
+using NuGet;
 
 namespace PdfCodeEditor.ViewModels
 {
@@ -55,7 +56,15 @@ namespace PdfCodeEditor.ViewModels
             Documents = new ObservableCollection<PdfDocumentViewModel>();
             Tools = new ObservableCollection<ToolViewModel>();
             MainTreeManager =
-                new ToolManagerViewModel(this, new ToolViewModel(PdfTreeViewModel.Empty, "Object tree", null));
+                new ToolManagerViewModel(
+                    new ToolViewModel(PdfTreeViewModel.Empty, this) { Title = "Object tree" }, 
+                    this);
+        }
+
+        public void Close()
+        {
+            Documents.Clear();
+            Tools.RemoveAll(item => item != MainTreeManager.Tool);
         }
     }
 }

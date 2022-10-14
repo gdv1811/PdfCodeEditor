@@ -16,6 +16,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System.Windows.Input;
+
 namespace PdfCodeEditor.ViewModels
 {
     internal class ToolViewModel : ViewModelBase
@@ -24,7 +26,10 @@ namespace PdfCodeEditor.ViewModels
         private string _title;
         private bool _isSelected;
         private ViewModelBase _content;
-        
+        private DockManagerViewModel _dockManager;
+
+        private ICommand _closeCommand;
+
         public string ToolTip
         {
             get => _toolTip;
@@ -65,11 +70,23 @@ namespace PdfCodeEditor.ViewModels
             }
         }
         
-        public ToolViewModel(ViewModelBase content, string title, string toolTip)
+        public ICommand CloseCommand
+        {
+            get { return _closeCommand ??= new RelayCommand(arg => Close()); }
+        }
+
+        public ToolViewModel(ViewModelBase content, DockManagerViewModel dockManager)
         {
             _content = content;
-            _title = title;
-            _toolTip = toolTip;
+            _dockManager = dockManager;
+        }
+
+        public void Close()
+        {
+            if (_dockManager.MainTreeManager.Tool == this)
+                _dockManager.MainTreeManager.CloseTool();
+            else
+                _dockManager.Tools.Remove(this);
         }
     }
 }
