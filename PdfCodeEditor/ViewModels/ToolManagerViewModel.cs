@@ -16,6 +16,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+using System.Collections.Specialized;
 using System.Windows.Input;
 
 namespace PdfCodeEditor.ViewModels
@@ -52,7 +53,14 @@ namespace PdfCodeEditor.ViewModels
         public ToolManagerViewModel(ToolViewModel tool, DockManagerViewModel dockManager)
         {
             _dockManager = dockManager;
+            _dockManager.Tools.CollectionChanged+= ToolsOnCollectionChanged;
             Tool = tool;
+        }
+
+        private void ToolsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Remove && e.OldItems != null && e.OldItems.Contains(Tool))
+                IsToolOpen = false;
         }
 
         public void OpenTool()

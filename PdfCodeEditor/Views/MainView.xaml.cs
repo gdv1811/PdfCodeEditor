@@ -65,7 +65,11 @@ namespace PdfCodeEditor.Views
         private void MainViewOnLoaded(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(_dockSettingsPath))
+            {
+                Dispatcher.BeginInvoke(DispatcherPriority.Normal,
+                    new Action(() => ObjectTreeButton.IsChecked = true));
                 return;
+            }
 
             var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(DockManager);
             serializer.LayoutSerializationCallback += (s, args) =>

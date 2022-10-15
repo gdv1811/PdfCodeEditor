@@ -22,11 +22,12 @@ namespace PdfCodeEditor.ViewModels
 {
     internal class ToolViewModel : ViewModelBase
     {
+        private readonly DockManagerViewModel _dockManager;
+
         private string _toolTip;
         private string _title;
         private bool _isSelected;
         private ViewModelBase _content;
-        private DockManagerViewModel _dockManager;
 
         private ICommand _closeCommand;
 
@@ -72,7 +73,7 @@ namespace PdfCodeEditor.ViewModels
         
         public ICommand CloseCommand
         {
-            get { return _closeCommand ??= new RelayCommand(arg => Close()); }
+            get { return _closeCommand ??= new RelayCommand(_ => Close()); }
         }
 
         public ToolViewModel(ViewModelBase content, DockManagerViewModel dockManager)
@@ -83,10 +84,7 @@ namespace PdfCodeEditor.ViewModels
 
         public void Close()
         {
-            if (_dockManager.MainTreeManager.Tool == this)
-                _dockManager.MainTreeManager.CloseTool();
-            else
-                _dockManager.Tools.Remove(this);
+            _dockManager.Tools.Remove(this);
         }
     }
 }
