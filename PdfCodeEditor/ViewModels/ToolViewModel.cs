@@ -16,29 +16,40 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using System.IO;
+using System.Windows.Input;
 
 namespace PdfCodeEditor.ViewModels
 {
     internal class ToolViewModel : ViewModelBase
     {
-        private string _filePath;
-        private bool _isSelected;
+        private readonly DockManagerViewModel _dockManager;
 
-        public string FilePath
+        private string _toolTip;
+        private string _title;
+        private bool _isSelected;
+        private ViewModelBase _content;
+
+        private ICommand _closeCommand;
+
+        public string ToolTip
         {
-            get { return _filePath; }
+            get => _toolTip;
             set
             {
-                if (_filePath == value)
-                    return;
-                _filePath = value;
-                OnPropertyChanged(nameof(FilePath));
-                OnPropertyChanged(nameof(Title));
+                _toolTip = value;
+                OnPropertyChanged(nameof(ToolTip));
             }
         }
 
-        public virtual string Title => Path.GetFileName(_filePath);
+        public string Title
+        {
+            get => _title;
+            set
+            {
+                _title = value;
+                OnPropertyChanged(nameof(Title));
+            }
+        }
 
         public bool IsSelected
         {
@@ -48,6 +59,32 @@ namespace PdfCodeEditor.ViewModels
                 _isSelected = value;
                 OnPropertyChanged(nameof(IsSelected));
             }
+        }
+
+        public ViewModelBase Content
+        {
+            get => _content;
+            set
+            {
+                _content = value;
+                OnPropertyChanged(nameof(Content));
+            }
+        }
+        
+        public ICommand CloseCommand
+        {
+            get { return _closeCommand ??= new RelayCommand(_ => Close()); }
+        }
+
+        public ToolViewModel(ViewModelBase content, DockManagerViewModel dockManager)
+        {
+            _content = content;
+            _dockManager = dockManager;
+        }
+
+        public void Close()
+        {
+            _dockManager.Tools.Remove(this);
         }
     }
 }

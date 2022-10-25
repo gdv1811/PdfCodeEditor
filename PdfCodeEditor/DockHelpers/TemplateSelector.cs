@@ -16,7 +16,6 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-using AvalonDock.Layout;
 using System.Windows.Controls;
 using System.Windows;
 using PdfCodeEditor.ViewModels;
@@ -48,20 +47,19 @@ namespace PdfCodeEditor.DockHelpers
             set;
         }
 
-        public override System.Windows.DataTemplate SelectTemplate(object item, System.Windows.DependencyObject container)
+        public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            var itemAsLayoutContent = item as LayoutContent;
-
-            if (item is PdfDocumentViewModel)
-                return PdfDocumentViewTemplate;
-
-            if (item is PdfTreeViewModel)
-                return PdfTreeViewTemplate;
-
-            if (item is ContentToolViewModel)
-                return ContentToolViewTemplate;
-
-            return base.SelectTemplate(item, container);
+            switch (item)
+            {
+                case PdfDocumentViewModel:
+                    return PdfDocumentViewTemplate;
+                case ToolViewModel tool when tool.Content is PdfTreeViewModel:
+                    return PdfTreeViewTemplate;
+                case ToolViewModel tool when tool.Content is ContentToolViewModel:
+                    return ContentToolViewTemplate;
+                default:
+                    return base.SelectTemplate(item, container);
+            }
         }
     }
 }

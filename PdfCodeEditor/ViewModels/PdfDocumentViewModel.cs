@@ -20,6 +20,7 @@ using System;
 using System.IO;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Document;
+using NuGet;
 using PdfCodeEditor.Editor;
 using PdfCodeEditor.Models;
 using PdfCodeEditor.Models.Pdf;
@@ -32,6 +33,7 @@ namespace PdfCodeEditor.ViewModels
         #region Fields
 
         private readonly IDialogService _dialogService;
+        private readonly DockManagerViewModel _dockManager;
         private string _filePath;
         private TextDocument _document;
         private bool _isModified;
@@ -47,7 +49,7 @@ namespace PdfCodeEditor.ViewModels
 
         public string FilePath
         {
-            get { return _filePath; }
+            get => _filePath;
             set
             {
                 if (_filePath == value)
@@ -65,7 +67,7 @@ namespace PdfCodeEditor.ViewModels
 
         public TextDocument Document
         {
-            get { return _document; }
+            get => _document;
             set
             {
                 _document = value;
@@ -75,7 +77,7 @@ namespace PdfCodeEditor.ViewModels
 
         public bool IsModified
         {
-            get { return _isModified; }
+            get => _isModified;
             set
             {
                 _isModified = value;
@@ -86,7 +88,7 @@ namespace PdfCodeEditor.ViewModels
 
         public NavigatorViewModel Navigator
         {
-            get { return _navigator; }
+            get => _navigator;
             set
             {
                 _navigator = value;
@@ -96,7 +98,7 @@ namespace PdfCodeEditor.ViewModels
 
         public PdfTreeViewModel PdfTree
         {
-            get { return _pdfTree; }
+            get => _pdfTree;
             set
             {
                 _pdfTree = value;
@@ -105,13 +107,7 @@ namespace PdfCodeEditor.ViewModels
         }
 
         #endregion
-
-        #region Events
-
-        public event EventHandler<EventArgs> DocumentClosing;
-
-        #endregion
-
+        
         #region Properties-commands
 
         public ICommand SaveCommand
@@ -128,16 +124,17 @@ namespace PdfCodeEditor.ViewModels
         }
         public ICommand CloseCommand
         {
-            get { return _closeCommand ??= new RelayCommand(arg => OnDocumentClosing()); }
+            get { return _closeCommand ??= new RelayCommand(arg => Close()); }
         }
 
         #endregion
 
         #region Constructors
 
-        public PdfDocumentViewModel(IDialogService dialogService)
+        public PdfDocumentViewModel(IDialogService dialogService, DockManagerViewModel dockManager)
         {
             _dialogService = dialogService;
+            _dockManager = dockManager;
             Document = new TextDocument();
             Navigator = new NavigatorViewModel(Document);
         }
@@ -150,16 +147,18 @@ namespace PdfCodeEditor.ViewModels
         {
             FilePath = filePath;
 
-            if (File.Exists(filePath))
-            {
-                _document = new TextDocument(FileManager.ReadTextFile(_filePath));
-                Navigator.Document = _document;
+            if (!File.Exists(filePath)) 
+                return;
 
-                var stm = new TextDocumentStream(_document);
-                IPdfObjectProvider provider = new PdfObjectiTextProvider(stm);
-                PdfTree = new PdfTreeViewModel(provider, Navigator);
-                PdfTree.FilePath = filePath;
-            }
+            _document = new TextDocument(FileManager.ReadTextFile(_filePath));
+            Navigator.Document = _document;
+
+            var stm = new TextDocumentStream(_document);
+            IPdfObjectProvider provider = new PdfObjectiTextProvider(stm);
+            PdfTree = new PdfTreeViewModel(provider, Navigator, _dockManager)
+            {
+                FilePath = filePath
+            };
         }
 
         public void Save(string path)
@@ -179,14 +178,13 @@ namespace PdfCodeEditor.ViewModels
                 _dialogService.ShowErrorMessage(ex.Message, "Save error");
             }
         }
-        
-        #endregion
 
-        #region Private methods
-
-        private void OnDocumentClosing()
+        public void Close()
         {
-            DocumentClosing?.Invoke(this, EventArgs.Empty);
+            _dockManager.Documents.Remove(this);
+            if (_dockManager.MainTreeManager.Tool.Content == PdfTree)
+                _dockManager.MainTreeManager.Tool.Content = PdfTreeViewModel.Empty;
+            _dockManager.Tools.RemoveAll(item => item.Content == PdfTree);
         }
         
         #endregion
