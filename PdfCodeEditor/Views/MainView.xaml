@@ -26,7 +26,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Menu>
+        <Menu Height="24">
             <Menu.ItemsPanel>
                 <ItemsPanelTemplate>
                     <DockPanel HorizontalAlignment="Stretch"/>
@@ -58,12 +58,14 @@
                 <MenuItem Header="About" Click="AboutMenuItemOnClick"/>
             </MenuItem>
             <MenuItem Command ="{Binding UpdateAppCommand}"
-                      Header="Update" 
                       Visibility="{Binding IsUpdateAvailable, 
                 Converter={StaticResource BooleanToVisibilityConverter}}" 
-                      Height="18" HorizontalAlignment="Right">
+                      HorizontalAlignment="Right" VerticalAlignment="Center">
+                <MenuItem.Header>
+                    <TextBlock Text="Update" VerticalAlignment="Center"/>
+                </MenuItem.Header>
                 <MenuItem.Icon>
-                    <Image Source="/Resources/DownloadImage.png" Width="16"/>
+                    <Image Source="/Resources/DownloadImage.png"/>
                 </MenuItem.Icon>
             </MenuItem>
         </Menu>
