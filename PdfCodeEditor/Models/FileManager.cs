@@ -18,6 +18,7 @@
 
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using ICSharpCode.AvalonEdit.Utils;
 
 namespace PdfCodeEditor.Models
@@ -26,16 +27,14 @@ namespace PdfCodeEditor.Models
     {
         private static readonly Encoding PdfEncoding = new PdfEncoding();
 
+        public static Task<string> ReadTextFileAsync(string file) => Task.Run(() => ReadTextFile(file));
+
         public static string ReadTextFile(string file)
         {
-            using (var fs = new FileStream(file,
-                FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                using (var reader = FileReader.OpenStream(fs, PdfEncoding))
-                {
-                    return reader.ReadToEnd();
-                }
-            }
+            using var fs = new FileStream(file,
+                FileMode.Open, FileAccess.Read, FileShare.Read);
+            using var reader = FileReader.OpenStream(fs, PdfEncoding);
+            return reader.ReadToEnd();
         }
 
         public static void WriteTextFile(string text, string filePath)

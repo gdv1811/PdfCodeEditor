@@ -21,7 +21,6 @@ using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Windows.Media;
 using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Folding;
 using ICSharpCode.AvalonEdit.Search;
 using PdfCodeEditor.Editor;
 using PdfCodeEditor.Editor.AvalonEdit.AddIn;
@@ -38,7 +37,6 @@ namespace PdfCodeEditor.Views
         private readonly FoldingStrategy _foldingStrategy = new FoldingStrategy();
         private TextMarkerService _colorTransformer;
         private ITextMarker _objectRefMarker;
-        //private readonly Timer _timerOfUpdateFoldings;
 
         #endregion
 
@@ -61,14 +59,12 @@ namespace PdfCodeEditor.Views
 
             Editor.DocumentChanged += (sender, args) =>
             {
-                UpdateFoldings();
+                _foldingStrategy.UpdateManager(Editor.TextArea);
+                _foldingStrategy.UpdateFoldings(Editor.Document);
                 _colorTransformer = new TextMarkerService(Editor.Document);
                 Editor.TextArea.TextView.BackgroundRenderers.Add(_colorTransformer);
                 Editor.TextArea.TextView.LineTransformers.Add(_colorTransformer);
             };
-
-            //_timerOfUpdateFoldings = new Timer(1000) { AutoReset = false };
-            //_timerOfUpdateFoldings.Elapsed += (sender, args) => UpdateFoldings();
 
             Editor.TextArea.TextEntered += TextAreaOnTextEntered;
             Editor.TextArea.PreviewMouseDown += TextAreaOnPreviewMouseDown;
@@ -81,13 +77,7 @@ namespace PdfCodeEditor.Views
         #endregion
 
         #region Private methods
-
-        private void UpdateFoldings()
-        {
-            _foldingStrategy.FoldingManager = _foldingStrategy.FoldingManager ?? FoldingManager.Install(Editor.TextArea);
-            _foldingStrategy.UpdateFoldings(Editor.Document);
-        }
-
+        
         private void HighlightObjectRef(TextViewPosition? position)
         {
             if (position == null)
@@ -132,8 +122,7 @@ namespace PdfCodeEditor.Views
 
         private void TextAreaOnTextEntered(object sender, TextCompositionEventArgs e)
         {
-            UpdateFoldings();
-            //_timerOfUpdateFoldings.Start();
+            _foldingStrategy.UpdateFoldings(Editor.Document);
         }
 
         private void TextAreaOnPreviewMouseDown(object sender, MouseButtonEventArgs e)

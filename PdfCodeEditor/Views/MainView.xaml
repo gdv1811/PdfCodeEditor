@@ -5,9 +5,14 @@
         xmlns:views="clr-namespace:PdfCodeEditor.Views"
         xmlns:dockHelpers="clr-namespace:PdfCodeEditor.DockHelpers"
         xmlns:converters="clr-namespace:PdfCodeEditor.Converters"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:PdfCodeEditor.ViewModels"
+        mc:Ignorable="d"
         Title="PdfCodeEditor"
         Width="1024"
-        Height="500">
+        Height="500" 
+        d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding CloseCommand }"/>
@@ -169,17 +174,26 @@
         </DockingManager>
                      
         <StatusBar Grid.Row="3">
-            <Label Margin="5,-5,0,-5" Content="Offset:" />
-            <TextBox x:Name="OffsetTextBox" 
+            <StatusBarItem Content="Offset:" />
+            <StatusBarItem>
+                <TextBox x:Name="OffsetTextBox" 
                      Width="100"
-                     Margin="-10,-1,0,-1"
                      Text="{Binding Path=DockManager.CurrentPdfDocument.Navigator.CaretOffset,
                                     Mode=TwoWay}"
                      PreviewKeyDown="TextBoxOnPreviewKeyDown"
                      TextAlignment="Right" />
-            <Label Margin="5,-5"
-                   Content="{Binding Path=DockManager.CurrentPdfDocument.Navigator.SelectionLength}"
-                   ContentStringFormat="Selected: {0}" />
+            </StatusBarItem>
+            <StatusBarItem Content="{Binding Path=DockManager.CurrentPdfDocument.Navigator.SelectionLength}"
+                           ContentStringFormat="Selected: {0}" />
+
+            <StatusBarItem HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding Progress.Message}" Margin="0,0,5,0"/>
+                    <ProgressBar Width="150" Height="10" 
+                                 IsIndeterminate="{Binding Progress.IsIndeterminate, Mode=TwoWay}"
+                                 Value="{Binding Progress.Percent}"/>
+                </StackPanel>
+            </StatusBarItem>
         </StatusBar>
     </Grid>
 </Window>

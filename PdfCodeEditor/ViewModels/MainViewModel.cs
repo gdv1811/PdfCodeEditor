@@ -20,6 +20,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using PdfCodeEditor.Services;
@@ -37,6 +38,7 @@ namespace PdfCodeEditor.ViewModels
 
         private readonly IDialogService _dialogService;
         private DockManagerViewModel _dockManager;
+        private ProgressViewModel _progress;
 
         private ICommand _openCommand;
         private ICommand _dropCommand;
@@ -65,6 +67,16 @@ namespace PdfCodeEditor.ViewModels
             {
                 _isUpdateAvailable = value;
                 OnPropertyChanged(nameof(IsUpdateAvailable));
+            }
+        }
+
+        public ProgressViewModel Progress
+        {
+            get => _progress;
+            set
+            {
+                _progress = value;
+                OnPropertyChanged(nameof(Progress));
             }
         }
 
@@ -105,14 +117,15 @@ namespace PdfCodeEditor.ViewModels
         {
             _dialogService = dialogService;
             _dockManager = new DockManagerViewModel();
+            _progress = new ProgressViewModel();
+
+            Task.Run(InitUpdateManager);
 
             var args = Environment.GetCommandLineArgs();
             foreach (var path in args.Where(File.Exists).Where(path => Path.GetExtension(path) == ".pdf"))
             {
                 Open(path);
             }
-
-            InitUpdateManager();
         }
 
         #endregion
@@ -123,14 +136,14 @@ namespace PdfCodeEditor.ViewModels
         {
             Open(_dialogService.ShowOpenDialog("PDF|*.pdf"));
         }
-
+        
         private void Open(string path)
         {
             if(string.IsNullOrEmpty(path))
                 return;
 
-            var doc = new PdfDocumentViewModel(_dialogService, _dockManager);
-            doc.Open(path);
+            var doc = new PdfDocumentViewModel(_dialogService, _dockManager, Progress);
+            doc.OpenAsync(path);
             _dockManager.Documents.Add(doc);
             _dockManager.CurrentPdfDocument = doc;
         }
@@ -165,6 +178,7 @@ namespace PdfCodeEditor.ViewModels
             catch
             {
                 //todo add to log
+                Progress.ShowMessage("Unable to check for update");
             }
         }
 
@@ -172,14 +186,18 @@ namespace PdfCodeEditor.ViewModels
         {
             try
             {
-                await _updateManager.UpdateApp();
+                _progress.ShowMessage("Updating...");
+                await _updateManager.UpdateApp(progress => { _progress.Percent = progress; });
 
                 IsUpdateAvailable = false;
+
                 _dialogService.ShowMessage("Update completed successfully!\nPlease, restart application.", "Update");
+                _progress.ShowMessage("Update completed successfully!");
             }
             catch (Exception ex)
             {
                 _dialogService.ShowErrorMessage(ex.Message, "Update error");
+                _progress.ShowMessage("Update error");
             }
         }
 

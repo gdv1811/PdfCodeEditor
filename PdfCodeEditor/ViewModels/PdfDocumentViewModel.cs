@@ -18,6 +18,8 @@
 
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ICSharpCode.AvalonEdit.Document;
 using NuGet;
@@ -34,9 +36,11 @@ namespace PdfCodeEditor.ViewModels
 
         private readonly IDialogService _dialogService;
         private readonly DockManagerViewModel _dockManager;
+        private readonly ProgressViewModel _progress;
         private string _filePath;
         private TextDocument _document;
         private bool _isModified;
+        private bool _isEnabled = true;
         private ICommand _saveCommand;
         private ICommand _saveAsCommand;
         private ICommand _closeCommand;
@@ -86,6 +90,16 @@ namespace PdfCodeEditor.ViewModels
             }
         }
 
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            private set
+            {
+                _isEnabled = value;
+                OnPropertyChanged(nameof(IsEnabled));
+            }
+        }
+
         public NavigatorViewModel Navigator
         {
             get => _navigator;
@@ -131,10 +145,11 @@ namespace PdfCodeEditor.ViewModels
 
         #region Constructors
 
-        public PdfDocumentViewModel(IDialogService dialogService, DockManagerViewModel dockManager)
+        public PdfDocumentViewModel(IDialogService dialogService, DockManagerViewModel dockManager, ProgressViewModel progress)
         {
             _dialogService = dialogService;
             _dockManager = dockManager;
+            _progress = progress;
             Document = new TextDocument();
             Navigator = new NavigatorViewModel(Document);
         }
@@ -143,22 +158,31 @@ namespace PdfCodeEditor.ViewModels
 
         #region Public methods
 
-        public void Open(string filePath)
+        public async void OpenAsync(string filePath)
         {
-            FilePath = filePath;
-
-            if (!File.Exists(filePath)) 
+            if (!File.Exists(filePath))
                 return;
 
-            _document = new TextDocument(FileManager.ReadTextFile(_filePath));
-            Navigator.Document = _document;
+            _progress.ShowMessage("Opening document", true);
+            FilePath = filePath;
+            var uiThread = Thread.CurrentThread;
+            var text = await FileManager.ReadTextFileAsync(filePath);
+            
+            Document = await Task.Run(() =>
+            {
+                var lNewDocument = new TextDocument
+                {
+                    Text = text
+                };
 
+                lNewDocument.SetOwnerThread(uiThread);
+                return lNewDocument;
+            });
             var stm = new TextDocumentStream(_document);
             IPdfObjectProvider provider = new PdfObjectiTextProvider(stm);
-            PdfTree = new PdfTreeViewModel(provider, Navigator, _dockManager)
-            {
-                FilePath = filePath
-            };
+            PdfTree = new PdfTreeViewModel(provider, Navigator, _dockManager) { FilePath = filePath };
+            _dockManager.MainTreeManager.Tool.Content = PdfTree;
+            _progress.ShowMessage("Opened");
         }
 
         public void Save(string path)

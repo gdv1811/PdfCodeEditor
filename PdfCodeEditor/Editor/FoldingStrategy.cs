@@ -19,22 +19,23 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ICSharpCode.AvalonEdit.Document;
+using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Folding;
 
 namespace PdfCodeEditor.Editor
 {
     internal class FoldingStrategy
     {
-        public List<FoldingTemplate> FoldingTemplates { get; set; }
+        private FoldingManager _foldingManager;
 
-        public FoldingManager FoldingManager { get; set; }
+        public List<FoldingTemplate> FoldingTemplates { get; set; }
 
         /// <summary>
         /// Creates a new FoldingStrategy.
         /// </summary>
         public FoldingStrategy(FoldingManager foldingManager)
         {
-            FoldingManager = foldingManager;
+            _foldingManager = foldingManager;
         }
 
         /// <summary>
@@ -46,9 +47,8 @@ namespace PdfCodeEditor.Editor
 
         public void UpdateFoldings(TextDocument document)
         {
-            int firstErrorOffset;
-            var newFoldings = CreateNewFoldings(document, out firstErrorOffset);
-            FoldingManager.UpdateFoldings(newFoldings, firstErrorOffset);
+            var newFoldings = CreateNewFoldings(document, out var firstErrorOffset);
+            _foldingManager.UpdateFoldings(newFoldings, firstErrorOffset);
         }
 
         /// <summary>
@@ -93,6 +93,14 @@ namespace PdfCodeEditor.Editor
                 }
             }
             return newFoldings;
+        }
+
+        public void UpdateManager(TextArea textArea)
+        {
+            if (_foldingManager != null) 
+                FoldingManager.Uninstall(_foldingManager);
+
+            _foldingManager = FoldingManager.Install(textArea);
         }
     }
 }
